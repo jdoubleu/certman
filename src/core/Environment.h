@@ -12,6 +12,5 @@ class Environment {
 public:
     OS getOS();
     string getHomeDir();
-    string getExecutionDir();
-    string getApplicationDir();
+    string getAppDataLocation();
 };
