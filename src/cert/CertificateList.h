@@ -3,7 +3,7 @@
 
 using namespace std;
 
-namespace {
+namespace cert {
 
 class CertificateList {
 protected:

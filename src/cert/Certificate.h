@@ -2,7 +2,7 @@
 
 using namespace std;
 
-namespace {
+namespace cert {
 
 class Certificate {
 public:
