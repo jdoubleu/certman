@@ -2,8 +2,8 @@
 
 namespace gui::assistant {
 
-class Assistant: public QMainWindow {
+    class Assistant : public QMainWindow {
 
-};
+    };
 
 }

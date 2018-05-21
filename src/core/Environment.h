@@ -4,20 +4,23 @@ using std::string;
 
 namespace core {
 
-enum OS {
-    LINUX,
-    MACOS,
-    WINDOWS
-};
+    enum OS {
+        LINUX,
+        MACOS,
+        WINDOWS
+    };
 
-class Environment {
-public:
-    OS getOS();
-    string getHomeDir();
-    string getAppDataLocation();
-    string getCertificatesDir() {
-        return this->getAppDataLocation() + "certs";
-    }
-};
+    class Environment {
+    public:
+        OS getOS();
+
+        string getHomeDir();
+
+        string getAppDataLocation();
+
+        string getCertificatesDir() {
+            return this->getAppDataLocation() + "certs";
+        }
+    };
 
 }

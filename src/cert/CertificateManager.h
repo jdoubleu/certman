@@ -2,18 +2,18 @@
 
 namespace cert {
 
-class CertificateManager {
-public:
-    Certificate createCertificate();
+    class CertificateManager {
+    public:
+        Certificate createCertificate();
 
-    void signCertificate();
+        void signCertificate();
 
-    void importCertificate();
+        void importCertificate();
 
-    void exportCertificate();
+        void exportCertificate();
 
-protected:
-    void createKeyPair();
-};
+    protected:
+        void createKeyPair();
+    };
 
 }

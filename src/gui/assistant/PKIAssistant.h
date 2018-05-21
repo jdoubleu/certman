@@ -2,8 +2,8 @@
 
 namespace gui::assistant {
 
-class PKIAssistant : public Assistant {
+    class PKIAssistant : public Assistant {
 
-};
+    };
 
 }

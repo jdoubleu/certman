@@ -1,8 +1,8 @@
 namespace core {
 
-class Application {
-public:
-    void run();
-};
+    class Application {
+    public:
+        void run();
+    };
 
 }

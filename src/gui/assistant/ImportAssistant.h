@@ -1,20 +1,21 @@
 #include <QDialog>
 
 namespace Ui {
-class ImportAssistant;
+    class ImportAssistant;
 }
 
 namespace gui::assistant {
 
-class ImportAssistant: public QDialog {
+    class ImportAssistant : public QDialog {
     Q_OBJECT
 
-public:
-    explicit ImportAssistant(QWidget *parent = 0);
-    ~ImportAssistant();
+    public:
+        explicit ImportAssistant(QWidget *parent = 0);
 
-private:
-    Ui::ImportAssistant *ui;
-};
+        ~ImportAssistant();
+
+    private:
+        Ui::ImportAssistant *ui;
+    };
 
 }

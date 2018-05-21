@@ -4,14 +4,14 @@ using std::string;
 
 namespace cert {
 
-class Certificate {
-public:
-    explicit Certificate(string location);
+    class Certificate {
+    public:
+        explicit Certificate(string location);
 
-    string getLocation();
+        string getLocation();
 
-protected:
-    string location;
-};
+    protected:
+        string location;
+    };
 
 }

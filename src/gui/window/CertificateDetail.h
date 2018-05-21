@@ -1,7 +1,7 @@
 namespace gui::window {
 
-class CertificateDetail {
+    class CertificateDetail {
 
-};
+    };
 
 }

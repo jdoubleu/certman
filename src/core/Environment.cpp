@@ -4,26 +4,26 @@
 
 namespace core {
 
-OS Environment::getOS() {
+    OS Environment::getOS() {
 #ifdef _WIN64
-    return WINDOWS;
+        return WINDOWS;
 #elif __APPLE__ || __MACH__
-    return MACOS;
+        return MACOS;
 #elif __linux__
-    return LINUX;
+        return LINUX;
 #endif
-}
+    }
 
-string Environment::getHomeDir() {
-    return QDir::homePath().toStdString();
-}
+    string Environment::getHomeDir() {
+        return QDir::homePath().toStdString();
+    }
 
-string Environment::getAppDataLocation() {
-    return QStandardPaths::locate(
-            QStandardPaths::AppDataLocation,
-            QString::fromStdString("certman"),
-            QStandardPaths::LocateDirectory
-    ).toStdString();
-}
+    string Environment::getAppDataLocation() {
+        return QStandardPaths::locate(
+                QStandardPaths::AppDataLocation,
+                QString::fromStdString("certman"),
+                QStandardPaths::LocateDirectory
+        ).toStdString();
+    }
 
 }

@@ -5,14 +5,16 @@ using std::vector;
 
 namespace cert {
 
-class CertificateList {
-protected:
-    vector<Certificate> certificates;
+    class CertificateList {
+    protected:
+        vector<Certificate> certificates;
 
-public:
-    void load();
-    vector<Certificate> listAll();
-    void add(Certificate);
-};
+    public:
+        void load();
+
+        vector<Certificate> listAll();
+
+        void add(Certificate);
+    };
 
 }

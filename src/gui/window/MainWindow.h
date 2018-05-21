@@ -6,21 +6,22 @@ namespace Ui {
 
 namespace gui::window {
 
-class MainWindow: public QMainWindow
-{
+    class MainWindow : public QMainWindow {
     Q_OBJECT
 
-public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    public:
+        explicit MainWindow(QWidget *parent = 0);
 
-private:
-    Ui::MainWindow *ui;
+        ~MainWindow();
 
-    void setupActions();
+    private:
+        Ui::MainWindow *ui;
 
-private slots:
-    void importCertificate();
-};
+        void setupActions();
+
+    private slots:
+
+        void importCertificate();
+    };
 
 }

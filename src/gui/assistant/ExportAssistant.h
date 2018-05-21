@@ -2,8 +2,8 @@
 
 namespace gui::assistant {
 
-class ExportAssistant : public Assistant {
+    class ExportAssistant : public Assistant {
 
-};
+    };
 
 }

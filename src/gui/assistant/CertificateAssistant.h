@@ -2,8 +2,8 @@
 
 namespace gui::assistant {
 
-class CertificateAssistant : public Assistant {
+    class CertificateAssistant : public Assistant {
 
-};
+    };
 
 }

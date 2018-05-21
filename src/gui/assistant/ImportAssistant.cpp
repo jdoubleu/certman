@@ -3,7 +3,7 @@
 
 using namespace gui::assistant;
 
-ImportAssistant::ImportAssistant(QWidget *parent): QDialog(parent), ui(new Ui::ImportAssistant) {
+ImportAssistant::ImportAssistant(QWidget *parent) : QDialog(parent), ui(new Ui::ImportAssistant) {
     ui->setupUi(this);
 }
 
