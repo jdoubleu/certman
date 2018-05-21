@@ -1,9 +1,9 @@
 #include "Certificate.h"
 
-Certificate::Certificate(string location) {
+cert::Certificate::Certificate(string location) {
     this->location = location;
 }
 
-string Certificate::getLocation() {
+string cert::Certificate::getLocation() {
     return this->location;
 }
