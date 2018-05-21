@@ -1,13 +1,12 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
-
 #include <QMainWindow>
 
 namespace Ui {
-class MainWindow;
+    class MainWindow;
 }
 
-class MainWindow : public QMainWindow
+namespace gui::window {
+
+class MainWindow: public QMainWindow
 {
     Q_OBJECT
 
@@ -24,4 +23,4 @@ private slots:
     void importCertificate();
 };
 
-#endif // MAINWINDOW_H
+}

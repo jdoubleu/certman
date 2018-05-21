@@ -1,12 +1,14 @@
-#include "gui/assistant/ImportAssistant.h"
-#include "mainwindow.h"
+#include "MainWindow.h"
 #include "ui_mainwindow.h"
+#include "../assistant/ImportAssistant.h"
 
 using gui::assistant::ImportAssistant;
 
+using namespace gui::window;
+
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+        QMainWindow(parent),
+        ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 

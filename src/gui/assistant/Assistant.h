@@ -1,8 +1,9 @@
+#include <QMainWindow>
+
 namespace gui::assistant {
 
-class Assistant {
-public:
-    virtual void show();
+class Assistant: public QMainWindow {
+
 };
 
 }
