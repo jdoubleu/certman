@@ -17,5 +17,9 @@ string Environment::getHomeDir() {
 }
 
 string Environment::getAppDataLocation() {
-    return QStandardPaths::locate(QStandardPaths::StandardLocation::AppDataLocation, QString::fromStdString("certman")).toStdString();
+    return QStandardPaths::locate(
+            QStandardPaths::AppDataLocation,
+            QString::fromStdString("certman"),
+            QStandardPaths::LocateDirectory
+    ).toStdString();
 }
