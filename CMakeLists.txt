@@ -19,7 +19,11 @@ find_package(Qt5Widgets)
 find_package(OpenSSL REQUIRED)
 
 # Create executable
-add_executable(certman src/main.cpp src/mainwindow.cpp src/cert/Certificate.cpp src/cert/Certificate.h src/cert/CertificateList.cpp src/cert/CertificateList.h src/cert/CertificateManager.cpp src/cert/CertificateManager.h src/gui/Assistant.cpp src/gui/Assistant.h src/gui/ExportAssistant.cpp src/gui/ExportAssistant.h src/gui/ImportAssistant.cpp src/gui/ImportAssistant.h src/gui/PKIAssistant.cpp src/gui/PKIAssistant.h src/gui/CertificateAssistant.cpp src/gui/CertificateAssistant.h src/gui/CertificateDetail.cpp src/gui/CertificateDetail.h src/gui/CertificatesList.cpp src/gui/CertificatesList.h src/core/Application.cpp src/core/Application.h src/core/Environment.cpp src/core/Environment.h)
+file(GLOB_RECURSE CERTMAN_SRC
+        "src/*.h"
+        "src/*.cpp"
+        )
+add_executable(certman ${CERTMAN_SRC})
 
 # Link dependent libraries
 target_link_libraries(certman Qt5::Widgets)
