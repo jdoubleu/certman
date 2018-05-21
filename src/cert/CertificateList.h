@@ -3,6 +3,8 @@
 
 using namespace std;
 
+namespace {
+
 class CertificateList {
 protected:
     vector<Certificate> certificates;
@@ -12,3 +14,5 @@ public:
     vector<Certificate> listAll();
     void add(Certificate);
 };
+
+}

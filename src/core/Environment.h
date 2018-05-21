@@ -2,6 +2,8 @@
 
 using namespace std;
 
+namespace core {
+
 enum OS {
     LINUX,
     MACOS,
@@ -17,3 +19,5 @@ public:
         return this->getAppDataLocation() + "certs";
     }
 };
+
+}
