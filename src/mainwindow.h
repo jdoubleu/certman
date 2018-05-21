@@ -17,6 +17,11 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    void setupActions();
+
+private slots:
+    void importCertificate();
 };
 
 #endif // MAINWINDOW_H
