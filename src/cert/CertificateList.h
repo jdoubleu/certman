@@ -1,7 +1,7 @@
 #include <vector>
 #include "Certificate.h"
 
-using namespace std;
+using std::vector;
 
 namespace cert {
 
