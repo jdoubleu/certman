@@ -13,4 +13,7 @@ public:
     OS getOS();
     string getHomeDir();
     string getAppDataLocation();
+    string getCertificatesDir() {
+        return this->getAppDataLocation() + "certs";
+    }
 };
