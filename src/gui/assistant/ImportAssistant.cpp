@@ -23,7 +23,8 @@ ImportAssistant::~ImportAssistant() {
 }
 
 void ImportAssistant::chooseFile() {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Choose Certificate"), QString::fromStdString(Environment::getHomeDir()),
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Choose Certificate"),
+                                                    QString::fromStdString(Environment::getHomeDir()),
                                                     tr("Certificate Files (*.cer *.crt *.pem *.der)"));
     ui->file_input->setText(fileName);
 }

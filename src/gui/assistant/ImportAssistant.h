@@ -18,7 +18,9 @@ namespace gui::assistant {
         Ui::ImportAssistant *ui;
 
     private slots:
+
         void chooseFile();
+
         void submit();
     };
 
