@@ -29,15 +29,19 @@ namespace core {
         }
 
         static string getAppDataLocation() {
-            return QStandardPaths::locate(
-                    QStandardPaths::AppDataLocation,
-                    QString::fromStdString("certman"),
-                    QStandardPaths::LocateDirectory
-            ).toStdString();
+            QDir dir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
+            if (!dir.exists()) {
+                dir.mkpath(".");
+            }
+            return dir.absolutePath().toStdString();
         }
 
         static string getCertificatesDir() {
-            return Environment::getAppDataLocation() + "certs";
+            QDir dir(QString::fromStdString(Environment::getAppDataLocation() + "/certs"));
+            if (!dir.exists()) {
+                dir.mkpath(".");
+            }
+            return dir.absolutePath().toStdString();
         }
     };
 
