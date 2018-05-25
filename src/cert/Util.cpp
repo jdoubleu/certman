@@ -72,4 +72,14 @@ map<int, string> cert::X509_NAME_to_map_NID(const X509_NAME *entries) {
     }
 
     return fields;
+}
+
+string cert::X509_NAME_get_field(X509_NAME *name, const string field) {
+    auto NID = OBJ_txt2nid(field.c_str());
+    int length = X509_NAME_get_text_by_NID(name, NID, NULL, 0);
+
+    char buf[length];
+    X509_NAME_get_text_by_NID(name, NID, buf, length);
+
+    return string(buf);
 };

@@ -43,8 +43,7 @@ map<string, string> Certificate::getIssuerFields() {
 };
 
 string Certificate::getIssuerField(const string field) {
-    auto fields = getIssuerFields();
-    return fields.at(field);
+    return X509_NAME_get_field(X509_get_issuer_name(this->certificate), field);
 };
 
 string Certificate::getSubject() {
@@ -56,8 +55,7 @@ map<string, string> Certificate::getSubjectFields() {
 };
 
 string Certificate::getSubjectField(const string field) {
-    auto fields = getSubjectFields();
-    return fields.at(field);
+    return X509_NAME_get_field(X509_get_subject_name(this->certificate), field);
 }
 
 string Certificate::getSignatureAlgorithm() {

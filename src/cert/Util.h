@@ -19,5 +19,7 @@ namespace cert {
 
     map<int, string> X509_NAME_to_map_NID(const X509_NAME *entries);
 
+    string X509_NAME_get_field(X509_NAME *name, const string field);
+
     time_t ASN1_TIME_to_time(ASN1_TIME *time);
 }
