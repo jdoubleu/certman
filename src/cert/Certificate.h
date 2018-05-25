@@ -46,10 +46,6 @@ namespace cert {
 
         time_t getExpires();
 
-        X509_NAME *getSubjectNAME();
-
-        X509_NAME *getIssuerNAME();
-
         vector<string> getASN();
 
         bool operator==(const Certificate &c);

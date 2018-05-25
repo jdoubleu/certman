@@ -45,17 +45,8 @@ void CertificateListWidget::showCertificates(const vector<Certificate *> &certif
 }
 
 void CertificateListWidget::certToRow(Certificate *cert, const int &row) {
-    auto subject = cert->getSubjectNAME();
-
-    auto asn_str = X509_NAME_ENTRY_get_data(X509_NAME_get_entry(subject, 5));
-    string common_name = string((char *) ASN1_STRING_get0_data(asn_str));
-
-    model->setData(model->index(row, 0), cellFactory(common_name));
-
-    asn_str = X509_NAME_ENTRY_get_data(X509_NAME_get_entry(cert->getIssuerNAME(), 5));
-    common_name = string((char *) ASN1_STRING_get0_data(asn_str));
-
-    model->setData(model->index(row, 1), cellFactory(common_name));
+    model->setData(model->index(row, 0), cellFactory(cert->getSubjectField("commonName")));
+    model->setData(model->index(row, 1), cellFactory(cert->getIssuerField("commonName")));
 
     time_t _tm = cert->getCreated();
     struct tm *curtime = gmtime(&_tm);
