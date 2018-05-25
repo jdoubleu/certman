@@ -39,7 +39,7 @@ time_t cert::ASN1_TIME_to_time(ASN1_TIME *time) {
     return mktime(&t);
 }
 
-map<string, string> cert::X509_NAME_to_map(const X509_NAME *entries) {
+map<string, string> cert::X509_NAME_to_map(const X509_NAME *entries, enum X509_NAME_map_key_type type) {
     map<string, string> fields;
 
     for (int i = 0; i < X509_NAME_entry_count(entries); i++) {
@@ -47,10 +47,28 @@ map<string, string> cert::X509_NAME_to_map(const X509_NAME *entries) {
         ASN1_OBJECT *field = X509_NAME_ENTRY_get_object(entry);
         ASN1_STRING *value = X509_NAME_ENTRY_get_data(entry);
 
-        string fieldName = OBJ_nid2ln(OBJ_obj2nid(field));
+        int fieldNID = OBJ_obj2nid(field);
+        string fieldName = type == LONG ? OBJ_nid2ln(fieldNID) : OBJ_nid2sn(fieldNID);
         string fieldValue = string((char *) ASN1_STRING_get0_data(value));
 
         fields.insert(pair<string,string>(fieldName, fieldValue));
+    }
+
+    return fields;
+};
+
+map<int, string> cert::X509_NAME_to_map_NID(const X509_NAME *entries) {
+    map<int, string> fields;
+
+    for (int i = 0; i < X509_NAME_entry_count(entries); i++) {
+        X509_NAME_ENTRY *entry = X509_NAME_get_entry(entries, i);
+        ASN1_OBJECT *field = X509_NAME_ENTRY_get_object(entry);
+        ASN1_STRING *value = X509_NAME_ENTRY_get_data(entry);
+
+        int fieldNID = OBJ_obj2nid(field);
+        string fieldValue = string((char *) ASN1_STRING_get0_data(value));
+
+        fields.insert(pair<int,string>(fieldNID, fieldValue));
     }
 
     return fields;
