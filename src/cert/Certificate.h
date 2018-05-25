@@ -1,3 +1,6 @@
+#ifndef CERTIFICATE_H
+#define CERTIFICATE_H
+
 #include <openssl/x509.h>
 #include <openssl/x509v3.h>
 #include <string>
@@ -42,3 +45,5 @@ namespace cert {
     };
 
 }
+
+#endif
