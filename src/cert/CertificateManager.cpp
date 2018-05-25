@@ -19,11 +19,10 @@ void CertificateManager::importCertificate(string path) {
     if (x509 == nullptr)
         return;
 
-    exportCertificate(x509, Environment::getCertificatesDir(), std::to_string(X509_issuer_and_serial_hash(x509)));
+    exportCertificate(x509, Environment::getCertificatesDir() + "/" + std::to_string(X509_issuer_and_serial_hash(x509)) + ".pem");
 }
 
-void CertificateManager::exportCertificate(X509 *x509, string path, string filename) {
-    path.append("/" + filename + ".pem");
+void CertificateManager::exportCertificate(X509 *x509, string path) {
     auto bio = BIO_new_file(path.c_str(), "w");
     PEM_write_bio_X509(bio, x509);
     BIO_flush(bio);
