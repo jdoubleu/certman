@@ -3,7 +3,7 @@
 #include <cstring>
 #include "Util.h"
 
-string cert::Util::x509NameAsString(X509_NAME *name) {
+string cert::x509NameAsString(X509_NAME *name) {
     BIO *out = BIO_new(BIO_s_mem());
     BUF_MEM *buffer;
     X509_NAME_print(out, name, 0);
@@ -13,7 +13,7 @@ string cert::Util::x509NameAsString(X509_NAME *name) {
     return result;
 }
 
-time_t cert::Util::ASN1_GetTimeT(ASN1_TIME *time) {
+time_t cert::ASN1_GetTimeT(ASN1_TIME *time) {
     struct tm t{};
     const auto *str = (const char *) time->data;
     size_t i = 0;

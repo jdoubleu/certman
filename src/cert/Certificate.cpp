@@ -35,7 +35,7 @@ string Certificate::getThumbprint() const {
 }
 
 string Certificate::getIssuer() {
-    return Util::x509NameAsString(X509_get_issuer_name(this->certificate));
+    return x509NameAsString(X509_get_issuer_name(this->certificate));
 }
 
 X509_NAME *Certificate::getIssuerNAME() {
@@ -43,7 +43,7 @@ X509_NAME *Certificate::getIssuerNAME() {
 }
 
 string Certificate::getSubject() {
-    return Util::x509NameAsString(X509_get_subject_name(this->certificate));
+    return x509NameAsString(X509_get_subject_name(this->certificate));
 }
 
 X509_NAME *Certificate::getSubjectNAME() {
@@ -74,12 +74,12 @@ int Certificate::getKeySize() {
 
 time_t Certificate::getCreated() {
     ASN1_TIME *date = X509_get_notBefore(this->certificate);
-    return Util::ASN1_GetTimeT(date);
+    return ASN1_GetTimeT(date);
 }
 
 time_t Certificate::getExpires() {
     ASN1_TIME *date = X509_get_notAfter(this->certificate);
-    return Util::ASN1_GetTimeT(date);
+    return ASN1_GetTimeT(date);
 }
 
 vector<string> Certificate::getASN() {

@@ -5,10 +5,9 @@
 using std::string;
 
 namespace cert {
-    class Util {
-    public:
-        static string x509NameAsString(X509_NAME *name);
 
-        static time_t ASN1_GetTimeT(ASN1_TIME *time);
-    };
+    string x509NameAsString(X509_NAME *name);
+
+    time_t ASN1_GetTimeT(ASN1_TIME *time);
+
 }
