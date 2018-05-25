@@ -10,7 +10,7 @@ using core::Environment;
 
 using namespace cert;
 
-CertificateManager::CertificateManager() : certificateList(new vector<Certificate*>()) {
+CertificateManager::CertificateManager() : certificateList(new vector<Certificate *>()) {
 }
 
 void CertificateManager::importCertificate(string path) {
@@ -22,7 +22,9 @@ void CertificateManager::importCertificate(string path) {
 
     addCertificateToList(cert);
 
-    exportCertificate(cert, Environment::getCertificatesDir() + "/" + std::to_string(X509_issuer_and_serial_hash(x509)) + ".pem");
+    exportCertificate(cert,
+                      Environment::getCertificatesDir() + "/" + std::to_string(X509_issuer_and_serial_hash(x509)) +
+                      ".pem");
 }
 
 void CertificateManager::exportCertificate(Certificate *cert, string path) {
@@ -33,7 +35,7 @@ void CertificateManager::exportCertificate(Certificate *cert, string path) {
 }
 
 
-vector<Certificate*> * CertificateManager::getCertificateList() {
+vector<Certificate *> *CertificateManager::getCertificateList() {
     return this->certificateList;
 }
 

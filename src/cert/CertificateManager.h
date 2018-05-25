@@ -21,7 +21,7 @@ namespace cert {
 
         void exportCertificate(Certificate *cert, string path);
 
-        vector<Certificate *> * getCertificateList();
+        vector<Certificate *> *getCertificateList();
 
         void loadCertificates();
 
@@ -31,7 +31,7 @@ namespace cert {
         void createKeyPair();
 
     private:
-        vector<Certificate*> *certificateList;
+        vector<Certificate *> *certificateList;
 
         void addCertificateToList(Certificate *certificate);
 

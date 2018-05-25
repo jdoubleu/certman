@@ -36,7 +36,7 @@ string cert::Certificate::getIssuer() {
     return Util::x509NameAsString(X509_get_issuer_name(this->certificate));
 }
 
-X509_NAME* cert::Certificate::getIssuerNAME() {
+X509_NAME *cert::Certificate::getIssuerNAME() {
     return X509_get_issuer_name(this->certificate);
 }
 
@@ -44,7 +44,7 @@ string cert::Certificate::getSubject() {
     return Util::x509NameAsString(X509_get_subject_name(this->certificate));
 }
 
-X509_NAME* cert::Certificate::getSubjectNAME() {
+X509_NAME *cert::Certificate::getSubjectNAME() {
     return X509_get_subject_name(this->certificate);
 }
 

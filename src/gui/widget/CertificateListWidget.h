@@ -18,7 +18,9 @@ namespace gui::widget {
         ~CertificateListWidget();
 
         void clear();
+
         bool isEmpty();
+
         void showCertificates(const vector<Certificate *> &certificates);
 
     private:
@@ -26,6 +28,7 @@ namespace gui::widget {
         QAbstractItemModel *model;
 
         void certToRow(Certificate *cert, const int &row);
+
         QVariant cellFactory(const string &content);
     };
 

@@ -1,8 +1,5 @@
 #include "CertificateListWidget.h"
 #include "ui_certificatelist.h"
-#include <QTableWidgetItem>
-#include <QTreeWidgetItem>
-#include <time.h>
 
 using Qt::Orientation;
 
@@ -61,7 +58,7 @@ void CertificateListWidget::certToRow(Certificate *cert, const int &row) {
     model->setData(model->index(row, 1), cellFactory(common_name));
 
     time_t _tm = cert->getCreated();
-    struct tm * curtime = gmtime(&_tm);
+    struct tm *curtime = gmtime(&_tm);
 
     model->setData(model->index(row, 2), cellFactory(asctime(curtime)));
     model->setData(model->index(row, 3), cellFactory(asctime(curtime)));
