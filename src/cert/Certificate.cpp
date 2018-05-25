@@ -3,8 +3,6 @@
 #include <sstream>
 #include "Certificate.h"
 #include "Util.h"
-#include <openssl/objects.h>
-#include <vector>
 
 using std::stringstream;
 using std::vector;
@@ -73,12 +71,12 @@ int cert::Certificate::getKeySize() {
 }
 
 time_t cert::Certificate::getCreated() {
-    ASN1_TIME *date = X509_getm_notBefore(this->certificate);
+    ASN1_TIME *date = X509_get_notBefore(this->certificate);
     return Util::ASN1_GetTimeT(date);
 }
 
 time_t cert::Certificate::getExpires() {
-    ASN1_TIME *date = X509_getm_notAfter(this->certificate);
+    ASN1_TIME *date = X509_get_notAfter(this->certificate);
     return Util::ASN1_GetTimeT(date);
 }
 
@@ -91,7 +89,7 @@ vector<string> cert::Certificate::getASN() {
         GENERAL_NAME *gen = sk_GENERAL_NAME_value(subjectAltNames, i);
         if (gen->type == GEN_URI || gen->type == GEN_DNS || gen->type == GEN_EMAIL) {
             ASN1_IA5STRING *asn1_str = gen->d.uniformResourceIdentifier;
-            string san = string((char *) ASN1_STRING_get0_data(asn1_str), ASN1_STRING_length(asn1_str));
+            string san = string((char *) ASN1_STRING_data(asn1_str), ASN1_STRING_length(asn1_str));
             list.push_back(san);
         } else if (gen->type == GEN_IPADD) {
             unsigned char *p = gen->d.ip->data;
