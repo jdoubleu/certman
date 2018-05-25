@@ -2,7 +2,7 @@ namespace core {
 
     class Application {
     public:
-        void run();
+        int run(int argc, char *argv[]);
     };
 
 }
