@@ -11,8 +11,7 @@ using core::Environment;
 
 using namespace cert;
 
-CertificateManager::CertificateManager() {
-    this->certificateList = new vector<Certificate>;
+CertificateManager::CertificateManager() : certificateList(new vector<Certificate*>()) {
 }
 
 void CertificateManager::importCertificate(string path) {
@@ -31,7 +30,7 @@ void CertificateManager::exportCertificate(X509 *x509, string path, string filen
 }
 
 
-vector<Certificate> *CertificateManager::getCertificateList() {
+vector<Certificate*> * CertificateManager::getCertificateList() {
     return this->certificateList;
 }
 
@@ -46,9 +45,9 @@ void CertificateManager::loadCertificates() {
             return;
 
         auto *cert = new Certificate(x509);
-        if (!(find(certificateList->begin(), certificateList->end(), *cert) != certificateList->end())) {
+        if (!(find(certificateList->begin(), certificateList->end(), cert) != certificateList->end())) {
             //X509 not found -> add
-            certificateList->push_back(*cert);
+            certificateList->push_back(cert);
         }
 
     }

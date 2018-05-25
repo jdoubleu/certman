@@ -21,7 +21,7 @@ namespace cert {
 
         void exportCertificate(X509 *x509, string path, string filename);
 
-        vector<Certificate> *getCertificateList();
+        vector<Certificate *> * getCertificateList();
 
         void loadCertificates();
 
@@ -31,7 +31,7 @@ namespace cert {
         void createKeyPair();
 
     private:
-        vector<Certificate> *certificateList;
+        vector<Certificate*> *certificateList;
 
     };
 
