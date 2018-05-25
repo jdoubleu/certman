@@ -7,18 +7,20 @@
 using std::stringstream;
 using std::vector;
 
-cert::Certificate::Certificate(X509 *certificate) : certificate(certificate) {
+using namespace cert;
+
+Certificate::Certificate(X509 *certificate) : certificate(certificate) {
 }
 
-X509 *cert::Certificate::getX509() {
+X509 *Certificate::getX509() {
     return this->certificate;
 }
 
-long cert::Certificate::getVersion() {
+long Certificate::getVersion() {
     return X509_get_version(this->certificate);
 }
 
-string cert::Certificate::getThumbprint() const {
+string Certificate::getThumbprint() const {
     static const char hexbytes[] = "0123456789ABCDEF";
     unsigned int messageDigest_size;
     unsigned char messageDigest[EVP_MAX_MD_SIZE];
@@ -32,27 +34,27 @@ string cert::Certificate::getThumbprint() const {
     return toHex.str();
 }
 
-string cert::Certificate::getIssuer() {
+string Certificate::getIssuer() {
     return Util::x509NameAsString(X509_get_issuer_name(this->certificate));
 }
 
-X509_NAME *cert::Certificate::getIssuerNAME() {
+X509_NAME *Certificate::getIssuerNAME() {
     return X509_get_issuer_name(this->certificate);
 }
 
-string cert::Certificate::getSubject() {
+string Certificate::getSubject() {
     return Util::x509NameAsString(X509_get_subject_name(this->certificate));
 }
 
-X509_NAME *cert::Certificate::getSubjectNAME() {
+X509_NAME *Certificate::getSubjectNAME() {
     return X509_get_subject_name(this->certificate);
 }
 
-string cert::Certificate::getSignatureAlgorithm() {
+string Certificate::getSignatureAlgorithm() {
     return OBJ_nid2ln(X509_get_signature_type(this->certificate));
 }
 
-string cert::Certificate::getKeyType() {
+string Certificate::getKeyType() {
     EVP_PKEY *pkey = X509_get_pubkey(this->certificate);
     int key_type = EVP_PKEY_id(pkey);
     EVP_PKEY_free(pkey);
@@ -63,24 +65,24 @@ string cert::Certificate::getKeyType() {
     return "";
 }
 
-int cert::Certificate::getKeySize() {
+int Certificate::getKeySize() {
     EVP_PKEY *pkey = X509_get_pubkey(this->certificate);
     int keysize = EVP_PKEY_size(pkey);
     EVP_PKEY_free(pkey);
     return keysize;
 }
 
-time_t cert::Certificate::getCreated() {
+time_t Certificate::getCreated() {
     ASN1_TIME *date = X509_get_notBefore(this->certificate);
     return Util::ASN1_GetTimeT(date);
 }
 
-time_t cert::Certificate::getExpires() {
+time_t Certificate::getExpires() {
     ASN1_TIME *date = X509_get_notAfter(this->certificate);
     return Util::ASN1_GetTimeT(date);
 }
 
-vector<string> cert::Certificate::getASN() {
+vector<string> Certificate::getASN() {
     vector<string> list;
     auto *subjectAltNames = (GENERAL_NAMES *) X509_get_ext_d2i(
             this->certificate, NID_subject_alt_name, nullptr, nullptr
@@ -104,7 +106,7 @@ vector<string> cert::Certificate::getASN() {
     return list;
 }
 
-bool cert::Certificate::operator==(const cert::Certificate &c) {
+bool Certificate::operator==(const cert::Certificate &c) {
     return this->getThumbprint() == c.getThumbprint();
 }
 
