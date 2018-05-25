@@ -17,7 +17,7 @@ namespace cert {
 
         long getVersion();
 
-        string getThumbprint();
+        string getThumbprint() const;
 
         string getIssuer();
 
@@ -34,6 +34,8 @@ namespace cert {
         time_t getExpires();
 
         vector<string> getASN();
+
+        bool operator==(const Certificate &c);
 
     private:
         X509 *certificate;

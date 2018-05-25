@@ -9,6 +9,6 @@ namespace cert {
     public:
         static string x509NameAsString(X509_NAME *name);
 
-        static time_t ASN1_GetTimeT(ASN1_TIME* time);
+        static time_t ASN1_GetTimeT(ASN1_TIME *time);
     };
 }

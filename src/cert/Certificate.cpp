@@ -20,11 +20,11 @@ long cert::Certificate::getVersion() {
     return X509_get_version(this->certificate);
 }
 
-string cert::Certificate::getThumbprint() {
+string cert::Certificate::getThumbprint() const {
     static const char hexbytes[] = "0123456789ABCDEF";
     unsigned int messageDigest_size;
     unsigned char messageDigest[EVP_MAX_MD_SIZE];
-    const EVP_MD *digest = EVP_get_digestbyname(getSignatureAlgorithm().c_str());
+    const EVP_MD *digest = EVP_get_digestbyname("sha1");
     X509_digest(this->certificate, digest, messageDigest, &messageDigest_size);
     stringstream toHex;
     for (int pos = 0; pos < messageDigest_size; pos++) {
@@ -43,7 +43,7 @@ string cert::Certificate::getSubject() {
 }
 
 string cert::Certificate::getSignatureAlgorithm() {
-    return string(OBJ_nid2ln(X509_get_signature_type(this->certificate)));
+    return OBJ_nid2ln(X509_get_signature_type(this->certificate));
 }
 
 string cert::Certificate::getKeyType() {
@@ -58,7 +58,7 @@ string cert::Certificate::getKeyType() {
 }
 
 int cert::Certificate::getKeySize() {
-    EVP_PKEY *pkey=X509_get_pubkey(this->certificate);
+    EVP_PKEY *pkey = X509_get_pubkey(this->certificate);
     int keysize = EVP_PKEY_size(pkey);
     EVP_PKEY_free(pkey);
     return keysize;
@@ -76,29 +76,30 @@ time_t cert::Certificate::getExpires() {
 
 vector<string> cert::Certificate::getASN() {
     vector<string> list;
-    GENERAL_NAMES* subjectAltNames = (GENERAL_NAMES*)X509_get_ext_d2i(this->certificate, NID_subject_alt_name, NULL, NULL);
-    for (int i = 0; i < sk_GENERAL_NAME_num(subjectAltNames); i++)
-    {
-        GENERAL_NAME* gen = sk_GENERAL_NAME_value(subjectAltNames, i);
-        if (gen->type == GEN_URI || gen->type == GEN_DNS || gen->type == GEN_EMAIL)
-        {
+    auto *subjectAltNames = (GENERAL_NAMES *) X509_get_ext_d2i(
+            this->certificate, NID_subject_alt_name, nullptr, nullptr
+    );
+    for (int i = 0; i < sk_GENERAL_NAME_num(subjectAltNames); i++) {
+        GENERAL_NAME *gen = sk_GENERAL_NAME_value(subjectAltNames, i);
+        if (gen->type == GEN_URI || gen->type == GEN_DNS || gen->type == GEN_EMAIL) {
             ASN1_IA5STRING *asn1_str = gen->d.uniformResourceIdentifier;
-            string san = string( (char*)ASN1_STRING_get0_data(asn1_str), ASN1_STRING_length(asn1_str) );
-            list.push_back( san );
-        }
-        else if (gen->type == GEN_IPADD)
-        {
+            string san = string((char *) ASN1_STRING_get0_data(asn1_str), ASN1_STRING_length(asn1_str));
+            list.push_back(san);
+        } else if (gen->type == GEN_IPADD) {
             unsigned char *p = gen->d.ip->data;
-            if(gen->d.ip->length == 4)
-            {
+            if (gen->d.ip->length == 4) {
                 stringstream ip;
-                ip << (int)p[0] << '.' << (int)p[1] << '.' << (int)p[2] << '.' << (int)p[3];
-                list.push_back( ip.str() );
+                ip << (int) p[0] << '.' << (int) p[1] << '.' << (int) p[2] << '.' << (int) p[3];
+                list.push_back(ip.str());
             }
         }
     }
     GENERAL_NAMES_free(subjectAltNames);
     return list;
+}
+
+bool cert::Certificate::operator==(const cert::Certificate &c) {
+    return this->getThumbprint() == c.getThumbprint();
 }
 
 

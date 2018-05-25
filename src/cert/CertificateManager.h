@@ -1,5 +1,7 @@
 #include "Certificate.h"
 
+using std::vector;
+
 namespace cert {
 
 
@@ -9,6 +11,8 @@ namespace cert {
 
     class CertificateManager {
     public:
+        CertificateManager();
+
         Certificate createCertificate();
 
         void signCertificate();
@@ -17,8 +21,18 @@ namespace cert {
 
         void exportCertificate(X509 *x509, string path, string filename);
 
+        vector<Certificate> *getCertificateList();
+
+        void loadCertificates();
+
+        X509 *getX509(string path);
+
     protected:
         void createKeyPair();
+
+    private:
+        vector<Certificate> *certificateList;
+
     };
 
 }
