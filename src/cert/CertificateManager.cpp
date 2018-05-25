@@ -1,4 +1,3 @@
-
 #include <string>
 #include <openssl/pem.h>
 #include <QtCore/QDirIterator>
@@ -11,8 +10,7 @@ using core::Environment;
 
 using namespace cert;
 
-CertificateManager::CertificateManager() {
-    this->certificateList = new vector<Certificate>;
+CertificateManager::CertificateManager() : certificateList(new vector<Certificate*>()) {
 }
 
 void CertificateManager::importCertificate(string path) {
@@ -24,19 +22,18 @@ void CertificateManager::importCertificate(string path) {
 
     addCertificateToList(cert);
 
-    exportCertificate(cert, Environment::getCertificatesDir(), std::to_string(X509_issuer_and_serial_hash(x509)));
+    exportCertificate(cert, Environment::getCertificatesDir() + "/" + std::to_string(X509_issuer_and_serial_hash(x509)) + ".pem");
 }
 
-void CertificateManager::exportCertificate(Certificate *cert, string path, string filename) {
+void CertificateManager::exportCertificate(Certificate *cert, string path) {
     X509 *x509 = cert->getX509();
-    path.append("/" + filename + ".pem");
     auto bio = BIO_new_file(path.c_str(), "w");
     PEM_write_bio_X509(bio, x509);
     BIO_flush(bio);
 }
 
 
-vector<Certificate> *CertificateManager::getCertificateList() {
+vector<Certificate*> * CertificateManager::getCertificateList() {
     return this->certificateList;
 }
 
@@ -57,9 +54,9 @@ void CertificateManager::loadCertificates() {
 }
 
 void CertificateManager::addCertificateToList(Certificate *certificate) {
-    if (!(find(certificateList->begin(), certificateList->end(), *certificate) != certificateList->end())) {
+    if (!(find(certificateList->begin(), certificateList->end(), certificate) != certificateList->end())) {
         //Certificate not found -> add
-        certificateList->push_back(*certificate);
+        this->certificateList->push_back(certificate);
     }
 }
 

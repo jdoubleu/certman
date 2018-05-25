@@ -1,3 +1,6 @@
+#ifndef CERTIFICATE_H
+#define CERTIFICATE_H
+
 #include <openssl/x509.h>
 #include <openssl/x509v3.h>
 #include <string>
@@ -33,6 +36,10 @@ namespace cert {
 
         time_t getExpires();
 
+        X509_NAME *getSubjectNAME();
+
+        X509_NAME *getIssuerNAME();
+
         vector<string> getASN();
 
         bool operator==(const Certificate &c);
@@ -42,3 +49,5 @@ namespace cert {
     };
 
 }
+
+#endif
