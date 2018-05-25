@@ -20,10 +20,15 @@ void CertificateManager::importCertificate(string path) {
     if (x509 == nullptr)
         return;
 
-    exportCertificate(x509, Environment::getCertificatesDir(), std::to_string(X509_issuer_and_serial_hash(x509)));
+    auto *cert = new Certificate(x509);
+
+    addCertificateToList(cert);
+
+    exportCertificate(cert, Environment::getCertificatesDir(), std::to_string(X509_issuer_and_serial_hash(x509)));
 }
 
-void CertificateManager::exportCertificate(X509 *x509, string path, string filename) {
+void CertificateManager::exportCertificate(Certificate *cert, string path, string filename) {
+    X509 *x509 = cert->getX509();
     path.append("/" + filename + ".pem");
     auto bio = BIO_new_file(path.c_str(), "w");
     PEM_write_bio_X509(bio, x509);
@@ -46,11 +51,15 @@ void CertificateManager::loadCertificates() {
             return;
 
         auto *cert = new Certificate(x509);
-        if (!(find(certificateList->begin(), certificateList->end(), *cert) != certificateList->end())) {
-            //X509 not found -> add
-            certificateList->push_back(*cert);
-        }
 
+        addCertificateToList(cert);
+    }
+}
+
+void CertificateManager::addCertificateToList(Certificate *certificate) {
+    if (!(find(certificateList->begin(), certificateList->end(), *certificate) != certificateList->end())) {
+        //Certificate not found -> add
+        certificateList->push_back(*certificate);
     }
 }
 

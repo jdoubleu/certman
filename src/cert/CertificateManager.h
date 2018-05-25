@@ -19,7 +19,7 @@ namespace cert {
 
         void importCertificate(string path);
 
-        void exportCertificate(X509 *x509, string path, string filename);
+        void exportCertificate(Certificate *cert, string path, string filename);
 
         vector<Certificate> *getCertificateList();
 
@@ -32,6 +32,8 @@ namespace cert {
 
     private:
         vector<Certificate> *certificateList;
+
+        void addCertificateToList(Certificate *certificate);
 
     };
 
