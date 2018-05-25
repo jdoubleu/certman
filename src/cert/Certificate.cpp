@@ -3,8 +3,6 @@
 #include <sstream>
 #include "Certificate.h"
 #include "Util.h"
-#include <openssl/objects.h>
-#include <vector>
 
 using std::stringstream;
 using std::vector;

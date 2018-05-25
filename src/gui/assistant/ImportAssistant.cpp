@@ -2,9 +2,6 @@
 #include <src/core/Environment.h>
 #include "ImportAssistant.h"
 #include "ui_importassistant.h"
-#include <openssl/bio.h>
-#include <openssl/pem.h>
-#include <openssl/x509.h>
 #include <src/cert/CertificateManager.h>
 
 using core::Environment;
