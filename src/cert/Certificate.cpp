@@ -38,12 +38,30 @@ string Certificate::getIssuer() {
     return X509_NAME_to_combined_string(X509_get_issuer_name(this->certificate));
 }
 
+map<string, string> Certificate::getIssuerFields() {
+    return X509_NAME_to_map(X509_get_issuer_name(this->certificate));
+};
+
+string Certificate::getIssuerField(const string field) {
+    auto fields = getIssuerFields();
+    return fields.at(field);
+};
+
 X509_NAME *Certificate::getIssuerNAME() {
     return X509_get_issuer_name(this->certificate);
 }
 
 string Certificate::getSubject() {
     return X509_NAME_to_combined_string(X509_get_subject_name(this->certificate));
+}
+
+map<string, string> Certificate::getSubjectFields() {
+    return X509_NAME_to_map(X509_get_subject_name(this->certificate));
+};
+
+string Certificate::getSubjectField(const string field) {
+    auto fields = getSubjectFields();
+    return fields.at(field);
 }
 
 X509_NAME *Certificate::getSubjectNAME() {

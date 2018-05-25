@@ -6,9 +6,11 @@
 #include <string>
 #include <openssl/ossl_typ.h>
 #include <vector>
+#include <map>
 
 using std::string;
 using std::vector;
+using std::map;
 
 namespace cert {
 
@@ -24,7 +26,15 @@ namespace cert {
 
         string getIssuer();
 
+        map<string, string> getIssuerFields();
+
+        string getIssuerField(const string field);
+
         string getSubject();
+
+        map<string, string> getSubjectFields();
+
+        string getSubjectField(const string field);
 
         string getSignatureAlgorithm();
 
