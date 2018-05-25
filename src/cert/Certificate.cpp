@@ -91,7 +91,7 @@ vector<string> Certificate::getASN() {
         GENERAL_NAME *gen = sk_GENERAL_NAME_value(subjectAltNames, i);
         if (gen->type == GEN_URI || gen->type == GEN_DNS || gen->type == GEN_EMAIL) {
             ASN1_IA5STRING *asn1_str = gen->d.uniformResourceIdentifier;
-            string san = string((char *) ASN1_STRING_data(asn1_str), ASN1_STRING_length(asn1_str));
+            string san = string((char *) ASN1_STRING_get0_data(asn1_str));
             list.push_back(san);
         } else if (gen->type == GEN_IPADD) {
             unsigned char *p = gen->d.ip->data;
