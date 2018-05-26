@@ -39,6 +39,14 @@ time_t cert::ASN1_TIME_to_time(ASN1_TIME *time) {
     return mktime(&t);
 }
 
+string cert::time_to_string(time_t _tm) {
+    struct tm *time = gmtime(&_tm);
+    string stringTime = asctime(time);
+    if (stringTime[stringTime.length() - 1] == '\n')
+        stringTime[stringTime.length() - 1] = '\0';
+    return stringTime;
+}
+
 map<string, string> cert::X509_NAME_to_map(const X509_NAME *entries, enum X509_NAME_map_key_type type) {
     map<string, string> fields;
 
@@ -51,7 +59,7 @@ map<string, string> cert::X509_NAME_to_map(const X509_NAME *entries, enum X509_N
         string fieldName = type == LONG ? OBJ_nid2ln(fieldNID) : OBJ_nid2sn(fieldNID);
         string fieldValue = string((char *) ASN1_STRING_get0_data(value));
 
-        fields.insert(pair<string,string>(fieldName, fieldValue));
+        fields.insert(pair<string, string>(fieldName, fieldValue));
     }
 
     return fields;
@@ -68,7 +76,7 @@ map<int, string> cert::X509_NAME_to_map_NID(const X509_NAME *entries) {
         int fieldNID = OBJ_obj2nid(field);
         string fieldValue = string((char *) ASN1_STRING_get0_data(value));
 
-        fields.insert(pair<int,string>(fieldNID, fieldValue));
+        fields.insert(pair<int, string>(fieldNID, fieldValue));
     }
 
     return fields;

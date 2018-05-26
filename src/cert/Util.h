@@ -22,4 +22,6 @@ namespace cert {
     string X509_NAME_get_field(X509_NAME *name, const string field);
 
     time_t ASN1_TIME_to_time(ASN1_TIME *time);
+
+    string time_to_string(time_t _tm);
 }
