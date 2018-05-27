@@ -3,6 +3,7 @@
 #include "../../cert/Util.h"
 
 using Qt::Orientation;
+using cert::time_to_string;
 
 using namespace gui::widget;
 
@@ -49,10 +50,8 @@ void CertificateListWidget::certToRow(Certificate *cert, const int &row) {
     model->setData(model->index(row, 0), cellFactory(cert->getSubjectField("commonName")));
     model->setData(model->index(row, 1), cellFactory(cert->getIssuerField("commonName")));
 
-    time_t _tm = cert->getCreated();
-
-    model->setData(model->index(row, 2), cellFactory(cert::time_to_string(_tm)));
-    model->setData(model->index(row, 3), cellFactory(cert::time_to_string(_tm)));
+    model->setData(model->index(row, 2), cellFactory(time_to_string(cert->getCreated())));
+    model->setData(model->index(row, 3), cellFactory(time_to_string(cert->getExpires())));
     model->setData(model->index(row, 4), cellFactory(cert->getThumbprint()));
 }
 
