@@ -23,9 +23,10 @@ void CertificateManager::importCertificate(string path) {
 
     this->certificateList->add(cert);
 
-    exportCertificate(cert,
-                      Environment::getCertificatesDir() + "/" + std::to_string(X509_issuer_and_serial_hash(x509)) +
-                      ".pem");
+    exportCertificate(
+            cert,
+            Environment::getCertificatesDir() + "/" + cert->getThumbprint() + ".pem"
+    );
 }
 
 void CertificateManager::exportCertificate(Certificate *cert, string path) {
