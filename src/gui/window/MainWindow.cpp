@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     auto crtMgr = new CertificateManager();
     crtMgr->loadCertificates();
-    list->showCertificates(*crtMgr->getCertificateList());
+    list->showCertificates(*crtMgr->getCertificateList()->listAll());
 }
 
 MainWindow::~MainWindow() {

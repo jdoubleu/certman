@@ -1,4 +1,3 @@
-#include <vector>
 #include "Certificate.h"
 
 using std::vector;
@@ -6,15 +5,20 @@ using std::vector;
 namespace cert {
 
     class CertificateList {
-    protected:
-        vector<Certificate> certificates;
 
     public:
-        void load();
+        CertificateList();
 
-        vector<Certificate> listAll();
+        vector<Certificate*>* listAll();
 
-        void add(Certificate);
+        void add(Certificate*);
+
+        void remove(Certificate*);
+
+        long find(Certificate*);
+
+    private:
+        vector<Certificate*>* certificates;
     };
 
 }

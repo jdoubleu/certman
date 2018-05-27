@@ -1,13 +1,9 @@
 #include "Certificate.h"
+#include "CertificateList.h"
 
 using std::vector;
 
 namespace cert {
-
-
-    struct ImportException {
-        string message;
-    };
 
     class CertificateManager {
     public:
@@ -21,7 +17,7 @@ namespace cert {
 
         void exportCertificate(Certificate *cert, string path);
 
-        vector<Certificate *> *getCertificateList();
+        CertificateList *getCertificateList();
 
         void loadCertificates();
 
@@ -31,10 +27,7 @@ namespace cert {
         void createKeyPair();
 
     private:
-        vector<Certificate *> *certificateList;
-
-        void addCertificateToList(Certificate *certificate);
-
+        CertificateList *certificateList;
     };
 
 }
