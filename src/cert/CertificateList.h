@@ -19,8 +19,6 @@ namespace cert {
 
         void remove(Certificate *);
 
-        int find(Certificate *);
-
     private:
         unordered_set<Certificate *> *certificates;
     };
