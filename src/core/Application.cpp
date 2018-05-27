@@ -4,7 +4,9 @@
 
 using gui::window::MainWindow;
 
-int core::Application::run(int argc, char *argv[]) {
+using namespace core;
+
+int Application::run(int argc, char *argv[]) {
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
