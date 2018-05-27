@@ -16,6 +16,12 @@ Application::~Application() {
 
 int Application::run(int argc, char *argv[]) {
     QApplication a(argc, argv);
+
+    // application meta information
+    a.setOrganizationName("certman");
+    a.setApplicationName("certman");
+    a.setOrganizationDomain("certman.it-set.medien.hs-duesseldorf.de");
+
     MainWindow w(crtMgr, env);
     w.show();
 
