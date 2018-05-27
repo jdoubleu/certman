@@ -21,10 +21,14 @@ ImportAssistant::~ImportAssistant() {
 
 void ImportAssistant::chooseFile() {
     QSettings settings;
-    auto openDir = settings.value(IMPORT_LAST_OPEN_DIR, QString::fromStdString(Environment::getHomeDir()));
+    QString openDir;
+
+    if ((openDir = ui->file_input->text()).isEmpty()) {
+        openDir = settings.value(IMPORT_LAST_OPEN_DIR, QString::fromStdString(Environment::getHomeDir())).toString();
+    }
 
     QString fileName = QFileDialog::getOpenFileName(this, tr("Choose Certificate"),
-                                                    openDir.toString(),
+                                                    openDir,
                                                     tr("Certificate Files (*.cer *.crt *.pem *.der)"));
 
     if (!fileName.isEmpty()) {
