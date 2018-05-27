@@ -19,6 +19,7 @@ MainWindow::MainWindow(CertificateManager *crtMgr, Environment *env, QWidget *pa
 
     ui->centralwidget->layout()->addWidget(crtList);
 
+    crtMgr->loadCertificates();
     onCertificateImport(true);
 }
 
@@ -32,6 +33,15 @@ void MainWindow::setupActions() {
 }
 
 void MainWindow::importCertificate() {
-    ImportAssistant ia(crtMgr);
-    ia.exec();
+    auto *ia = new ImportAssistant(crtMgr);
+
+    connect(ia, SIGNAL(certificateImported(bool)), this, SLOT(onCertificateImport(bool)));
+
+    ia->exec();
+}
+
+void MainWindow::onCertificateImport(bool successful) {
+    if (successful) {
+        crtList->showCertificates(*crtMgr->getCertificateList());
+    }
 }

@@ -27,6 +27,9 @@ namespace gui::assistant {
         void chooseFile();
 
         void submit();
+
+    signals:
+        void certificateImported(bool successful);
     };
 
 }

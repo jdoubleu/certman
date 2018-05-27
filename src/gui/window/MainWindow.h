@@ -34,6 +34,8 @@ namespace gui::window {
     private slots:
 
         void importCertificate();
+
+        void onCertificateImport(bool successful);
     };
 
 }

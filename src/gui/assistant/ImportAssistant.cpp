@@ -29,5 +29,7 @@ void ImportAssistant::submit() {
     auto fileName = ui->file_input->text();
 
     crtMgr->importCertificate(fileName.toStdString());
+
+    emit certificateImported(true);
 }
 
