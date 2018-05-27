@@ -14,6 +14,17 @@ namespace cert {
         CertificateList();
 
         unordered_set<Certificate *> *listAll();
+        struct CertificateEqualByThumbprint {
+            bool operator()(const Certificate *lhs, const Certificate *rhs) const;
+        };
+
+        struct CertificateHashByThumbprint {
+        public:
+            size_t operator()(const Certificate *cert) const;
+        };
+
+        unordered_set<Certificate *, CertificateList::CertificateHashByThumbprint, CertificateList::CertificateEqualByThumbprint> *
+        listAll();
 
         void add(Certificate *);
 

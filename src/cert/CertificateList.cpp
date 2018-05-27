@@ -19,3 +19,10 @@ void CertificateList::remove(Certificate *cert) {
     certificates->erase(cert);
 }
 
+bool CertificateList::CertificateEqualByThumbprint::operator()(const Certificate *lhs, const Certificate *rhs) const {
+    return lhs->getThumbprint() == rhs->getThumbprint();
+}
+
+size_t CertificateList::CertificateHashByThumbprint::operator()(const Certificate *cert) const {
+    return std::hash<string>()(cert->getThumbprint());
+}
