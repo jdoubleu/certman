@@ -1,5 +1,6 @@
 #include <QtWidgets/QFileDialog>
 #include <src/core/Environment.h>
+#include <QSettings>
 #include "ImportAssistant.h"
 #include "ui_importassistant.h"
 
@@ -19,9 +20,17 @@ ImportAssistant::~ImportAssistant() {
 }
 
 void ImportAssistant::chooseFile() {
+    QSettings settings;
+    auto openDir = settings.value(IMPORT_LAST_OPEN_DIR, QString::fromStdString(Environment::getHomeDir()));
+
     QString fileName = QFileDialog::getOpenFileName(this, tr("Choose Certificate"),
-                                                    QString::fromStdString(Environment::getHomeDir()),
+                                                    openDir.toString(),
                                                     tr("Certificate Files (*.cer *.crt *.pem *.der)"));
+
+    if (!fileName.isEmpty()) {
+        settings.setValue(IMPORT_LAST_OPEN_DIR, fileName);
+    }
+
     ui->file_input->setText(fileName);
 }
 

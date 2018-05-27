@@ -9,6 +9,11 @@ namespace Ui {
 
 namespace gui::assistant {
 
+    /**
+     * Key for storing last opened dir with importer
+     */
+    const QString IMPORT_LAST_OPEN_DIR("import_open_dir");
+
     class ImportAssistant : public QDialog {
     Q_OBJECT
 
