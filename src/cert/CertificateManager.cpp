@@ -62,5 +62,10 @@ X509 *CertificateManager::getX509(string path) {
     auto bio = BIO_new_file(path.c_str(), "r");
     X509 *x509 = PEM_read_bio_X509(bio, NULL, NULL, NULL);
 
+    if (x509 == NULL) {
+        BIO_reset(bio);
+        x509 = d2i_X509_bio(bio, NULL);
+    }
+
     return x509;
 }
