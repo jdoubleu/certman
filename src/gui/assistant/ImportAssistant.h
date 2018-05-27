@@ -1,4 +1,7 @@
 #include <QDialog>
+#include "../../cert/CertificateManager.h"
+
+using cert::CertificateManager;
 
 namespace Ui {
     class ImportAssistant;
@@ -10,12 +13,14 @@ namespace gui::assistant {
     Q_OBJECT
 
     public:
-        explicit ImportAssistant(QWidget *parent = 0);
+        explicit ImportAssistant(CertificateManager *crtMgr, QWidget *parent = 0);
 
         ~ImportAssistant();
 
     private:
         Ui::ImportAssistant *ui;
+
+        CertificateManager *crtMgr;
 
     private slots:
 

@@ -2,13 +2,12 @@
 #include <src/core/Environment.h>
 #include "ImportAssistant.h"
 #include "ui_importassistant.h"
-#include <src/cert/CertificateManager.h>
 
 using core::Environment;
 
 using namespace gui::assistant;
 
-ImportAssistant::ImportAssistant(QWidget *parent) : QDialog(parent), ui(new Ui::ImportAssistant) {
+ImportAssistant::ImportAssistant(CertificateManager *crtMgr, QWidget *parent) : QDialog(parent), ui(new Ui::ImportAssistant), crtMgr(crtMgr) {
     ui->setupUi(this);
 
     connect(ui->file_choose, SIGNAL(clicked()), this, SLOT(chooseFile()));
@@ -29,7 +28,6 @@ void ImportAssistant::chooseFile() {
 void ImportAssistant::submit() {
     auto fileName = ui->file_input->text();
 
-    auto *certManager = new cert::CertificateManager();
-    certManager->importCertificate(fileName.toStdString());
+    crtMgr->importCertificate(fileName.toStdString());
 }
 

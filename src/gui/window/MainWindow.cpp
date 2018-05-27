@@ -10,9 +10,10 @@ using cert::CertificateManager;
 
 using namespace gui::window;
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(CertificateManager *crtMgr, Environment *env, QWidget *parent) :
         QMainWindow(parent),
-        ui(new Ui::MainWindow) {
+        ui(new Ui::MainWindow),
+        crtMgr(crtMgr), env(env) {
     ui->setupUi(this);
 
     this->setupActions();
@@ -20,7 +21,6 @@ MainWindow::MainWindow(QWidget *parent) :
     auto *list = new CertificateListWidget(this);
     ui->centralwidget->layout()->addWidget(list);
 
-    auto crtMgr = new CertificateManager();
     crtMgr->loadCertificates();
     list->showCertificates(*crtMgr->getCertificateList());
 }
@@ -34,6 +34,6 @@ void MainWindow::setupActions() {
 }
 
 void MainWindow::importCertificate() {
-    ImportAssistant ia;
+    ImportAssistant ia(crtMgr);
     ia.exec();
 }

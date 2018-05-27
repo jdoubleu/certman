@@ -1,3 +1,6 @@
+#ifndef ENVIRONMENT_H
+#define ENVIRONMENT_H
+
 #include <string>
 #include <QDir>
 #include <QStandardPaths>
@@ -24,3 +27,5 @@ namespace core {
     };
 
 }
+
+#endif

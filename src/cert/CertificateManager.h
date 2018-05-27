@@ -1,3 +1,6 @@
+#ifndef CERTIFICATEMANAGER_H
+#define CERTIFICATEMANAGER_H
+
 #include "Certificate.h"
 
 using std::vector;
@@ -38,3 +41,5 @@ namespace cert {
     };
 
 }
+
+#endif
