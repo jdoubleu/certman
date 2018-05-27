@@ -1,11 +1,9 @@
 #include "MainWindow.h"
 #include "ui_mainwindow.h"
 #include "../assistant/ImportAssistant.h"
-#include "src/gui/widget/CertificateListWidget.h"
 #include "../../cert/CertificateManager.h"
 
 using gui::assistant::ImportAssistant;
-using gui::widget::CertificateListWidget;
 using cert::CertificateManager;
 
 using namespace gui::window;
@@ -13,20 +11,20 @@ using namespace gui::window;
 MainWindow::MainWindow(CertificateManager *crtMgr, Environment *env, QWidget *parent) :
         QMainWindow(parent),
         ui(new Ui::MainWindow),
+        crtList(new CertificateListWidget(this)),
         crtMgr(crtMgr), env(env) {
     ui->setupUi(this);
 
     this->setupActions();
 
-    auto *list = new CertificateListWidget(this);
-    ui->centralwidget->layout()->addWidget(list);
+    ui->centralwidget->layout()->addWidget(crtList);
 
-    crtMgr->loadCertificates();
-    list->showCertificates(*crtMgr->getCertificateList());
+    onCertificateImport(true);
 }
 
 MainWindow::~MainWindow() {
     delete ui;
+    delete crtList;
 }
 
 void MainWindow::setupActions() {
