@@ -33,11 +33,11 @@ void MainWindow::setupActions() {
 }
 
 void MainWindow::importCertificate() {
-    auto *ia = new ImportAssistant(crtMgr);
+    ImportAssistant ia(crtMgr);
 
-    connect(ia, SIGNAL(certificateImported(bool)), this, SLOT(onCertificateImport(bool)));
+    connect(&ia, SIGNAL(certificateImported(bool)), this, SLOT(onCertificateImport(bool)));
 
-    ia->exec();
+    ia.exec();
 }
 
 void MainWindow::onCertificateImport(bool successful) {
