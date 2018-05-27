@@ -10,7 +10,8 @@ using core::Environment;
 
 using namespace cert;
 
-CertificateManager::CertificateManager() : certificateList(new vector<Certificate *>()) {
+CertificateManager::CertificateManager(){
+    this->certificateList = new CertificateList();
 }
 
 void CertificateManager::importCertificate(string path) {
@@ -20,7 +21,7 @@ void CertificateManager::importCertificate(string path) {
 
     auto *cert = new Certificate(x509);
 
-    addCertificateToList(cert);
+    this->certificateList->add(cert);
 
     exportCertificate(cert,
                       Environment::getCertificatesDir() + "/" + std::to_string(X509_issuer_and_serial_hash(x509)) +
@@ -35,7 +36,7 @@ void CertificateManager::exportCertificate(Certificate *cert, string path) {
 }
 
 
-vector<Certificate *> *CertificateManager::getCertificateList() {
+CertificateList *CertificateManager::getCertificateList() {
     return this->certificateList;
 }
 
@@ -51,16 +52,10 @@ void CertificateManager::loadCertificates() {
 
         auto *cert = new Certificate(x509);
 
-        addCertificateToList(cert);
+        this->certificateList->add(cert);
     }
 }
 
-void CertificateManager::addCertificateToList(Certificate *certificate) {
-    if (!(find(certificateList->begin(), certificateList->end(), certificate) != certificateList->end())) {
-        //Certificate not found -> add
-        this->certificateList->push_back(certificate);
-    }
-}
 
 X509 *CertificateManager::getX509(string path) {
     auto bio = BIO_new_file(path.c_str(), "r");

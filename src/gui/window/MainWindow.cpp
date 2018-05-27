@@ -42,6 +42,6 @@ void MainWindow::importCertificate() {
 
 void MainWindow::onCertificateImport(bool successful) {
     if (successful) {
-        crtList->showCertificates(*crtMgr->getCertificateList());
+        crtList->showCertificates(*crtMgr->getCertificateList()->listAll());
     }
 }
