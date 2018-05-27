@@ -13,8 +13,8 @@ namespace cert {
     public:
         CertificateList();
 
-        unordered_set<Certificate *> *listAll();
         struct CertificateEqualByThumbprint {
+        public:
             bool operator()(const Certificate *lhs, const Certificate *rhs) const;
         };
 
@@ -31,7 +31,7 @@ namespace cert {
         void remove(Certificate *);
 
     private:
-        unordered_set<Certificate *> *certificates;
+        unordered_set<Certificate *, CertificateHashByThumbprint, CertificateEqualByThumbprint> *certificates;
     };
 
 }

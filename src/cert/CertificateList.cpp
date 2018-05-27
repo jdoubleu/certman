@@ -4,10 +4,11 @@ using namespace cert;
 
 
 CertificateList::CertificateList() {
-    certificates = new unordered_set<Certificate *>;
+    certificates = new unordered_set<Certificate *, CertificateHashByThumbprint, CertificateEqualByThumbprint>;
 }
 
-unordered_set<Certificate *> *CertificateList::listAll() {
+unordered_set<Certificate *, CertificateList::CertificateHashByThumbprint, CertificateList::CertificateEqualByThumbprint> *
+CertificateList::listAll() {
     return certificates;
 }
 
