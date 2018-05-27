@@ -1,3 +1,6 @@
+#ifndef CERTIFICATELIST_H
+#define CERTIFICATELIST_H
+
 #include <unordered_set>
 #include "Certificate.h"
 
@@ -23,3 +26,4 @@ namespace cert {
     };
 
 }
+#endif
