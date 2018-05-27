@@ -34,6 +34,7 @@ namespace gui::assistant {
         void submit();
 
     signals:
+
         void certificateImported(bool successful);
     };
 

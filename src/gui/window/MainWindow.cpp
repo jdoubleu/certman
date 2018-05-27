@@ -1,7 +1,6 @@
 #include "MainWindow.h"
 #include "ui_mainwindow.h"
 #include "../assistant/ImportAssistant.h"
-#include "../../cert/CertificateManager.h"
 
 using gui::assistant::ImportAssistant;
 using cert::CertificateManager;

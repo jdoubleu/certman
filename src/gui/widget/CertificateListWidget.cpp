@@ -25,14 +25,14 @@ bool CertificateListWidget::isEmpty() {
     return model->rowCount() == 0;
 }
 
-void CertificateListWidget::showCertificates(const vector<Certificate *> &certificates) {
+void CertificateListWidget::showCertificates(const unordered_set<Certificate *> &certificates) {
     if (!isEmpty()) {
         clear();
     }
 
     model->insertRows(0, certificates.size());
 
-    vector<Certificate *>::const_iterator it;
+    unordered_set<Certificate *>::const_iterator it;
     int i = 0;
 
     for (it = certificates.begin(); it != certificates.end(); ++it, i++) {

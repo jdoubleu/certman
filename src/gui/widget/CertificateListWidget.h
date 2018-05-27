@@ -1,8 +1,9 @@
 #include <QTreeWidget>
+#include <unordered_set>
 #include "../../cert/Certificate.h"
 
 using std::string;
-using std::vector;
+using std::unordered_set;
 using cert::Certificate;
 
 namespace Ui {
@@ -21,7 +22,7 @@ namespace gui::widget {
 
         bool isEmpty();
 
-        void showCertificates(const vector<Certificate *> &certificates);
+        void showCertificates(const unordered_set<Certificate *> &certificates);
 
     private:
         Ui::CertificateList *ui;

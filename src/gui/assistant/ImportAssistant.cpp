@@ -8,7 +8,9 @@ using core::Environment;
 
 using namespace gui::assistant;
 
-ImportAssistant::ImportAssistant(CertificateManager *crtMgr, QWidget *parent) : QDialog(parent), ui(new Ui::ImportAssistant), crtMgr(crtMgr) {
+ImportAssistant::ImportAssistant(CertificateManager *crtMgr, QWidget *parent) : QDialog(parent),
+                                                                                ui(new Ui::ImportAssistant),
+                                                                                crtMgr(crtMgr) {
     ui->setupUi(this);
 
     connect(ui->file_choose, SIGNAL(clicked()), this, SLOT(chooseFile()));
