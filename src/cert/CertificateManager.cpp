@@ -10,7 +10,7 @@ using core::Environment;
 
 using namespace cert;
 
-CertificateManager::CertificateManager(){
+CertificateManager::CertificateManager() {
     this->certificateList = new CertificateList();
 }
 

@@ -1,6 +1,7 @@
+#include <unordered_set>
 #include "Certificate.h"
 
-using std::vector;
+using std::unordered_set;
 
 namespace cert {
 
@@ -9,16 +10,16 @@ namespace cert {
     public:
         CertificateList();
 
-        vector<Certificate*>* listAll();
+        unordered_set<Certificate *> *listAll();
 
-        void add(Certificate*);
+        void add(Certificate *);
 
-        void remove(Certificate*);
+        void remove(Certificate *);
 
-        long find(Certificate*);
+        int find(Certificate *);
 
     private:
-        vector<Certificate*>* certificates;
+        unordered_set<Certificate *> *certificates;
     };
 
 }
