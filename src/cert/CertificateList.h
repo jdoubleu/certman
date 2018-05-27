@@ -1,20 +1,25 @@
-#include <vector>
+#include <unordered_set>
 #include "Certificate.h"
 
-using std::vector;
+using std::unordered_set;
 
 namespace cert {
 
     class CertificateList {
-    protected:
-        vector<Certificate> certificates;
 
     public:
-        void load();
+        CertificateList();
 
-        vector<Certificate> listAll();
+        unordered_set<Certificate *> *listAll();
 
-        void add(Certificate);
+        void add(Certificate *);
+
+        void remove(Certificate *);
+
+        int find(Certificate *);
+
+    private:
+        unordered_set<Certificate *> *certificates;
     };
 
 }

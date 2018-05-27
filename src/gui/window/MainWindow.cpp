@@ -3,19 +3,28 @@
 #include "../assistant/ImportAssistant.h"
 
 using gui::assistant::ImportAssistant;
+using cert::CertificateManager;
 
 using namespace gui::window;
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(CertificateManager *crtMgr, Environment *env, QWidget *parent) :
         QMainWindow(parent),
-        ui(new Ui::MainWindow) {
+        ui(new Ui::MainWindow),
+        crtList(new CertificateListWidget(this)),
+        crtMgr(crtMgr), env(env) {
     ui->setupUi(this);
 
     this->setupActions();
+
+    ui->centralwidget->layout()->addWidget(crtList);
+
+    crtMgr->loadCertificates();
+    onCertificateImport(true);
 }
 
 MainWindow::~MainWindow() {
     delete ui;
+    delete crtList;
 }
 
 void MainWindow::setupActions() {
@@ -23,6 +32,15 @@ void MainWindow::setupActions() {
 }
 
 void MainWindow::importCertificate() {
-    ImportAssistant ia;
+    ImportAssistant ia(crtMgr);
+
+    connect(&ia, SIGNAL(certificateImported(bool)), this, SLOT(onCertificateImport(bool)));
+
     ia.exec();
+}
+
+void MainWindow::onCertificateImport(bool successful) {
+    if (successful) {
+        crtList->showCertificates(*crtMgr->getCertificateList()->listAll());
+    }
 }

@@ -1,3 +1,6 @@
+#ifndef ENVIRONMENT_H
+#define ENVIRONMENT_H
+
 #include <string>
 #include <QDir>
 #include <QStandardPaths>
@@ -14,31 +17,15 @@ namespace core {
 
     class Environment {
     public:
-        static OS getOS() {
-#ifdef _WIN64
-            return WINDOWS;
-#elif __APPLE__ || __MACH__
-            return MACOS;
-#elif __linux__
-            return LINUX;
-#endif
-        }
+        static OS getOS();
 
-        static string getHomeDir() {
-            return QDir::homePath().toStdString();
-        }
+        static string getHomeDir();
 
-        static string getAppDataLocation() {
-            return QStandardPaths::locate(
-                    QStandardPaths::AppDataLocation,
-                    QString::fromStdString("certman"),
-                    QStandardPaths::LocateDirectory
-            ).toStdString();
-        }
+        static string getAppDataLocation();
 
-        static string getCertificatesDir() {
-            return Environment::getAppDataLocation() + "certs";
-        }
+        static string getCertificatesDir();
     };
 
 }
+
+#endif
