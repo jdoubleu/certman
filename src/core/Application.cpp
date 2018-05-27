@@ -20,7 +20,7 @@ int Application::run(int argc, char *argv[]) {
     // application meta information
     a.setOrganizationName("certman");
     a.setApplicationName("certman");
-    a.setOrganizationDomain("certman.it-set.medien.hs-duesseldorf.de");
+    a.setOrganizationDomain("certman.it-sec.medien.hs-duesseldorf.de");
 
     MainWindow w(crtMgr, env);
     w.show();
