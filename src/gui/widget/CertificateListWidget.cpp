@@ -25,14 +25,15 @@ bool CertificateListWidget::isEmpty() {
     return model->rowCount() == 0;
 }
 
-void CertificateListWidget::showCertificates(const unordered_set<Certificate *> &certificates) {
+void CertificateListWidget::showCertificates(
+        unordered_set<Certificate *, CertificateList::CertificateHashByThumbprint, CertificateList::CertificateEqualByThumbprint> certificates) {
     if (!isEmpty()) {
         clear();
     }
 
     model->insertRows(0, certificates.size());
 
-    unordered_set<Certificate *>::const_iterator it;
+    unordered_set<Certificate *, CertificateList::CertificateHashByThumbprint, CertificateList::CertificateEqualByThumbprint>::const_iterator it;
     int i = 0;
 
     for (it = certificates.begin(); it != certificates.end(); ++it, i++) {
