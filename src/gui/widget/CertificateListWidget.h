@@ -26,11 +26,9 @@ namespace gui::widget {
 
     private:
         Ui::CertificateList *ui;
-        QAbstractItemModel *model;
+        QTreeWidget *treeList;
 
-        void certToRow(Certificate *cert, const int &row);
-
-        QVariant cellFactory(const string &content);
+        QTreeWidgetItem *createRowForCertificate(Certificate *cert);
     };
 
 }
