@@ -32,7 +32,7 @@
    <item>
     <widget class="QTreeWidget" name="treeWidget">
      <property name="editTriggers">
-      <set>QAbstractItemView::NoEditTriggers</set>
+      <set>QAbstractItemView::DoubleClicked</set>
      </property>
      <property name="rootIsDecorated">
       <bool>false</bool>

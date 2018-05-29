@@ -11,6 +11,9 @@ CertificateListWidget::CertificateListWidget(QWidget *parent) : QWidget(parent),
     ui->setupUi(this);
 
     treeList = ui->treeWidget;
+
+    connect(treeList, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT(
+            onItemDoubleClicked(QTreeWidgetItem *)));
 }
 
 CertificateListWidget::~CertificateListWidget() {
@@ -57,5 +60,14 @@ QTreeWidgetItem* CertificateListWidget::createRowForCertificate(Certificate *cer
             }
     ));
 
+    struct CertificateContainer c = {cert};
+    row->setData(0, Qt::UserRole, QVariant::fromValue(c));
+
     return row;
+}
+
+void CertificateListWidget::onItemDoubleClicked(QTreeWidgetItem *item) {
+    auto c = item->data(0, Qt::UserRole).value<CertificateContainer>().certificate;
+
+    emit certificateSelected(c);
 }
