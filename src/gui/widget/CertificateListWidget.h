@@ -1,3 +1,6 @@
+#ifndef CERTIFICATELISTWIDGET_H
+#define CERTIFICATELISTWIDGET_H
+
 #include <QTreeWidget>
 #include <unordered_set>
 #include "src/cert/Certificate.h"
@@ -38,3 +41,5 @@ namespace gui::widget {
     };
 
 }
+
+#endif
