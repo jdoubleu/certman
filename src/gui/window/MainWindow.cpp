@@ -1,9 +1,11 @@
 #include "MainWindow.h"
 #include "ui_mainwindow.h"
 #include "../assistant/ImportAssistant.h"
+#include "../widget/CertificateDetailWidget.h"
 
 using gui::assistant::ImportAssistant;
 using cert::CertificateManager;
+using gui::widget::CertificateDetailWidget;
 
 using namespace gui::window;
 
@@ -29,6 +31,8 @@ MainWindow::~MainWindow() {
 
 void MainWindow::setupActions() {
     connect(ui->action_Import, SIGNAL(triggered()), this, SLOT(importCertificate()));
+
+    connect(crtList, SIGNAL(certificateSelected(Certificate * )), this, SLOT(onCertificateSelected(Certificate * )));
 }
 
 void MainWindow::importCertificate() {
@@ -43,4 +47,9 @@ void MainWindow::onCertificateImport(bool successful) {
     if (successful) {
         crtList->showCertificates(*crtMgr->getCertificateList()->listAll());
     }
+}
+
+void MainWindow::onCertificateSelected(Certificate *cert) {
+    auto detail = CertificateDetailWidget::asDialog(*cert, this);
+    detail->show();
 }

@@ -17,7 +17,12 @@ namespace Ui {
 
 namespace gui::widget {
 
+    struct CertificateContainer {
+        Certificate *certificate;
+    };
+
     class CertificateListWidget : public QWidget {
+    Q_OBJECT
     public:
         explicit CertificateListWidget(QWidget *parent = 0);
 
@@ -32,14 +37,21 @@ namespace gui::widget {
 
     private:
         Ui::CertificateList *ui;
+        QTreeWidget *treeList;
 
-        QAbstractItemModel *model;
+        QTreeWidgetItem *createRowForCertificate(Certificate *cert);
 
-        void certToRow(Certificate *cert, const int &row);
+    private slots:
 
-        QVariant cellFactory(const string &content);
+        void onItemDoubleClicked(QTreeWidgetItem *item);
+
+    signals:
+
+        void certificateSelected(Certificate *cert);
     };
 
 }
+
+Q_DECLARE_METATYPE(gui::widget::CertificateContainer);
 
 #endif
