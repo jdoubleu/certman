@@ -12,8 +12,8 @@ CertificateListWidget::CertificateListWidget(QWidget *parent) : QWidget(parent),
 
     treeList = ui->treeWidget;
 
-    connect(treeList, SIGNAL(itemDoubleClicked(QTreeWidgetItem*, int)), this, SLOT(
-            onItemDoubleClicked(QTreeWidgetItem *)));
+    connect(treeList, SIGNAL(itemDoubleClicked(QTreeWidgetItem * , int)), this, SLOT(
+            onItemDoubleClicked(QTreeWidgetItem * )));
 }
 
 CertificateListWidget::~CertificateListWidget() {
@@ -49,7 +49,7 @@ void CertificateListWidget::showCertificates(const unordered_set<Certificate *> 
     ui->treeWidget->resizeColumnToContents(4);
 }
 
-QTreeWidgetItem* CertificateListWidget::createRowForCertificate(Certificate *cert) {
+QTreeWidgetItem *CertificateListWidget::createRowForCertificate(Certificate *cert) {
     auto row = new QTreeWidgetItem(QStringList(
             {
                     QString::fromStdString(cert->getSubjectField("commonName")),

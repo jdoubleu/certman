@@ -32,7 +32,7 @@ MainWindow::~MainWindow() {
 void MainWindow::setupActions() {
     connect(ui->action_Import, SIGNAL(triggered()), this, SLOT(importCertificate()));
 
-    connect(crtList, SIGNAL(certificateSelected(Certificate*)), this, SLOT(onCertificateSelected(Certificate*)));
+    connect(crtList, SIGNAL(certificateSelected(Certificate * )), this, SLOT(onCertificateSelected(Certificate * )));
 }
 
 void MainWindow::importCertificate() {
