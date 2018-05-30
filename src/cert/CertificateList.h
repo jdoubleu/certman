@@ -1,3 +1,6 @@
+#ifndef CERTIFICATELIST_H
+#define CERTIFICATELIST_H
+
 #include <unordered_set>
 #include "Certificate.h"
 
@@ -10,16 +13,26 @@ namespace cert {
     public:
         CertificateList();
 
-        unordered_set<Certificate *> *listAll();
+        struct CertificateEqualByThumbprint {
+        public:
+            bool operator()(const Certificate *lhs, const Certificate *rhs) const;
+        };
+
+        struct CertificateHashByThumbprint {
+        public:
+            size_t operator()(const Certificate *cert) const;
+        };
+
+        unordered_set<Certificate *, CertificateList::CertificateHashByThumbprint, CertificateList::CertificateEqualByThumbprint> *
+        listAll();
 
         void add(Certificate *);
 
         void remove(Certificate *);
 
-        int find(Certificate *);
-
     private:
-        unordered_set<Certificate *> *certificates;
+        unordered_set<Certificate *, CertificateHashByThumbprint, CertificateEqualByThumbprint> *certificates;
     };
 
 }
+#endif
