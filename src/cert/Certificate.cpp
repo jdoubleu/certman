@@ -117,5 +117,3 @@ vector<string> Certificate::getASN() {
 bool Certificate::operator==(const cert::Certificate &c) {
     return this->getThumbprint() == c.getThumbprint();
 }
-
-

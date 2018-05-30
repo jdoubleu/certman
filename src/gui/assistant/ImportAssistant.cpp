@@ -47,4 +47,3 @@ void ImportAssistant::submit() {
 
     emit certificateImported(true);
 }
-
