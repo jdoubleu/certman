@@ -1,3 +1,6 @@
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
+
 #include <QMainWindow>
 #include <vector>
 #include "../../cert/CertificateManager.h"
@@ -49,3 +52,5 @@ namespace gui::window {
     };
 
 }
+
+#endif

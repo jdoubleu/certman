@@ -1,7 +1,7 @@
 #include <openssl/bio.h>
 #include <openssl/x509.h>
 #include <cstring>
-#include "Util.h"
+#include "util.h"
 
 using std::pair;
 

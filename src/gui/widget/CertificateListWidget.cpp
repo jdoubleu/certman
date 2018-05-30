@@ -1,6 +1,6 @@
 #include "CertificateListWidget.h"
 #include "ui_certificatelist.h"
-#include "../../cert/Util.h"
+#include "../../cert/util.h"
 #include <QMenu>
 
 using Qt::Orientation;
