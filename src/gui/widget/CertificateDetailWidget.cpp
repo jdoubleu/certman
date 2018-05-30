@@ -18,7 +18,7 @@ CertificateDetailWidget::~CertificateDetailWidget() {
 QDialog *CertificateDetailWidget::asDialog(Certificate certificate, QWidget *parent) {
     auto *dialog = new QDialog(parent);
     dialog->setWindowTitle(
-            tr("%1 - Certificate Information").arg(QString::fromStdString(certificate.getSubjectField("commonName"))));
+            tr("%1").arg(QString::fromStdString(certificate.getSubjectField("commonName"))));
 
     auto *layout = new QGridLayout(dialog);
     layout->setMargin(10);

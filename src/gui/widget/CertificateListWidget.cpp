@@ -108,7 +108,7 @@ void CertificateListWidget::generateContextMenu(const QPoint &pos) {
     QMenu contextMenu(tr("Certificate"), this);
 
     // Name
-    QAction name(tr("Certificate: %1").arg(QString::fromStdString(c->getSubjectField("commonName"))), this);
+    QAction name(QString::fromStdString(c->getSubjectField("commonName")), this);
     name.setDisabled(true);
     contextMenu.addAction(&name);
     QAction nameSep(this);
@@ -116,7 +116,7 @@ void CertificateListWidget::generateContextMenu(const QPoint &pos) {
     contextMenu.addAction(&nameSep);
 
     // TODO: use same translation ref as from MainWindow certificateMenu actions
-    QAction showDetails(tr("Details"), this);
+    QAction showDetails(tr("Information"), this);
     connect(&showDetails, &QAction::triggered, this, [=] {
         emit certificateSelected(c);
     });
