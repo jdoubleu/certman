@@ -33,7 +33,8 @@ void MainWindow::setupActions() {
     connect(ui->action_Import, SIGNAL(triggered()), this, SLOT(importCertificate()));
 
     connect(crtList, SIGNAL(certificateSelected(Certificate * )), this, SLOT(onCertificateSelected(Certificate * )));
-    connect(crtList, SIGNAL(certificatesSelected(vector<Certificate *>)), this, SLOT(onCertificatesSelected(vector<Certificate *>)));
+    connect(crtList, SIGNAL(certificatesSelected(vector<Certificate *>)), this,
+            SLOT(onCertificatesSelected(vector<Certificate *>)));
 
     connect(ui->actionDetails, SIGNAL(triggered()), this, SLOT(onCertificateDetailsAction()));
 }
