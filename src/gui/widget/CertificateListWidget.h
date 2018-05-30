@@ -51,6 +51,8 @@ namespace gui::widget {
 
         void onItemSelectionChanged();
 
+        void generateContextMenu(const QPoint &pos);
+
     signals:
 
         void certificateSelected(Certificate *cert);

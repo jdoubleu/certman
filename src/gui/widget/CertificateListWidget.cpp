@@ -1,6 +1,7 @@
 #include "CertificateListWidget.h"
 #include "ui_certificatelist.h"
 #include "../../cert/Util.h"
+#include <QMenu>
 
 using Qt::Orientation;
 using cert::time_to_string;
@@ -11,6 +12,10 @@ CertificateListWidget::CertificateListWidget(QWidget *parent) : QWidget(parent),
     ui->setupUi(this);
 
     treeList = ui->treeWidget;
+
+    connect(treeList, SIGNAL(customContextMenuRequested(
+                                     const QPoint &)), this, SLOT(generateContextMenu(
+                                                                          const QPoint &)));
 
     connect(treeList, SIGNAL(itemDoubleClicked(QTreeWidgetItem * , int)), this, SLOT(
             onItemDoubleClicked(QTreeWidgetItem * )));
@@ -84,9 +89,38 @@ void CertificateListWidget::onItemSelectionChanged() {
     vector<Certificate *> selectedCertificates;
     QList<QTreeWidgetItem *>::iterator it;
 
-    for(it = items.begin(); it != items.end(); ++it) {
+    for (it = items.begin(); it != items.end(); ++it) {
         selectedCertificates.push_back(retrieveCertificateFromItem(*it));
     }
 
     emit certificatesSelected(selectedCertificates);
+}
+
+void CertificateListWidget::generateContextMenu(const QPoint &pos) {
+    auto item = treeList->itemAt(pos);
+
+    if (item == NULL) {
+        return;
+    }
+
+    auto *c = retrieveCertificateFromItem(item);
+
+    QMenu contextMenu(tr("Certificate"), this);
+
+    // Name
+    QAction name(tr("Certificate: %1").arg(QString::fromStdString(c->getSubjectField("commonName"))), this);
+    name.setDisabled(true);
+    contextMenu.addAction(&name);
+    QAction nameSep(this);
+    nameSep.setSeparator(true);
+    contextMenu.addAction(&nameSep);
+
+    // TODO: use same translation ref as from MainWindow certificateMenu actions
+    QAction showDetails(tr("Details"), this);
+    connect(&showDetails, &QAction::triggered, this, [=] {
+        emit certificateSelected(c);
+    });
+    contextMenu.addAction(&showDetails);
+
+    contextMenu.exec(mapToGlobal(pos));
 }
