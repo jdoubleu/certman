@@ -10,7 +10,10 @@ using namespace gui::widget;
 CertificateListWidget::CertificateListWidget(QWidget *parent) : QWidget(parent), ui(new Ui::CertificateList) {
     ui->setupUi(this);
 
-    model = ui->treeWidget->model();
+    treeList = ui->treeWidget;
+
+    connect(treeList, SIGNAL(itemDoubleClicked(QTreeWidgetItem * , int)), this, SLOT(
+            onItemDoubleClicked(QTreeWidgetItem * )));
 }
 
 CertificateListWidget::~CertificateListWidget() {
@@ -18,11 +21,11 @@ CertificateListWidget::~CertificateListWidget() {
 }
 
 void CertificateListWidget::clear() {
-    model->removeRows(0, ui->treeWidget->model()->rowCount());
+    treeList->clear();
 }
 
 bool CertificateListWidget::isEmpty() {
-    return model->rowCount() == 0;
+    return treeList->topLevelItemCount() == 0;
 }
 
 void CertificateListWidget::showCertificates(
@@ -31,15 +34,15 @@ void CertificateListWidget::showCertificates(
         clear();
     }
 
-    model->insertRows(0, certificates.size());
-
+    QList<QTreeWidgetItem *> items;
     unordered_set<Certificate *, CertificateList::CertificateHashByThumbprint, CertificateList::CertificateEqualByThumbprint>::const_iterator it;
     int i = 0;
 
     for (it = certificates.begin(); it != certificates.end(); ++it, i++) {
-        Certificate *cert = *it;
-        certToRow(cert, i);
+        items.append(createRowForCertificate(*it));
     }
+
+    ui->treeWidget->insertTopLevelItems(0, items);
 
     ui->treeWidget->resizeColumnToContents(0);
     ui->treeWidget->resizeColumnToContents(2);
@@ -47,15 +50,25 @@ void CertificateListWidget::showCertificates(
     ui->treeWidget->resizeColumnToContents(4);
 }
 
-void CertificateListWidget::certToRow(Certificate *cert, const int &row) {
-    model->setData(model->index(row, 0), cellFactory(cert->getSubjectField("commonName")));
-    model->setData(model->index(row, 1), cellFactory(cert->getIssuerField("commonName")));
+QTreeWidgetItem *CertificateListWidget::createRowForCertificate(Certificate *cert) {
+    auto row = new QTreeWidgetItem(QStringList(
+            {
+                    QString::fromStdString(cert->getSubjectField("commonName")),
+                    QString::fromStdString(cert->getIssuerField("commonName")),
+                    QString::fromStdString(time_to_string(cert->getCreated())),
+                    QString::fromStdString(time_to_string(cert->getExpires())),
+                    QString::fromStdString(cert->getThumbprint())
+            }
+    ));
 
-    model->setData(model->index(row, 2), cellFactory(time_to_string(cert->getCreated())));
-    model->setData(model->index(row, 3), cellFactory(time_to_string(cert->getExpires())));
-    model->setData(model->index(row, 4), cellFactory(cert->getThumbprint()));
+    struct CertificateContainer c = {cert};
+    row->setData(0, Qt::UserRole, QVariant::fromValue(c));
+
+    return row;
 }
 
-QVariant CertificateListWidget::cellFactory(const string &content) {
-    return QString::fromStdString(content);
+void CertificateListWidget::onItemDoubleClicked(QTreeWidgetItem *item) {
+    auto c = item->data(0, Qt::UserRole).value<CertificateContainer>().certificate;
+
+    emit certificateSelected(c);
 }

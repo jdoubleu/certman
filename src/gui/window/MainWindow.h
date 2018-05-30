@@ -36,6 +36,8 @@ namespace gui::window {
         void importCertificate();
 
         void onCertificateImport(bool successful);
+
+        void onCertificateSelected(Certificate *cert);
     };
 
 }
