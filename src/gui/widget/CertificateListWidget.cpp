@@ -14,6 +14,7 @@ CertificateListWidget::CertificateListWidget(QWidget *parent) : QWidget(parent),
 
     connect(treeList, SIGNAL(itemDoubleClicked(QTreeWidgetItem * , int)), this, SLOT(
             onItemDoubleClicked(QTreeWidgetItem * )));
+    connect(ui->treeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(onItemSelectionChanged()));
 }
 
 CertificateListWidget::~CertificateListWidget() {
@@ -67,8 +68,25 @@ QTreeWidgetItem *CertificateListWidget::createRowForCertificate(Certificate *cer
     return row;
 }
 
+Certificate *CertificateListWidget::retrieveCertificateFromItem(const QTreeWidgetItem *item) const {
+    return item->data(0, Qt::UserRole).value<CertificateContainer>().certificate;
+}
+
 void CertificateListWidget::onItemDoubleClicked(QTreeWidgetItem *item) {
-    auto c = item->data(0, Qt::UserRole).value<CertificateContainer>().certificate;
+    auto c = retrieveCertificateFromItem(item);
 
     emit certificateSelected(c);
+}
+
+void CertificateListWidget::onItemSelectionChanged() {
+    auto items = ui->treeWidget->selectedItems();
+
+    vector<Certificate *> selectedCertificates;
+    QList<QTreeWidgetItem *>::iterator it;
+
+    for(it = items.begin(); it != items.end(); ++it) {
+        selectedCertificates.push_back(retrieveCertificateFromItem(*it));
+    }
+
+    emit certificatesSelected(selectedCertificates);
 }

@@ -3,11 +3,13 @@
 
 #include <QTreeWidget>
 #include <unordered_set>
+#include <vector>
 #include "src/cert/Certificate.h"
 #include "src/cert/CertificateList.h"
 
 using std::string;
 using std::unordered_set;
+using std::vector;
 using cert::Certificate;
 using cert::CertificateList;
 
@@ -41,13 +43,19 @@ namespace gui::widget {
 
         QTreeWidgetItem *createRowForCertificate(Certificate *cert);
 
+        Certificate *retrieveCertificateFromItem(const QTreeWidgetItem *item) const;
+
     private slots:
 
         void onItemDoubleClicked(QTreeWidgetItem *item);
 
+        void onItemSelectionChanged();
+
     signals:
 
         void certificateSelected(Certificate *cert);
+
+        void certificatesSelected(vector<Certificate *> certificates);
     };
 
 }
