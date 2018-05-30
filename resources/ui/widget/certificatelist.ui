@@ -31,6 +31,9 @@
    </property>
    <item>
     <widget class="QTreeWidget" name="treeWidget">
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
      <property name="editTriggers">
       <set>QAbstractItemView::DoubleClicked</set>
      </property>

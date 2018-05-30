@@ -1,4 +1,5 @@
 #include <QMainWindow>
+#include <vector>
 #include "../../cert/CertificateManager.h"
 #include "../../core/Environment.h"
 #include "../widget/CertificateListWidget.h"
@@ -6,6 +7,7 @@
 using cert::CertificateManager;
 using core::Environment;
 using gui::widget::CertificateListWidget;
+using std::vector;
 
 namespace Ui {
     class MainWindow;
@@ -29,6 +31,8 @@ namespace gui::window {
 
         CertificateListWidget *crtList;
 
+        Certificate *selectedCertificate;
+
         void setupActions();
 
     private slots:
@@ -37,7 +41,11 @@ namespace gui::window {
 
         void onCertificateImport(bool successful);
 
+        void onCertificateDetailsAction();
+
         void onCertificateSelected(Certificate *cert);
+
+        void onCertificatesSelected(vector<Certificate *> certificates);
     };
 
 }
