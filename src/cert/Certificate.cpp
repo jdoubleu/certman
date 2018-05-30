@@ -2,7 +2,7 @@
 #include <openssl/x509v3.h>
 #include <sstream>
 #include "Certificate.h"
-#include "Util.h"
+#include "util.h"
 
 using std::stringstream;
 using std::vector;
