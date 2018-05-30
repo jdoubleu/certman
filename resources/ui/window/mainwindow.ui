@@ -50,7 +50,14 @@
     </property>
     <addaction name="action_Import"/>
    </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Certificate</string>
+    </property>
+    <addaction name="actionDetails"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
   </widget>
   <action name="action_Import">
    <property name="text">
@@ -58,6 +65,14 @@
    </property>
    <property name="toolTip">
     <string>Import existing certificate</string>
+   </property>
+  </action>
+  <action name="actionDetails">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Deta&amp;ils</string>
    </property>
   </action>
  </widget>

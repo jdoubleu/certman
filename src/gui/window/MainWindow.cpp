@@ -33,6 +33,9 @@ void MainWindow::setupActions() {
     connect(ui->action_Import, SIGNAL(triggered()), this, SLOT(importCertificate()));
 
     connect(crtList, SIGNAL(certificateSelected(Certificate * )), this, SLOT(onCertificateSelected(Certificate * )));
+    connect(crtList, SIGNAL(certificatesSelected(vector<Certificate *>)), this, SLOT(onCertificatesSelected(vector<Certificate *>)));
+
+    connect(ui->actionDetails, SIGNAL(triggered()), this, SLOT(onCertificateDetailsAction()));
 }
 
 void MainWindow::importCertificate() {
@@ -52,4 +55,24 @@ void MainWindow::onCertificateImport(bool successful) {
 void MainWindow::onCertificateSelected(Certificate *cert) {
     auto detail = CertificateDetailWidget::asDialog(*cert, this);
     detail->show();
+}
+
+void MainWindow::onCertificatesSelected(vector<Certificate *> certificates) {
+    if (certificates.empty()) {
+        // Disable some certificate actions in menu
+        ui->actionDetails->setDisabled(true);
+
+        selectedCertificate = NULL;
+    } else {
+        // TODO: support multiple certificates
+        selectedCertificate = certificates[0];
+
+        ui->actionDetails->setDisabled(false);
+    }
+}
+
+void MainWindow::onCertificateDetailsAction() {
+    if (selectedCertificate != NULL) {
+        onCertificateSelected(selectedCertificate);
+    }
 }
