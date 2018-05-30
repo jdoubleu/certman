@@ -1,3 +1,6 @@
+#ifndef UTIL_H
+#define UTIL_H
+
 #include <openssl/ossl_typ.h>
 #include <string>
 #include <ctime>
@@ -25,3 +28,5 @@ namespace cert {
 
     string time_to_string(time_t _tm);
 }
+
+#endif

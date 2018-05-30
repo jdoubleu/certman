@@ -1,3 +1,6 @@
+#ifndef CERTIFICATEASSISTANT_H
+#define CERTIFICATEASSISTANT_H
+
 #include "src/gui/assistant/Assistant.h"
 
 namespace gui::assistant {
@@ -7,3 +10,5 @@ namespace gui::assistant {
     };
 
 }
+
+#endif

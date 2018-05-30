@@ -1,3 +1,6 @@
+#ifndef CERTIFICATEDETAIL_H
+#define CERTIFICATEDETAIL_H
+
 namespace gui::window {
 
     class CertificateDetail {
@@ -5,3 +8,5 @@ namespace gui::window {
     };
 
 }
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef IMPORTASSISTANT_H
+#define IMPORTASSISTANT_H
+
 #include <QDialog>
 #include "../../cert/CertificateManager.h"
 
@@ -39,3 +42,5 @@ namespace gui::assistant {
     };
 
 }
+
+#endif
