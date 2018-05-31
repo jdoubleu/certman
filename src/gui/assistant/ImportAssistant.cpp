@@ -14,6 +14,7 @@ ImportAssistant::ImportAssistant(CertificateManager *crtMgr, QWidget *parent) : 
     ui->setupUi(this);
 
     connect(ui->file_choose, SIGNAL(clicked()), this, SLOT(chooseFile()));
+    connect(ui->key_choose, SIGNAL(clicked()), this, SLOT(chooseKey()));
     connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(submit()));
 }
 
@@ -29,21 +30,49 @@ void ImportAssistant::chooseFile() {
         openDir = settings.value(IMPORT_LAST_OPEN_DIR, QString::fromStdString(Environment::getHomeDir())).toString();
     }
 
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Choose Certificate"),
+    QString certPath = QFileDialog::getOpenFileName(this, tr("Choose Certificate"),
                                                     openDir,
                                                     tr("Certificate Files (*.cer *.crt *.pem *.der)"));
 
-    if (!fileName.isEmpty()) {
-        settings.setValue(IMPORT_LAST_OPEN_DIR, fileName);
+    if (!certPath.isEmpty()) {
+        settings.setValue(IMPORT_LAST_OPEN_DIR, certPath);
     }
 
-    ui->file_input->setText(fileName);
+    QFileInfo certInfo(certPath);
+    QStringList certFileName = certInfo.fileName().split('.');
+    certFileName.pop_back();
+    QString keyName = certFileName.join('.').append("_key.pem");
+
+    QString keyPath = certInfo.path() + '/' + keyName;
+    QFileInfo keyInfo(keyPath);
+
+    if (keyInfo.exists() && keyInfo.isFile()) {
+        ui->key_input->setText(keyPath);
+    }
+
+    ui->file_input->setText(certPath);
+}
+
+void ImportAssistant::chooseKey() {
+    QSettings settings;
+    QString openDir;
+
+    if ((openDir = ui->file_input->text()).isEmpty()) {
+        openDir = settings.value(IMPORT_LAST_OPEN_DIR, QString::fromStdString(Environment::getHomeDir())).toString();
+    }
+
+    QString key = QFileDialog::getOpenFileName(this, tr("Choose Key"),
+                                               openDir,
+                                               tr("Certificate Files (*.pem *.der)"));
+    ui->key_input->setText(key);
 }
 
 void ImportAssistant::submit() {
     auto fileName = ui->file_input->text();
 
-    crtMgr->importCertificate(fileName.toStdString());
+    auto keyName = ui->key_input->text();
+
+    crtMgr->importCertificate(fileName.toStdString(), keyName.toStdString());
 
     emit certificateImported(true);
 }

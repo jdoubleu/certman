@@ -7,6 +7,7 @@
 #include <openssl/ossl_typ.h>
 #include <vector>
 #include <map>
+#include "../core/Environment.h"
 
 using std::string;
 using std::vector;
@@ -52,6 +53,7 @@ namespace cert {
 
     private:
         X509 *certificate;
+
     };
 
 }

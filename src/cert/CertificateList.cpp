@@ -1,5 +1,7 @@
 #include "CertificateList.h"
 
+using std::hash;
+
 using namespace cert;
 
 

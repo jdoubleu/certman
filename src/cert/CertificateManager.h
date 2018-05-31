@@ -16,7 +16,7 @@ namespace cert {
 
         void signCertificate();
 
-        void importCertificate(string path);
+        void importCertificate(string pathCert, string pathPrivateKey);
 
         void exportCertificate(Certificate *cert, string path);
 
@@ -26,11 +26,22 @@ namespace cert {
 
         X509 *getX509(string path);
 
+        EVP_PKEY *getKey(string path);
+
+        bool hasPrivateKey(Certificate *cert);
+
     protected:
         void createKeyPair();
 
     private:
         CertificateList *certificateList;
+
+        string getCertificateDefaultLocation(Certificate *cert);
+
+        string getPrivateKeyDefaultLocation(Certificate *cert);
+
+        void exportPrivateKey(string origin, string destination);
+
     };
 
 }
