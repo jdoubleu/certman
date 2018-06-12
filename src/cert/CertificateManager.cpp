@@ -3,6 +3,7 @@
 #include <QtCore/QDirIterator>
 #include "CertificateManager.h"
 #include "../gui/dialog/PasswordDialog.h"
+#include "../core/Environment.h"
 
 using std::string;
 using std::vector;
