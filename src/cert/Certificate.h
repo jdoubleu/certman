@@ -52,6 +52,7 @@ namespace cert {
 
     private:
         X509 *certificate;
+
     };
 
 }

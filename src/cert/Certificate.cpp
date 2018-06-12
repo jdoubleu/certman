@@ -9,7 +9,8 @@ using std::vector;
 
 using namespace cert;
 
-Certificate::Certificate(X509 *certificate) : certificate(certificate) {
+Certificate::Certificate(X509 *certificate) {
+    this->certificate = certificate;
 }
 
 X509 *Certificate::getX509() {

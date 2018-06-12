@@ -34,6 +34,8 @@ namespace gui::assistant {
 
         void chooseFile();
 
+        void chooseKey();
+
         void submit();
 
     signals:
