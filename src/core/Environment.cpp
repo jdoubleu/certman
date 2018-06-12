@@ -19,13 +19,3 @@ string core::Environment::getAppDataLocation() {
 string core::Environment::getHomeDir() {
     return QDir::homePath().toStdString();
 }
-
-core::OS core::Environment::getOS() {
-#ifdef _WIN64
-    return WINDOWS;
-#elif __APPLE__ || __MACH__
-    return MACOS;
-#elif __linux__
-    return LINUX;
-#endif
-}
