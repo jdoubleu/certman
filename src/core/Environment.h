@@ -9,15 +9,8 @@ using std::string;
 
 namespace core {
 
-    enum OS {
-        LINUX,
-        MACOS,
-        WINDOWS
-    };
-
     class Environment {
     public:
-        static OS getOS();
 
         static string getHomeDir();
 
