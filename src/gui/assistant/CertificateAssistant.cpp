@@ -27,7 +27,7 @@ CertificateAssistant::CertificateAssistant(QWidget *parent) : QWizard(parent),
             );
 
     auto update_validityPeriod_until_field = [=](int v) {
-        auto to = now.addYears(v);
+        auto to = now.addDays(v);
 
         ui->validityperiod_until_field->setText(
                 to.toString(QLocale::system().dateFormat(QLocale::LongFormat))
