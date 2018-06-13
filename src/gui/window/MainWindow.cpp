@@ -93,13 +93,13 @@ void MainWindow::onCertificateRemoveAction() {
                 QMessageBox::Abort
         );
 
-        if(reply != QMessageBox::Yes){
+        if (reply != QMessageBox::Yes) {
             return;
         }
 
         bool success = crtMgr->removeCertifcate(selectedCertificate);
 
-        if(success)
+        if (success)
             crtList->showCertificates(*crtMgr->getCertificateList()->listAll());
     }
 }

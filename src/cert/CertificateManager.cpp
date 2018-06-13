@@ -110,13 +110,13 @@ bool CertificateManager::hasPrivateKey(Certificate *cert) {
 }
 
 bool CertificateManager::removeCertifcate(Certificate *cert) {
-    
+
     bool success = QFile::remove(QString::fromStdString(getCertificateDefaultLocation(cert)));
 
-    if(!success)
+    if (!success)
         return false;
 
-    if(hasPrivateKey(cert))
+    if (hasPrivateKey(cert))
         QFile::remove(QString::fromStdString(getPrivateKeyDefaultLocation(cert)));
 
     this->certificateList->remove(cert);
