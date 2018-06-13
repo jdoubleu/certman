@@ -30,17 +30,21 @@ namespace cert {
 
         bool hasPrivateKey(Certificate *cert);
 
+        void exportPrivateKey(EVP_PKEY *pkey, string destination);
+
+        string getCertificateDefaultLocation(Certificate *cert);
+
+        string getPrivateKeyDefaultLocation(Certificate *cert);
+
     protected:
         void createKeyPair();
 
     private:
         CertificateList *certificateList;
 
-        string getCertificateDefaultLocation(Certificate *cert);
-
-        string getPrivateKeyDefaultLocation(Certificate *cert);
-
         void exportPrivateKey(string origin, string destination);
+
+
 
     };
 
