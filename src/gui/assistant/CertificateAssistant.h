@@ -1,7 +1,10 @@
 #ifndef CERTIFICATEASSISTANT_H
 #define CERTIFICATEASSISTANT_H
 
-#include <QDialog>
+#include <QWizard>
+#include "../../cert/Certificate.h"
+
+using cert::Certificate;
 
 namespace Ui {
     class CertificateAssistant;
@@ -9,7 +12,7 @@ namespace Ui {
 
 namespace gui::assistant {
 
-    class CertificateAssistant : public QDialog {
+    class CertificateAssistant : public QWizard {
     Q_OBJECT
 
     public:
@@ -17,10 +20,16 @@ namespace gui::assistant {
 
         ~CertificateAssistant();
 
+        void accept() override;
+
     private:
         Ui::CertificateAssistant *ui;
 
         void setupDialogButtons();
+
+    signals:
+
+        void created(Certificate *cert);
     };
 
 }
