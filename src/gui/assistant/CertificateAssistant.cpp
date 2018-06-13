@@ -3,11 +3,9 @@
 #include "../../core/Environment.h"
 #include <string>
 #include <QStringList>
-#include <iostream>
 #include <QDate>
 
 using std::string;
-using std::cout;
 using core::Environment;
 
 using namespace gui::assistant;

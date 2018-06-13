@@ -25,8 +25,6 @@ namespace gui::assistant {
     private:
         Ui::CertificateAssistant *ui;
 
-        void setupDialogButtons();
-
     signals:
 
         void created(Certificate *cert);
