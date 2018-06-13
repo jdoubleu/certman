@@ -4,6 +4,7 @@
 #include <string>
 #include <QStringList>
 #include <iostream>
+#include <QDate>
 
 using std::string;
 using std::cout;
@@ -20,6 +21,23 @@ CertificateAssistant::CertificateAssistant(QWidget *parent) : QWizard(parent),
         ui->countryName_field->addItem(QString::fromStdString(cc));
     }
     ui->countryName_field->setCurrentText(QLocale::system().name().remove(0, 3));
+
+    // validity
+    auto now = QDate::currentDate();
+    ui->validityperiod_from_field->setText(
+            now.toString(QLocale::system().dateFormat(QLocale::LongFormat))
+            );
+
+    auto update_validityPeriod_until_field = [=](int v) {
+        auto to = now.addYears(v);
+
+        ui->validityperiod_until_field->setText(
+                to.toString(QLocale::system().dateFormat(QLocale::LongFormat))
+        );
+    };
+    update_validityPeriod_until_field(ui->validityperiod_field->value());
+
+    connect(ui->validityperiod_field, QOverload<int>::of(&QSpinBox::valueChanged), this, update_validityPeriod_until_field);
 }
 
 CertificateAssistant::~CertificateAssistant() {
