@@ -55,6 +55,7 @@
      <string>Certificate</string>
     </property>
     <addaction name="actionDetails"/>
+    <addaction name="actionRemove"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -73,6 +74,14 @@
    </property>
    <property name="text">
     <string>Information</string>
+   </property>
+  </action>
+  <action name="actionRemove">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Remove</string>
    </property>
   </action>
  </widget>
