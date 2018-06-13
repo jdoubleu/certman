@@ -55,6 +55,7 @@
      <string>Certificate</string>
     </property>
     <addaction name="actionDetails"/>
+    <addaction name="actionExport"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -73,6 +74,14 @@
    </property>
    <property name="text">
     <string>Information</string>
+   </property>
+  </action>
+  <action name="actionExport">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Export</string>
    </property>
   </action>
  </widget>
