@@ -20,6 +20,8 @@ namespace cert {
 
         void exportCertificate(Certificate *cert, string path);
 
+        void exportPrivateKey(string origin, string destination);
+
         CertificateList *getCertificateList();
 
         void loadCertificates();
@@ -30,17 +32,12 @@ namespace cert {
 
         bool hasPrivateKey(Certificate *cert);
 
-    protected:
-        void createKeyPair();
-
-    private:
-        CertificateList *certificateList;
-
         string getCertificateDefaultLocation(Certificate *cert);
 
         string getPrivateKeyDefaultLocation(Certificate *cert);
 
-        void exportPrivateKey(string origin, string destination);
+    private:
+        CertificateList *certificateList;
 
     };
 

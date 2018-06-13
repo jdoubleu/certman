@@ -1,10 +1,12 @@
 #include "MainWindow.h"
 #include "ui_mainwindow.h"
 #include "../assistant/ImportAssistant.h"
+#include "../assistant/ExportAssistant.h"
 #include "../widget/CertificateDetailWidget.h"
 
-using gui::assistant::ImportAssistant;
 using cert::CertificateManager;
+using gui::assistant::ImportAssistant;
+using gui::assistant::ExportAssistant;
 using gui::widget::CertificateDetailWidget;
 
 using namespace gui::window;
@@ -37,6 +39,7 @@ void MainWindow::setupActions() {
             SLOT(onCertificatesSelected(vector<Certificate *>)));
 
     connect(ui->actionDetails, SIGNAL(triggered()), this, SLOT(onCertificateDetailsAction()));
+    connect(ui->actionExport, SIGNAL(triggered()), this, SLOT(onCertificateExportAction()));
 }
 
 void MainWindow::importCertificate() {
@@ -62,6 +65,7 @@ void MainWindow::onCertificatesSelected(vector<Certificate *> certificates) {
     if (certificates.empty()) {
         // Disable some certificate actions in menu
         ui->actionDetails->setDisabled(true);
+        ui->actionExport->setDisabled(true);
 
         selectedCertificate = NULL;
     } else {
@@ -69,11 +73,19 @@ void MainWindow::onCertificatesSelected(vector<Certificate *> certificates) {
         selectedCertificate = certificates[0];
 
         ui->actionDetails->setDisabled(false);
+        ui->actionExport->setDisabled(false);
     }
 }
 
 void MainWindow::onCertificateDetailsAction() {
     if (selectedCertificate != NULL) {
         onCertificateSelected(selectedCertificate);
+    }
+}
+
+void MainWindow::onCertificateExportAction() {
+    if (selectedCertificate != NULL) {
+        ExportAssistant ea(crtMgr, selectedCertificate);
+        ea.exec();
     }
 }
