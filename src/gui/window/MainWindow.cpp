@@ -84,7 +84,7 @@ void MainWindow::onCertificateDetailsAction() {
 }
 
 void MainWindow::onNewCertificateAction() {
-    CertificateAssistant cea(this);
+    CertificateAssistant cea(crtMgr, this);
 
     connect(&cea, &CertificateAssistant::created, this, [=]() {
         this->onCertificateImport(true);

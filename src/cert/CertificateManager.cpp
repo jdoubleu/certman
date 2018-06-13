@@ -108,3 +108,11 @@ void CertificateManager::exportPrivateKey(string origin, string destination) {
 bool CertificateManager::hasPrivateKey(Certificate *cert) {
     return QFile::exists(QString::fromStdString(getPrivateKeyDefaultLocation(cert)));
 }
+
+void CertificateManager::exportPrivateKey(EVP_PKEY *pkey, string location) {
+    auto bio = BIO_new_file(location.c_str(), "w");
+    string label = "Please enter passphrase.";
+    PEM_write_bio_PrivateKey(bio,pkey,EVP_des_ede3_cbc(), NULL, 0, gui::dialog::passwordCallback, &label);
+    BIO_flush(bio);
+    BIO_free(bio);
+}
