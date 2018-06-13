@@ -33,16 +33,6 @@
      </rect>
     </property>
     <layout class="QFormLayout" name="namefields_layout">
-     <item row="5" column="0">
-      <widget class="QLabel" name="commonName_label">
-       <property name="text">
-        <string>Common Name</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="QLineEdit" name="commonName_field"/>
-     </item>
      <item row="0" column="0">
       <widget class="QLabel" name="countryName_label">
        <property name="text">
@@ -97,15 +87,15 @@
      <item row="4" column="1">
       <widget class="QLineEdit" name="organizationalunit_field"/>
      </item>
-     <item row="6" column="0">
-      <widget class="QLabel" name="emailAddress_label">
+     <item row="5" column="0">
+      <widget class="QLabel" name="commonName_label">
        <property name="text">
-        <string>Email Address</string>
+        <string>Common Name</string>
        </property>
       </widget>
      </item>
-     <item row="6" column="1">
-      <widget class="QLineEdit" name="emailAddress_field"/>
+     <item row="5" column="1">
+      <widget class="QLineEdit" name="commonName_field"/>
      </item>
     </layout>
    </widget>
