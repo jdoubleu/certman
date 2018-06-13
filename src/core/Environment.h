@@ -2,10 +2,12 @@
 #define ENVIRONMENT_H
 
 #include <string>
+#include <list>
 #include <QDir>
 #include <QStandardPaths>
 
 using std::string;
+using std::list;
 
 namespace core {
 
@@ -17,6 +19,10 @@ namespace core {
         static string getAppDataLocation();
 
         static string getCertificatesDir();
+
+        static string iso3166_alpha2_codes[];
+
+        static list<string> iso3166_alpha2_codes_list;
     };
 
 }

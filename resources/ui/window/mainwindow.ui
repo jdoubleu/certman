@@ -55,6 +55,7 @@
      <string>Certificate</string>
     </property>
     <addaction name="actionDetails"/>
+    <addaction name="actionNew_Certificate"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -73,6 +74,11 @@
    </property>
    <property name="text">
     <string>Information</string>
+   </property>
+  </action>
+  <action name="actionNew_Certificate">
+   <property name="text">
+    <string>&amp;New Certificate</string>
    </property>
   </action>
  </widget>

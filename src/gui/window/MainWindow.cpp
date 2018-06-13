@@ -1,11 +1,14 @@
+#include <iostream>
 #include "MainWindow.h"
 #include "ui_mainwindow.h"
 #include "../assistant/ImportAssistant.h"
 #include "../widget/CertificateDetailWidget.h"
+#include "../assistant/CertificateAssistant.h"
 
 using gui::assistant::ImportAssistant;
 using cert::CertificateManager;
 using gui::widget::CertificateDetailWidget;
+using gui::assistant::CertificateAssistant;
 
 using namespace gui::window;
 
@@ -37,6 +40,8 @@ void MainWindow::setupActions() {
             SLOT(onCertificatesSelected(vector<Certificate *>)));
 
     connect(ui->actionDetails, SIGNAL(triggered()), this, SLOT(onCertificateDetailsAction()));
+
+    connect(ui->actionNew_Certificate, &QAction::triggered, this, &MainWindow::onNewCertificateAction);
 }
 
 void MainWindow::importCertificate() {
@@ -76,4 +81,14 @@ void MainWindow::onCertificateDetailsAction() {
     if (selectedCertificate != NULL) {
         onCertificateSelected(selectedCertificate);
     }
+}
+
+void MainWindow::onNewCertificateAction() {
+    CertificateAssistant cea(this);
+
+    connect(&cea, &CertificateAssistant::created, this, [=]() {
+        this->onCertificateImport(true);
+    });
+
+    cea.exec();
 }
