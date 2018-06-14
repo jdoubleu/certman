@@ -12,8 +12,6 @@ namespace cert {
     public:
         CertificateManager();
 
-        Certificate createCertificate();
-
         bool removeCertifcate(Certificate *cert);
 
         void signCertificate();
