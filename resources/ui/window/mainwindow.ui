@@ -49,13 +49,13 @@
      <string>File</string>
     </property>
     <addaction name="action_Import"/>
+    <addaction name="actionNew_Certificate"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
      <string>Certificate</string>
     </property>
     <addaction name="actionDetails"/>
-    <addaction name="actionNew_Certificate"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
