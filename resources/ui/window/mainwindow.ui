@@ -62,7 +62,7 @@
   </widget>
   <action name="action_Import">
    <property name="text">
-    <string>Import certificate</string>
+    <string>&amp;Import Certificate</string>
    </property>
    <property name="toolTip">
     <string>Import existing certificate</string>
