@@ -14,6 +14,8 @@ namespace cert {
 
         Certificate createCertificate();
 
+        bool removeCertifcate(Certificate *cert);
+
         void signCertificate();
 
         void importCertificate(string pathCert, string pathPrivateKey);
