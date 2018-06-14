@@ -41,14 +41,14 @@ CertificateAssistant::CertificateAssistant(CertificateManager *crtMgr, QWidget *
             update_validityPeriod_until_field);
 
     //Algorithem
-    ui->algorithm_field->addItem(QString("RSA"), EVP_PKEY_RSA);
+    ui->algorithm_field->addItem(QString(SN_rsa), EVP_PKEY_RSA);
     ui->algorithm_field->addItem(QString("ECC"), EVP_PKEY_EC);
-    ui->algorithm_field->addItem(QString("DSA"), EVP_PKEY_DSA);
+    ui->algorithm_field->addItem(QString(SN_dsa), EVP_PKEY_DSA);
 
     auto update_algorithm_field = [=](const QString &value) {
         ui->keysize_field->clear();
 
-        if (value.toStdString() == "RSA") {
+        if (value.toStdString() == SN_rsa) {
             ui->keysize_field->addItem(QString("2048"));
             ui->keysize_field->addItem(QString("4096"));
         }
