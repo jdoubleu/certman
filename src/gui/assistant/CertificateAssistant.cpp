@@ -2,19 +2,8 @@
 #include "ui_certificateassistant.h"
 #include <QPushButton>
 #include <QtWidgets/QDialogButtonBox>
-#include <openssl/ossl_typ.h>
-#include <openssl/evp.h>
-#include <openssl/rsa.h>
-#include <openssl/x509.h>
-#include <cstdlib>
-#include "../../cert/Certificate.h"
 #include "../../core/Environment.h"
-#include <string>
-#include <QStringList>
 #include <QDate>
-#include <openssl/rand.h>
-#include <openssl/evp.h>
-#include <openssl/rsa.h>
 
 using std::string;
 using core::Environment;
@@ -52,8 +41,9 @@ CertificateAssistant::CertificateAssistant(CertificateManager *crtMgr, QWidget *
             update_validityPeriod_until_field);
 
     //Algorithem
-    ui->algorithm_field->addItem(QString("RSA"));
-    ui->algorithm_field->addItem(QString("ECC"));
+    ui->algorithm_field->addItem(QString("RSA"), EVP_PKEY_RSA);
+    ui->algorithm_field->addItem(QString("ECC"), EVP_PKEY_EC);
+    ui->algorithm_field->addItem(QString("DSA"), EVP_PKEY_DSA);
 
     auto update_algorithm_field = [=](const QString &value) {
         ui->keysize_field->clear();
@@ -80,92 +70,32 @@ void CertificateAssistant::accept() {
 }
 
 void CertificateAssistant::createCertificate() {
-    EVP_PKEY *privateKey;
-    privateKey = EVP_PKEY_new();
-
-    auto currentAlgorithm = ui->algorithm_field->currentText().toStdString();
-
-    if (currentAlgorithm == "RSA") {
-        auto keySize = ui->keysize_field->currentText().toInt();
-
-        EVP_PKEY_CTX *ctx;
-        ctx = EVP_PKEY_CTX_new_id(EVP_PKEY_RSA, NULL);
-        if (!ctx)
-            /* Error occurred */
-            return;
-
-        if (EVP_PKEY_keygen_init(ctx) <= 0)
-            /* Error */
-            return;
-
-        if (EVP_PKEY_CTX_set_rsa_keygen_bits(ctx, keySize) <= 0)
-            /* Error */
-            return;
-            
-        /* Generate key */
-        if (EVP_PKEY_keygen(ctx, &privateKey) <= 0) {
-            return;
-        }
-
-
-    } else if (currentAlgorithm == "ECC") {
-
-    }
-
-    X509 *x509 = X509_new();
-
-    //Set serialnumber to 1
-    ASN1_INTEGER_set(X509_get_serialNumber(x509), 1);
-
-    //Set valid from
-    X509_gmtime_adj(X509_get_notBefore(x509), 0);
-
-    //Set valid to
+    auto currentAlgorithm = ui->algorithm_field->currentData().toInt();
+    auto keySize = ui->keysize_field->currentText().toInt();
     int validityDays = ui->validityperiod_field->value();
-    long validitySeconds = validityDays * 24 * 60 * 60;
-    X509_gmtime_adj(X509_get_notAfter(x509), validitySeconds);
 
-    //Set public key
-    X509_set_pubkey(x509, privateKey);
-
-    X509_NAME *name;
-    name = X509_get_subject_name(x509);
+    X509_NAME *name = X509_NAME_new();
 
     //Set name entrys
     auto cn = ui->commonName_field->text().toStdString();
-    X509_NAME_add_entry_by_txt(name, SN_commonName, MBSTRING_ASC, (unsigned char *) cn.c_str(), -1, -1, 0);
+    X509_NAME_add_entry_by_txt(name, SN_commonName, MBSTRING_UTF8, (unsigned char *) cn.c_str(), -1, -1, 0);
 
     auto o = ui->organization_field->text().toStdString();
-    X509_NAME_add_entry_by_txt(name, SN_organizationName, MBSTRING_ASC, (unsigned char *) o.c_str(), -1, -1, 0);
+    X509_NAME_add_entry_by_txt(name, SN_organizationName, MBSTRING_UTF8, (unsigned char *) o.c_str(), -1, -1, 0);
 
     auto ou = ui->organizationalunit_field->text().toStdString();
-    X509_NAME_add_entry_by_txt(name, SN_organizationalUnitName, MBSTRING_ASC, (unsigned char *) ou.c_str(), -1, -1, 0);
+    X509_NAME_add_entry_by_txt(name, SN_organizationalUnitName, MBSTRING_UTF8, (unsigned char *) ou.c_str(), -1, -1, 0);
 
     auto c = ui->countryName_field->currentText().toStdString();
-    X509_NAME_add_entry_by_txt(name, SN_countryName, MBSTRING_ASC, (unsigned char *) c.c_str(), -1, -1, 0);
+    X509_NAME_add_entry_by_txt(name, SN_countryName, MBSTRING_UTF8, (unsigned char *) c.c_str(), -1, -1, 0);
 
     auto l = ui->locality_field->text().toStdString();
-    X509_NAME_add_entry_by_txt(name, SN_localityName, MBSTRING_ASC, (unsigned char *) l.c_str(), -1, -1, 0);
+    X509_NAME_add_entry_by_txt(name, SN_localityName, MBSTRING_UTF8, (unsigned char *) l.c_str(), -1, -1, 0);
 
     auto st = ui->stateorprovince_field->text().toStdString();
-    X509_NAME_add_entry_by_txt(name, SN_stateOrProvinceName, MBSTRING_ASC, (unsigned char *) st.c_str(), -1, -1, 0);
+    X509_NAME_add_entry_by_txt(name, SN_stateOrProvinceName, MBSTRING_UTF8, (unsigned char *) st.c_str(), -1, -1, 0);
 
-    X509_set_issuer_name(x509, name);
+    bool successful = crtMgr->createCertificate(currentAlgorithm, keySize, validityDays, name, X509_NAME_dup(name));
 
-    //sign certificate
-    X509_sign(x509, privateKey, EVP_sha1());
-
-
-    //Save/export certificate and key
-    auto *cert = new Certificate(x509);
-
-    crtMgr->exportPrivateKey(privateKey, crtMgr->getPrivateKeyDefaultLocation(cert));
-
-    crtMgr->exportCertificate(cert, crtMgr->getCertificateDefaultLocation(cert));
-
-    //Free x509
-    X509_free(x509);
-
-    emit created(cert);
-
+    emit created(successful);
 }

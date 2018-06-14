@@ -36,6 +36,9 @@ namespace cert {
 
         string getPrivateKeyDefaultLocation(Certificate *cert);
 
+        bool createCertificate(int algorithm, int keySize, int validityDays, X509_NAME *subjectName,
+                               X509_NAME *issuerName);
+
     protected:
         void createKeyPair();
 
@@ -43,7 +46,6 @@ namespace cert {
         CertificateList *certificateList;
 
         void exportPrivateKey(string origin, string destination);
-
 
 
     };
