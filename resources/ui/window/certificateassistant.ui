@@ -41,6 +41,9 @@
      <height>0</height>
     </size>
    </property>
+   <property name="title">
+    <string>Subject Name</string>
+   </property>
    <layout class="QVBoxLayout" name="layout_page_namefields">
     <property name="leftMargin">
      <number>0</number>
@@ -131,6 +134,9 @@
    </layout>
   </widget>
   <widget class="QWizardPage" name="page_algorithm">
+   <property name="title">
+    <string>Algorithm</string>
+   </property>
    <layout class="QVBoxLayout" name="layout_page_algorithm">
     <property name="leftMargin">
      <number>0</number>
@@ -187,6 +193,9 @@
    </layout>
   </widget>
   <widget class="QWizardPage" name="page_validity">
+   <property name="title">
+    <string>Validity</string>
+   </property>
    <layout class="QVBoxLayout" name="layout_page_validity">
     <property name="leftMargin">
      <number>0</number>
