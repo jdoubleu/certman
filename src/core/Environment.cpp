@@ -43,5 +43,7 @@ string core::Environment::iso3166_alpha2_codes[] = {
         "GB", "US", "UM", "UY", "UZ", "VU", "VE", "VN", "VG", "VI", "WF", "EH", "YE", "ZM", "ZW"
 };
 
-list<string> core::Environment::iso3166_alpha2_codes_list(core::Environment::iso3166_alpha2_codes, core::Environment::iso3166_alpha2_codes +
-        sizeof(core::Environment::iso3166_alpha2_codes) / sizeof(string));
+list<string> core::Environment::iso3166_alpha2_codes_list(core::Environment::iso3166_alpha2_codes,
+                                                          core::Environment::iso3166_alpha2_codes +
+                                                          sizeof(core::Environment::iso3166_alpha2_codes) /
+                                                          sizeof(string));

@@ -33,7 +33,7 @@ namespace gui::assistant {
 
     signals:
 
-        void created(Certificate *cert);
+        void created(bool successful);
     };
 
 }
