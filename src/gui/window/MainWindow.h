@@ -46,6 +46,8 @@ namespace gui::window {
 
         void onCertificateDetailsAction();
 
+        void onCertificateExportAction();
+
         void onCertificateSelected(Certificate *cert);
 
         void onCertificatesSelected(vector<Certificate *> certificates);
