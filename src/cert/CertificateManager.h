@@ -14,11 +14,17 @@ namespace cert {
 
         Certificate createCertificate();
 
+        bool removeCertifcate(Certificate *cert);
+
         void signCertificate();
 
         void importCertificate(string pathCert, string pathPrivateKey);
 
         void exportCertificate(Certificate *cert, string path);
+
+        void exportPrivateKeyFile(string origin, string destination);
+
+        void exportPrivateKey(EVP_PKEY *pkey, string location);
 
         CertificateList *getCertificateList();
 
@@ -29,8 +35,6 @@ namespace cert {
         EVP_PKEY *getKey(string path);
 
         bool hasPrivateKey(Certificate *cert);
-
-        void exportPrivateKey(EVP_PKEY *pkey, string destination);
 
         string getCertificateDefaultLocation(Certificate *cert);
 
@@ -44,10 +48,6 @@ namespace cert {
 
     private:
         CertificateList *certificateList;
-
-        void exportPrivateKey(string origin, string destination);
-
-
     };
 
 }

@@ -29,7 +29,7 @@ void CertificateManager::importCertificate(string pathCert, string pathPrivateKe
         if (valid != 1)
             return;
 
-        exportPrivateKey(pathPrivateKey, getPrivateKeyDefaultLocation(cert));
+        exportPrivateKeyFile(pathPrivateKey, getPrivateKeyDefaultLocation(cert));
     }
 
     this->certificateList->add(cert);
@@ -101,7 +101,7 @@ string CertificateManager::getPrivateKeyDefaultLocation(Certificate *cert) {
     return Environment::getCertificatesDir() + "/" + cert->getThumbprint() + "_key.pem";
 }
 
-void CertificateManager::exportPrivateKey(string origin, string destination) {
+void CertificateManager::exportPrivateKeyFile(string origin, string destination) {
     QFile::copy(QString::fromStdString(origin), QString::fromStdString(destination));
 }
 
@@ -115,6 +115,20 @@ void CertificateManager::exportPrivateKey(EVP_PKEY *pkey, string location) {
     PEM_write_bio_PrivateKey(bio, pkey, EVP_des_ede3_cbc(), NULL, 0, gui::dialog::passwordCallback, &label);
     BIO_flush(bio);
     BIO_free(bio);
+}
+
+bool CertificateManager::removeCertifcate(Certificate *cert) {
+    bool success = QFile::remove(QString::fromStdString(getCertificateDefaultLocation(cert)));
+
+    if (!success)
+        return false;
+
+    if (hasPrivateKey(cert))
+        QFile::remove(QString::fromStdString(getPrivateKeyDefaultLocation(cert)));
+
+    this->certificateList->remove(cert);
+
+    return true;
 }
 
 bool CertificateManager::createCertificate(int algorithm, int keySize, int validityDays, X509_NAME *subjectName,
