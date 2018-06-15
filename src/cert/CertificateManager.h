@@ -42,7 +42,7 @@ namespace cert {
                                X509_NAME *issuerName);
 
     protected:
-        void createKeyPair();
+        EVP_PKEY *createKeyPair(int algorithm, int keySize);
 
     private:
         CertificateList *certificateList;

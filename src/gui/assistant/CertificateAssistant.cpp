@@ -42,7 +42,7 @@ CertificateAssistant::CertificateAssistant(CertificateManager *crtMgr, QWidget *
 
     //Algorithem
     ui->algorithm_field->addItem(QString(SN_rsa), EVP_PKEY_RSA);
-    ui->algorithm_field->addItem(QString("ECC"), EVP_PKEY_EC);
+    //ui->algorithm_field->addItem(QString("ECC"), EVP_PKEY_EC);
     ui->algorithm_field->addItem(QString(SN_dsa), EVP_PKEY_DSA);
 
     auto update_algorithm_field = [=](const QString &value) {
@@ -51,6 +51,9 @@ CertificateAssistant::CertificateAssistant(CertificateManager *crtMgr, QWidget *
         if (value.toStdString() == SN_rsa) {
             ui->keysize_field->addItem(QString("2048"));
             ui->keysize_field->addItem(QString("4096"));
+        } else if (value.toStdString() == SN_dsa) {
+            ui->keysize_field->addItem(QString("1024"));
+            ui->keysize_field->addItem(QString("2048"));
         }
     };
     update_algorithm_field(ui->algorithm_field->currentText());
