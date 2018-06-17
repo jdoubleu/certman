@@ -5,6 +5,7 @@
 #include <QFormLayout>
 #include <QGroupBox>
 #include <QDialog>
+#include <QTreeWidgetItem>
 #include "../../cert/Certificate.h"
 #include "../../cert/CertificateManager.h"
 
@@ -34,11 +35,15 @@ namespace gui::widget {
 
         void renderCertificate();
 
+        void renderCertificatePath();
+
         QWidget *createDetailSection(QString name);
 
         void createInformationTable(QWidget *attachTo, map<string, string> information);
 
         void createDetailInformationSection(QString name, map<string, string> information);
+
+        void onCertificatePathItemDoubleClicked(QTreeWidgetItem *item, int column);
     };
 
 }
