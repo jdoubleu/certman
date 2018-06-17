@@ -2,11 +2,11 @@
 #include "ui_certificateassistant.h"
 #include <QPushButton>
 #include <QtWidgets/QDialogButtonBox>
-#include "../../core/Environment.h"
 #include <QDate>
+#include "../widget/NameWidget.h"
 
 using std::string;
-using core::Environment;
+using gui::widget::NameWidget;
 
 using namespace gui::assistant;
 using namespace cert;
@@ -15,12 +15,6 @@ CertificateAssistant::CertificateAssistant(CertificateManager *crtMgr, QWidget *
                                                                                           ui(new Ui::CertificateAssistant),
                                                                                           crtMgr(crtMgr) {
     ui->setupUi(this);
-
-    // Fill country name field with iso3166 alpha2 codes
-    for (string cc : Environment::iso3166_alpha2_codes_list) {
-        ui->countryName_field->addItem(QString::fromStdString(cc));
-    }
-    ui->countryName_field->setCurrentText(QLocale::system().name().remove(0, 3));
 
     // validity
     auto now = QDate::currentDate();
@@ -77,26 +71,7 @@ void CertificateAssistant::createCertificate() {
     auto keySize = ui->keysize_field->currentText().toInt();
     int validityDays = ui->validityperiod_field->value();
 
-    X509_NAME *name = X509_NAME_new();
-
-    //Set name entrys
-    auto cn = ui->commonName_field->text().toStdString();
-    X509_NAME_add_entry_by_txt(name, SN_commonName, MBSTRING_UTF8, (unsigned char *) cn.c_str(), -1, -1, 0);
-
-    auto o = ui->organization_field->text().toStdString();
-    X509_NAME_add_entry_by_txt(name, SN_organizationName, MBSTRING_UTF8, (unsigned char *) o.c_str(), -1, -1, 0);
-
-    auto ou = ui->organizationalunit_field->text().toStdString();
-    X509_NAME_add_entry_by_txt(name, SN_organizationalUnitName, MBSTRING_UTF8, (unsigned char *) ou.c_str(), -1, -1, 0);
-
-    auto c = ui->countryName_field->currentText().toStdString();
-    X509_NAME_add_entry_by_txt(name, SN_countryName, MBSTRING_UTF8, (unsigned char *) c.c_str(), -1, -1, 0);
-
-    auto l = ui->locality_field->text().toStdString();
-    X509_NAME_add_entry_by_txt(name, SN_localityName, MBSTRING_UTF8, (unsigned char *) l.c_str(), -1, -1, 0);
-
-    auto st = ui->stateorprovince_field->text().toStdString();
-    X509_NAME_add_entry_by_txt(name, SN_stateOrProvinceName, MBSTRING_UTF8, (unsigned char *) st.c_str(), -1, -1, 0);
+    auto *name = ui->subject_name->getX509Name();
 
     bool successful = crtMgr->createCertificate(currentAlgorithm, keySize, validityDays, name, X509_NAME_dup(name));
 
