@@ -55,7 +55,7 @@
         <x>0</x>
         <y>0</y>
         <width>450</width>
-        <height>274</height>
+        <height>273</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -101,7 +101,7 @@
              <bool>true</bool>
             </property>
             <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -109,13 +109,13 @@
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>75</height>
+              <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>75</height>
+              <height>16777215</height>
              </size>
             </property>
             <property name="autoFillBackground">
@@ -126,6 +126,9 @@
             </property>
             <property name="horizontalScrollBarPolicy">
              <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="sizeAdjustPolicy">
+             <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
             </property>
             <property name="autoScroll">
              <bool>false</bool>
