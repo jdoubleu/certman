@@ -134,6 +134,51 @@ bool CertificateManager::removeCertifcate(Certificate *cert) {
 bool CertificateManager::createCertificate(int algorithm, int keySize, int validityDays, X509_NAME *subjectName,
                                            X509_NAME *issuerName) {
     EVP_PKEY *privateKey;
+    privateKey = createKeyPair(algorithm, keySize);
+
+    if(privateKey == nullptr)
+        return false;
+
+    X509 *x509 = X509_new();
+
+    //Set serialnumber to 1
+    ASN1_INTEGER_set(X509_get_serialNumber(x509), 1);
+
+    //Set valid from
+    ASN1_TIME *tmFrom = ASN1_TIME_adj(NULL, time(NULL), 0, 0);
+    X509_set1_notBefore(x509, tmFrom);
+
+    //Set valid to
+    ASN1_TIME *tmAfter = ASN1_TIME_adj(NULL, time(NULL), validityDays, 0);
+    X509_set1_notAfter(x509, tmAfter);
+
+    //Set public key
+    X509_set_pubkey(x509, privateKey);
+
+
+    X509_set_subject_name(x509, subjectName);
+    X509_set_issuer_name(x509, issuerName);
+
+    //sign certificate
+    X509_sign(x509, privateKey, EVP_sha1());
+
+    if(X509_verify(x509,privateKey) != 1)
+        return false;
+
+    //Save/export certificate and key
+    auto *cert = new Certificate(x509);
+
+    exportPrivateKey(privateKey, getPrivateKeyDefaultLocation(cert));
+
+    exportCertificate(cert, getCertificateDefaultLocation(cert));
+
+    certificateList->add(cert);
+
+    return true;
+}
+
+EVP_PKEY *CertificateManager::createKeyPair(int algorithm, int keySize) {
+    EVP_PKEY *privateKey;
     privateKey = EVP_PKEY_new();
     EVP_PKEY_CTX *ctx;
     EC_KEY *ecKey;
@@ -160,7 +205,7 @@ bool CertificateManager::createCertificate(int algorithm, int keySize, int valid
             if (ret == -1) {
                 EVP_PKEY_CTX_free(ctx);
                 EVP_PKEY_free(privateKey);
-                return false;
+                return nullptr;
             }
             break;
         case EVP_PKEY_EC:
@@ -179,7 +224,7 @@ bool CertificateManager::createCertificate(int algorithm, int keySize, int valid
             if (ret == -1) {
                 EC_KEY_free(ecKey);
                 EVP_PKEY_free(privateKey);
-                return false;
+                return nullptr;
             }
             break;
         case EVP_PKEY_DSA:
@@ -191,7 +236,7 @@ bool CertificateManager::createCertificate(int algorithm, int keySize, int valid
             if (!EVP_PKEY_paramgen_init(ctx))
                 ret = -1;
 
-            if (!EVP_PKEY_CTX_set_dsa_paramgen_bits(ctx, 2048))
+            if (!EVP_PKEY_CTX_set_dsa_paramgen_bits(ctx, keySize))
                 ret = -1;
 
             if (!EVP_PKEY_paramgen(ctx, &privateKey))
@@ -200,45 +245,12 @@ bool CertificateManager::createCertificate(int algorithm, int keySize, int valid
             if (ret == -1) {
                 EVP_PKEY_CTX_free(ctx);
                 EVP_PKEY_free(privateKey);
-                return false;
+                return nullptr;
             }
             break;
         default:
             break;
     }
 
-    X509 *x509 = X509_new();
-
-    //Set serialnumber to 1
-    ASN1_INTEGER_set(X509_get_serialNumber(x509), 1);
-
-    //Set valid from
-    ASN1_TIME *tmFrom = ASN1_TIME_adj(NULL, time(NULL), 0, 0);
-    X509_set1_notBefore(x509, tmFrom);
-
-    //Set valid to
-    ASN1_TIME *tmAfter = ASN1_TIME_adj(NULL, time(NULL), validityDays, 0);
-    X509_set1_notAfter(x509, tmAfter);
-
-    //Set public key
-    X509_set_pubkey(x509, privateKey);
-
-
-    X509_set_subject_name(x509, subjectName);
-    X509_set_issuer_name(x509, issuerName);
-
-    //sign certificate
-    X509_sign(x509, privateKey, EVP_sha1());
-
-
-    //Save/export certificate and key
-    auto *cert = new Certificate(x509);
-
-    exportPrivateKey(privateKey, getPrivateKeyDefaultLocation(cert));
-
-    exportCertificate(cert, getCertificateDefaultLocation(cert));
-
-    certificateList->add(cert);
-
-    return true;
+    return privateKey;
 }
