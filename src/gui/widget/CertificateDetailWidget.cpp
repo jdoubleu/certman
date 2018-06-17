@@ -4,8 +4,10 @@
 
 using namespace gui::widget;
 
-CertificateDetailWidget::CertificateDetailWidget(Certificate certificate, QWidget *parent) : ui(
-        new Ui::CertificateDetail), cert(certificate) {
+CertificateDetailWidget::CertificateDetailWidget(Certificate certificate, CertificateManager *crtMgr, QWidget *parent) :
+        ui(new Ui::CertificateDetail),
+        cert(certificate),
+        crtMgr(crtMgr) {
     ui->setupUi(this);
 
     renderCertificate();
@@ -15,14 +17,14 @@ CertificateDetailWidget::~CertificateDetailWidget() {
     delete ui;
 }
 
-QDialog *CertificateDetailWidget::asDialog(Certificate certificate, QWidget *parent) {
+QDialog *CertificateDetailWidget::asDialog(Certificate certificate, CertificateManager *crtMgr, QWidget *parent) {
     auto *dialog = new QDialog(parent);
     dialog->setWindowTitle(QString::fromStdString(certificate.getSubjectField("commonName")));
 
     auto *layout = new QGridLayout(dialog);
     layout->setMargin(10);
 
-    layout->addWidget(new CertificateDetailWidget(certificate, dialog));
+    layout->addWidget(new CertificateDetailWidget(certificate, crtMgr, dialog));
 
     dialog->setLayout(layout);
 

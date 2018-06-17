@@ -6,8 +6,10 @@
 #include <QGroupBox>
 #include <QDialog>
 #include "../../cert/Certificate.h"
+#include "../../cert/CertificateManager.h"
 
 using cert::Certificate;
+using cert::CertificateManager;
 
 namespace Ui {
     class CertificateDetail;
@@ -18,15 +20,17 @@ namespace gui::widget {
     class CertificateDetailWidget : public QWidget {
     Q_OBJECT
     public:
-        explicit CertificateDetailWidget(Certificate certificate, QWidget *parent = 0);
+        explicit CertificateDetailWidget(Certificate certificate, CertificateManager *crtMgr,
+                                                 QWidget *parent);
 
         ~CertificateDetailWidget();
 
-        static QDialog *asDialog(Certificate certificate, QWidget *parent = 0);
+        static QDialog *asDialog(Certificate certificate, CertificateManager *crtMgr, QWidget *parent = 0);
 
     private:
         Ui::CertificateDetail *ui;
         Certificate cert;
+        CertificateManager *crtMgr;
 
         void renderCertificate();
 
