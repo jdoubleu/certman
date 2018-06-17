@@ -15,7 +15,7 @@ CertificateDetailWidget::CertificateDetailWidget(Certificate certificate, Certif
 
     renderCertificate();
 
-    connect(ui->certificate_chain_tree, &QTreeWidget::itemDoubleClicked, this, &CertificateDetailWidget::onCertificatePathItemDoubleClicked);
+    connect(ui->certificate_chain_tree, &QTreeWidget::itemActivated, this, &CertificateDetailWidget::onCertificatePathItemDoubleClicked);
 }
 
 CertificateDetailWidget::~CertificateDetailWidget() {
@@ -111,6 +111,10 @@ void CertificateDetailWidget::renderCertificatePath() {
 }
 
 void CertificateDetailWidget::onCertificatePathItemDoubleClicked(QTreeWidgetItem *item, int column) {
+    if (item == NULL) {
+        return;
+    }
+
     auto cert = item->data(0, Qt::UserRole).value<CertificateContainer>().certificate;
 
     if (*cert == this->cert) {
