@@ -44,6 +44,8 @@ namespace cert {
         bool createCertificate(int algorithm, int keySize, int validityDays, X509_NAME *subjectName,
                                X509_NAME *issuerName);
 
+        X509_STORE *getCertificateListAsX509Store();
+
     protected:
         EVP_PKEY *createKeyPair(int algorithm, int keySize);
 

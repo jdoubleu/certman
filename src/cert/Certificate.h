@@ -7,6 +7,7 @@
 #include <openssl/ossl_typ.h>
 #include <vector>
 #include <map>
+#include <QtGui>
 
 using std::string;
 using std::vector;
@@ -55,6 +56,11 @@ namespace cert {
 
     };
 
+    struct CertificateContainer {
+        Certificate *certificate;
+    };
 }
+
+Q_DECLARE_METATYPE(cert::CertificateContainer);
 
 #endif

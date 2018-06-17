@@ -5,6 +5,7 @@
 
 using Qt::Orientation;
 using cert::time_to_string;
+using cert::CertificateContainer;
 
 using namespace gui::widget;
 

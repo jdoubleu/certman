@@ -19,10 +19,6 @@ namespace Ui {
 
 namespace gui::widget {
 
-    struct CertificateContainer {
-        Certificate *certificate;
-    };
-
     class CertificateListWidget : public QWidget {
     Q_OBJECT
     public:
@@ -61,7 +57,5 @@ namespace gui::widget {
     };
 
 }
-
-Q_DECLARE_METATYPE(gui::widget::CertificateContainer);
 
 #endif
