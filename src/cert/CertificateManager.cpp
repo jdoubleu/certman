@@ -254,3 +254,16 @@ EVP_PKEY *CertificateManager::createKeyPair(int algorithm, int keySize) {
 
     return privateKey;
 }
+
+X509_STORE *CertificateManager::getCertificateListAsX509Store() {
+    X509_STORE *store = X509_STORE_new();
+    auto certs = getCertificateList()->listAll();
+
+    for (const auto& cert: *certs) {
+        X509_STORE_add_cert(store, cert->getX509());
+    }
+
+    X509_STORE_lock(store);
+
+    return store;
+}
