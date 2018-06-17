@@ -55,6 +55,8 @@ namespace gui::window {
         void onCertificateRemoveAction();
 
         void onNewCertificateAction();
+
+        void onNewCertificateAuthorityAction();
     };
 
 }

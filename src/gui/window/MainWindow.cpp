@@ -5,12 +5,14 @@
 #include "../assistant/ExportAssistant.h"
 #include "../widget/CertificateDetailWidget.h"
 #include "../assistant/CertificateAssistant.h"
+#include "../assistant/CAAssistant.h"
 
 using cert::CertificateManager;
 using gui::assistant::ImportAssistant;
 using gui::assistant::ExportAssistant;
 using gui::widget::CertificateDetailWidget;
 using gui::assistant::CertificateAssistant;
+using gui::assistant::CAAssistant;
 
 using namespace gui::window;
 
@@ -37,6 +39,7 @@ MainWindow::~MainWindow() {
 void MainWindow::setupActions() {
     connect(ui->action_Import, SIGNAL(triggered()), this, SLOT(importCertificate()));
     connect(ui->actionNew_Certificate, &QAction::triggered, this, &MainWindow::onNewCertificateAction);
+    connect(ui->actionNew_Certificate_Authority, &QAction::triggered, this, &MainWindow::onNewCertificateAuthorityAction);
 
     connect(crtList, SIGNAL(certificateSelected(Certificate * )), this, SLOT(onCertificateSelected(Certificate * )));
     connect(crtList, SIGNAL(certificatesSelected(vector<Certificate *>)), this,
@@ -127,4 +130,10 @@ void MainWindow::onNewCertificateAction() {
     });
 
     cea.exec();
+}
+
+void MainWindow::onNewCertificateAuthorityAction() {
+    CAAssistant caa(crtMgr, this);
+
+    caa.exec();
 }

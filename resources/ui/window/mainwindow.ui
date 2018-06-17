@@ -50,6 +50,7 @@
     </property>
     <addaction name="action_Import"/>
     <addaction name="actionNew_Certificate"/>
+    <addaction name="actionNew_Certificate_Authority"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -97,6 +98,11 @@
    </property>
    <property name="text">
     <string>Export</string>
+   </property>
+  </action>
+  <action name="actionNew_Certificate_Authority">
+   <property name="text">
+    <string>New Certificate Authority</string>
    </property>
   </action>
  </widget>
