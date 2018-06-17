@@ -81,7 +81,7 @@ void ExportAssistant::submit() {
     }
 
     if (keyName != NULL) {
-        crtMgr->exportPrivateKey(crtMgr->getPrivateKeyDefaultLocation(cert), keyName.toStdString());
+        crtMgr->exportPrivateKeyFile(crtMgr->getPrivateKeyDefaultLocation(cert), keyName.toStdString());
     }
 
     emit certificateExported(true);

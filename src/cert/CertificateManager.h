@@ -1,6 +1,7 @@
 #ifndef CERTIFICATEMANAGER_H
 #define CERTIFICATEMANAGER_H
 
+#include <QtCore>
 #include "Certificate.h"
 #include "CertificateList.h"
 
@@ -9,10 +10,10 @@ using std::vector;
 namespace cert {
 
     class CertificateManager {
+    Q_DECLARE_TR_FUNCTIONS(CertificateManager)
+
     public:
         CertificateManager();
-
-        Certificate createCertificate();
 
         bool removeCertifcate(Certificate *cert);
 
@@ -22,7 +23,9 @@ namespace cert {
 
         void exportCertificate(Certificate *cert, string path);
 
-        void exportPrivateKey(string origin, string destination);
+        void exportPrivateKeyFile(string origin, string destination);
+
+        void exportPrivateKey(EVP_PKEY *pkey, string location);
 
         CertificateList *getCertificateList();
 
@@ -38,9 +41,14 @@ namespace cert {
 
         string getPrivateKeyDefaultLocation(Certificate *cert);
 
+        bool createCertificate(int algorithm, int keySize, int validityDays, X509_NAME *subjectName,
+                               X509_NAME *issuerName);
+
+    protected:
+        EVP_PKEY *createKeyPair(int algorithm, int keySize);
+
     private:
         CertificateList *certificateList;
-
     };
 
 }

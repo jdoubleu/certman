@@ -53,6 +53,8 @@ namespace gui::window {
         void onCertificatesSelected(vector<Certificate *> certificates);
 
         void onCertificateRemoveAction();
+
+        void onNewCertificateAction();
     };
 
 }
