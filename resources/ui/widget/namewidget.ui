@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>NameWidget</class>
+ <widget class="QWidget" name="NameWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>-1</number>
+   </property>
+   <property name="sizeConstraint">
+    <enum>QLayout::SetMinimumSize</enum>
+   </property>
+   <item>
+    <widget class="QTabWidget" name="fields_tabs">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="tabPosition">
+      <enum>QTabWidget::North</enum>
+     </property>
+     <property name="tabShape">
+      <enum>QTabWidget::Rounded</enum>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <property name="usesScrollButtons">
+      <bool>false</bool>
+     </property>
+     <property name="tabsClosable">
+      <bool>false</bool>
+     </property>
+     <property name="movable">
+      <bool>false</bool>
+     </property>
+     <property name="tabBarAutoHide">
+      <bool>false</bool>
+     </property>
+     <widget class="QWidget" name="required_fields_tab">
+      <attribute name="title">
+       <string>Required Fields</string>
+      </attribute>
+      <layout class="QFormLayout" name="required_fields_layout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="countryName_label">
+         <property name="text">
+          <string>Country Name</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="countryName_field">
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="stateorprovince_label">
+         <property name="text">
+          <string>State/Province</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="stateorprovince_field"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="locality_label">
+         <property name="text">
+          <string>City (Locality)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="locality_field"/>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="organization_label">
+         <property name="text">
+          <string>Organization Name</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="organization_field"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="organizationalunit_label">
+         <property name="text">
+          <string>Organizational Unit</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="organizationalunit_field"/>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="commonName_label">
+         <property name="text">
+          <string>Common Name</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLineEdit" name="commonName_field"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="optional_fields_tab">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <attribute name="title">
+       <string>Optional Fields</string>
+      </attribute>
+      <layout class="QFormLayout" name="required_fields_layout_2">
+       <item row="0" column="0">
+        <widget class="QLabel" name="pseudonym_label">
+         <property name="text">
+          <string>Pseudonym</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="pseudonym_field"/>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="title_label">
+         <property name="text">
+          <string>Title</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="title_field"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="surname_label">
+         <property name="text">
+          <string>Surname</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="surname_field"/>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="givenName_label">
+         <property name="text">
+          <string>Given Name</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="givenName_field"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="initials_label">
+         <property name="text">
+          <string>Initials</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="initials_field"/>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="generationQualifier_label">
+         <property name="text">
+          <string>Generation Qualifier</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLineEdit" name="generationQualifier_field"/>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="optional_fields_toggle">
+     <property name="text">
+      <string>Use optional fields</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
