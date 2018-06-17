@@ -1,6 +1,7 @@
 #ifndef CERTIFICATEMANAGER_H
 #define CERTIFICATEMANAGER_H
 
+#include <QtCore>
 #include "Certificate.h"
 #include "CertificateList.h"
 
@@ -9,6 +10,8 @@ using std::vector;
 namespace cert {
 
     class CertificateManager {
+    Q_DECLARE_TR_FUNCTIONS(CertificateManager)
+
     public:
         CertificateManager();
 
