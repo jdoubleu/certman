@@ -1,8 +1,6 @@
 #include <QLabel>
 #include "CertificateDetailWidget.h"
 #include "ui_certificatedetail.h"
-#include <openssl/safestack.h>
-#include "../../cert/CertificateExtension.h"
 
 using cert::CertificateContainer;
 using cert::CertificateExtension;
@@ -17,7 +15,8 @@ CertificateDetailWidget::CertificateDetailWidget(Certificate certificate, Certif
 
     renderCertificate();
 
-    connect(ui->certificate_chain_tree, &QTreeWidget::itemActivated, this, &CertificateDetailWidget::onCertificatePathItemDoubleClicked);
+    connect(ui->certificate_chain_tree, &QTreeWidget::itemActivated, this,
+            &CertificateDetailWidget::onCertificatePathItemDoubleClicked);
 }
 
 CertificateDetailWidget::~CertificateDetailWidget() {

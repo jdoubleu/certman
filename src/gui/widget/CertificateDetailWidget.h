@@ -22,7 +22,7 @@ namespace gui::widget {
     Q_OBJECT
     public:
         explicit CertificateDetailWidget(Certificate certificate, CertificateManager *crtMgr,
-                                                 QWidget *parent);
+                                         QWidget *parent);
 
         ~CertificateDetailWidget();
 

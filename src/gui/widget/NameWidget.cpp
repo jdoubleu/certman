@@ -6,7 +6,7 @@ using core::Environment;
 
 using namespace gui::widget;
 
-NameWidget::NameWidget(QWidget *parent): QWidget(parent), ui(new Ui::NameWidget) {
+NameWidget::NameWidget(QWidget *parent) : QWidget(parent), ui(new Ui::NameWidget) {
     ui->setupUi(this);
 
     on_optional_fields_toggle_stateChanged(0);
@@ -33,7 +33,8 @@ X509_NAME *NameWidget::getX509Name() {
     certman_qt_X509_NAME_add_entry(NID_commonName, ui->commonName_field);
     certman_qt_X509_NAME_add_entry(NID_organizationName, ui->organization_field);
     certman_qt_X509_NAME_add_entry(NID_organizationalUnitName, ui->organizationalunit_field);
-    certman_X509_NAME_add_entry(NID_countryName, (unsigned char *) ui->countryName_field->currentText().toStdString().c_str());
+    certman_X509_NAME_add_entry(NID_countryName,
+                                (unsigned char *) ui->countryName_field->currentText().toStdString().c_str());
     certman_qt_X509_NAME_add_entry(NID_localityName, ui->locality_field);
     certman_qt_X509_NAME_add_entry(NID_stateOrProvinceName, ui->stateorprovince_field);
     certman_qt_X509_NAME_add_entry(NID_organizationName, ui->organization_field);

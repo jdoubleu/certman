@@ -136,7 +136,7 @@ bool CertificateManager::createCertificate(int algorithm, int keySize, int valid
     EVP_PKEY *privateKey;
     privateKey = createKeyPair(algorithm, keySize);
 
-    if(privateKey == nullptr)
+    if (privateKey == nullptr)
         return false;
 
     X509 *x509 = X509_new();
@@ -162,7 +162,7 @@ bool CertificateManager::createCertificate(int algorithm, int keySize, int valid
     //sign certificate
     X509_sign(x509, privateKey, EVP_sha1());
 
-    if(X509_verify(x509,privateKey) != 1)
+    if (X509_verify(x509, privateKey) != 1)
         return false;
 
     //Save/export certificate and key
@@ -259,7 +259,7 @@ X509_STORE *CertificateManager::getCertificateListAsX509Store() {
     X509_STORE *store = X509_STORE_new();
     auto certs = getCertificateList()->listAll();
 
-    for (const auto& cert: *certs) {
+    for (const auto &cert: *certs) {
         X509_STORE_add_cert(store, cert->getX509());
     }
 

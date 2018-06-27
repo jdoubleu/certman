@@ -2,8 +2,6 @@
 #include "ui_certificateassistant.h"
 #include <QPushButton>
 #include <QtWidgets/QDialogButtonBox>
-#include <QDate>
-#include "../widget/NameWidget.h"
 
 using std::string;
 using gui::widget::NameWidget;

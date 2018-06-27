@@ -51,7 +51,7 @@ namespace cert {
 
         vector<string> getASN();
 
-        vector<CertificateExtension*> getExtensions();
+        vector<CertificateExtension *> getExtensions();
 
         bool operator==(const Certificate &c);
 
