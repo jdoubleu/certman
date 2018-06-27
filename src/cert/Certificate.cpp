@@ -118,3 +118,14 @@ vector<string> Certificate::getASN() {
 bool Certificate::operator==(const cert::Certificate &c) {
     return this->getThumbprint() == c.getThumbprint();
 }
+
+vector<CertificateExtension*> Certificate::getExtensions() {
+    const stack_st_X509_EXTENSION *extensions = X509_get0_extensions(this->getX509());
+    vector<CertificateExtension*> exts;
+
+    for(int i = 0; i < sk_X509_EXTENSION_num(extensions); i++) {
+        exts.push_back(new CertificateExtension(sk_X509_EXTENSION_value(extensions, i)));
+    }
+
+    return exts;
+}

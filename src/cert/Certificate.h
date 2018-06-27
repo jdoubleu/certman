@@ -8,10 +8,12 @@
 #include <vector>
 #include <map>
 #include <QtGui>
+#include "CertificateExtension.h"
 
 using std::string;
 using std::vector;
 using std::map;
+using cert::CertificateExtension;
 
 namespace cert {
 
@@ -48,6 +50,8 @@ namespace cert {
         time_t getExpires();
 
         vector<string> getASN();
+
+        vector<CertificateExtension*> getExtensions();
 
         bool operator==(const Certificate &c);
 
