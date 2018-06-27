@@ -28,10 +28,16 @@
    </property>
    <item>
     <widget class="QScrollArea" name="scrollArea">
-     <property name="minimumSize">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
       <size>
        <width>450</width>
-       <height>0</height>
+       <height>16777215</height>
       </size>
      </property>
      <property name="frameShape">
