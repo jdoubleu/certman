@@ -22,7 +22,7 @@ namespace gui::widget {
     Q_OBJECT
     public:
         explicit CertificateDetailWidget(Certificate certificate, CertificateManager *crtMgr,
-                                                 QWidget *parent);
+                                         QWidget *parent);
 
         ~CertificateDetailWidget();
 
@@ -44,6 +44,8 @@ namespace gui::widget {
         void createDetailInformationSection(QString name, map<string, string> information);
 
         void onCertificatePathItemDoubleClicked(QTreeWidgetItem *item, int column);
+
+        void renderExtensions();
     };
 
 }
