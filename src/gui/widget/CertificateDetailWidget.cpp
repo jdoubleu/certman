@@ -52,6 +52,10 @@ QWidget *CertificateDetailWidget::createDetailSection(QString name) {
     section->setTitle(name);
     section->setFlat(true);
 
+    QFont font;
+    font.setBold(true);
+    section->setFont(font);
+
     ui->certificate_details->layout()->addWidget(section);
 
     return section;
@@ -134,10 +138,14 @@ void CertificateDetailWidget::renderExtensions() {
     auto *containerLayout = new QVBoxLayout(container);
     containerLayout->setContentsMargins(12, 0, 0, 0);
 
+    QFont defaultFont;
+    defaultFont.setBold(false);
+
     for (CertificateExtension *ext: cert.getExtensions()) {
         auto *extContainer = new QGroupBox(container);
         extContainer->setFlat(true);
         extContainer->setTitle(tr(ext->type().c_str()));
+        extContainer->setFont(defaultFont);
 
         auto *extLayout = new QVBoxLayout(extContainer);
         extLayout->setContentsMargins(24, 10, 0, 0);
