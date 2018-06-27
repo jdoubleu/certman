@@ -44,6 +44,8 @@ namespace gui::widget {
         void createDetailInformationSection(QString name, map<string, string> information);
 
         void onCertificatePathItemDoubleClicked(QTreeWidgetItem *item, int column);
+
+        void renderExtensions();
     };
 
 }

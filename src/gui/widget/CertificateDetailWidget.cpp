@@ -2,8 +2,10 @@
 #include "CertificateDetailWidget.h"
 #include "ui_certificatedetail.h"
 #include <openssl/safestack.h>
+#include "../../cert/CertificateExtension.h"
 
 using cert::CertificateContainer;
+using cert::CertificateExtension;
 
 using namespace gui::widget;
 
@@ -41,6 +43,8 @@ void CertificateDetailWidget::renderCertificate() {
     createDetailInformationSection("Issuer", cert.getIssuerFields());
 
     renderCertificatePath();
+
+    renderExtensions();
 }
 
 QWidget *CertificateDetailWidget::createDetailSection(QString name) {
@@ -123,4 +127,26 @@ void CertificateDetailWidget::onCertificatePathItemDoubleClicked(QTreeWidgetItem
 
     auto dialog = CertificateDetailWidget::asDialog(*cert, crtMgr, this);
     dialog->show();
+}
+
+void CertificateDetailWidget::renderExtensions() {
+    auto *container = createDetailSection(tr("Extensions"));
+    auto *containerLayout = new QVBoxLayout(container);
+    containerLayout->setContentsMargins(12, 0, 0, 0);
+
+    for (CertificateExtension *ext: cert.getExtensions()) {
+        auto *extContainer = new QGroupBox(container);
+        extContainer->setFlat(true);
+        extContainer->setTitle(tr(ext->type().c_str()));
+
+        auto *extLayout = new QVBoxLayout(extContainer);
+        extLayout->setContentsMargins(24, 10, 0, 0);
+
+        auto *content = new QLabel(QString::fromStdString(ext->sprint()), container);
+        content->setWordWrap(true);
+        content->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
+        extLayout->addWidget(content);
+
+        containerLayout->addWidget(extContainer);
+    }
 }
