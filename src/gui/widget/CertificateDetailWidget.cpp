@@ -142,9 +142,14 @@ void CertificateDetailWidget::renderExtensions() {
     defaultFont.setBold(false);
 
     for (CertificateExtension *ext: cert.getExtensions()) {
+        auto extensionName = QString(ext->critical()
+                                     ? tr("%1 (critical)")
+                                     : "%1")
+                .arg(tr(ext->type().c_str()));
+
         auto *extContainer = new QGroupBox(container);
         extContainer->setFlat(true);
-        extContainer->setTitle(tr(ext->type().c_str()));
+        extContainer->setTitle(extensionName);
         extContainer->setFont(defaultFont);
 
         auto *extLayout = new QVBoxLayout(extContainer);
