@@ -22,6 +22,8 @@ namespace cert {
 
         string type();
 
+        string sprint();
+
     private:
 
         X509_EXTENSION *extension;

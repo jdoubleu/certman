@@ -34,3 +34,18 @@ string cert::CertificateExtension::type() {
 void *CertificateExtension::value() {
     return X509V3_EXT_d2i(extension);
 }
+
+string CertificateExtension::sprint() {
+    BIO *mem = BIO_new(BIO_s_mem());
+
+    X509V3_EXT_print(mem, extension, 0, 0);
+
+    BUF_MEM *memptr;
+    BIO_get_mem_ptr(mem, &memptr);
+    size_t length = memptr->length;
+
+    char buf[length];
+    int read = BIO_gets(mem, buf, length);
+
+    return string(buf);
+}
