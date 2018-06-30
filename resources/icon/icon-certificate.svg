@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512px" height="512px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon-cerman</title>
+    <defs></defs>
+    <g id="icon-certificate" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M8,422.5 L504,422.5 C504.276142,422.5 504.5,422.276142 504.5,422 L504.5,91 C504.5,90.7238576 504.276142,90.5 504,90.5 L8,90.5 C7.72385763,90.5 7.5,90.7238576 7.5,91 L7.5,422 C7.5,422.276142 7.72385763,422.5 8,422.5 Z" id="Combined-Shape" stroke="#979797" stroke-width="15"></path>
+        <text id="Certman" font-family="TimesNewRomanPS-BoldItalicMT, Times New Roman" font-size="95" font-style="italic" font-weight="bold" fill="#979797">
+            <tspan x="31" y="194">Certman</tspan>
+        </text>
+        <path d="M31.5,320.5 L284.5,320.5" id="Line" stroke="#979797" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M31.5,273.5 L284.5,273.5" id="Line" stroke="#979797" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path d="M31.5,367.5 L284.5,367.5" id="Line" stroke="#979797" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"></path>
+        <g id="Oval" transform="translate(320.000000, 257.000000)" stroke="#979797" stroke-width="15">
+            <path d="M78,147.583333 C116.189903,147.583333 147.148936,116.532906 147.148936,78.2302632 C147.148936,39.9276201 116.189903,8.87719298 78,8.87719298 C39.8100971,8.87719298 8.85106383,39.9276201 8.85106383,78.2302632 C8.85106383,116.532906 39.8100971,147.583333 78,147.583333 Z"></path>
+            <polyline id="Path-3" points="130.553191 126.5 130.553191 235.245614 78 191.474441 25.4468085 235.245614 25.4468085 126.5 25.4468085 126.5"></polyline>
+        </g>
+    </g>
+</svg>
