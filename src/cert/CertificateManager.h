@@ -46,6 +46,8 @@ namespace cert {
 
         X509_STORE *getCertificateListAsX509Store();
 
+        int signCertificate(Certificate *cert);
+
     protected:
         EVP_PKEY *createKeyPair(int algorithm, int keySize);
 

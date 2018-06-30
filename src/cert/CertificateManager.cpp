@@ -160,7 +160,7 @@ bool CertificateManager::createCertificate(int algorithm, int keySize, int valid
     X509_set_issuer_name(x509, issuerName);
 
     //sign certificate
-    X509_sign(x509, privateKey, EVP_sha1());
+    X509_sign(x509, privateKey, EVP_sha256());
 
     if (X509_verify(x509, privateKey) != 1)
         return false;
@@ -266,4 +266,11 @@ X509_STORE *CertificateManager::getCertificateListAsX509Store() {
     X509_STORE_lock(store);
 
     return store;
+}
+
+int CertificateManager::signCertificate(Certificate *cert) {
+    X509 *x509 = cert->getX509();
+    EVP_PKEY *pKey = getKey(getPrivateKeyDefaultLocation(cert));
+
+    return X509_sign(x509,pKey, EVP_sha256());
 }
