@@ -6,6 +6,7 @@
 #include "../../cert/CertificateManager.h"
 
 using cert::CertificateManager;
+using cert::KEYPAIR_EXPORT;
 
 namespace Ui {
     class KeyPairWidget;
@@ -40,6 +41,8 @@ namespace gui::widget {
         void injectCertificateManager(CertificateManager *crtMgr);
 
         bool validate();
+
+        KEYPAIR_EXPORT generateKeyPair();
 
     public Q_SLOTS:
 

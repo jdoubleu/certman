@@ -1,7 +1,10 @@
 #include <openssl/evp.h>
+#include <openssl/pem.h>
 #include "KeyPairWidget.h"
 #include "ui_keypairwidget.h"
 #include "PasswordWidget.h"
+
+using cert::EXPORT_PRIVATEKEY_FUNC;
 
 using namespace gui::widget;
 
@@ -88,6 +91,25 @@ bool KeyPairWidget::validate() {
     }
 
     return true;
+}
+
+KEYPAIR_EXPORT KeyPairWidget::generateKeyPair() {
+    auto keyAlgorithm = ui->algorithmComboBox->currentData(Qt::UserRole).value<SUPPORTED_KEY_ALG>().algorithm;
+    auto keyLength = ui->keySizeComboBox->currentData(Qt::UserRole).value<int>();
+    auto wrappingAlgorithm = ui->wrappingAlgorithmComboBox->currentData(Qt::UserRole).value<SUPPORTED_WRAPPING_ALG>().cipher;
+
+    EVP_PKEY *keyPair = crtMgr->generateKeyPair(keyAlgorithm, keyLength);
+
+    string passphrase = ui->keyPassword->password();
+    EXPORT_PRIVATEKEY_FUNC exporter = [keyPair, wrappingAlgorithm, passphrase](BIO *sink) {
+        PEM_write_bio_PrivateKey(sink, keyPair, wrappingAlgorithm, NULL, 0, NULL, (void*) &passphrase);
+        BIO_flush(sink);
+    };
+
+    return {
+        keyPair,
+        exporter
+    };
 }
 
 void KeyPairWidget::injectCertificateManager(CertificateManager *crtMgr) {
