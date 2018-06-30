@@ -41,6 +41,8 @@ void MainWindow::setupActions() {
     connect(crtList, SIGNAL(certificateSelected(Certificate * )), this, SLOT(onCertificateSelected(Certificate * )));
     connect(crtList, SIGNAL(certificatesSelected(vector<Certificate *>)), this,
             SLOT(onCertificatesSelected(vector<Certificate *>)));
+    connect(crtList, SIGNAL(certificateRemoveAction()), this, SLOT(onCertificateRemoveAction()));
+    connect(crtList, SIGNAL(certificateExportAction()), this, SLOT(onCertificateExportAction()));
 
     connect(ui->actionDetails, SIGNAL(triggered()), this, SLOT(onCertificateDetailsAction()));
     connect(ui->actionRemove, SIGNAL(triggered()), this, SLOT(onCertificateRemoveAction()));
@@ -110,6 +112,7 @@ void MainWindow::onCertificateRemoveAction() {
         if (success)
             crtList->showCertificates(*crtMgr->getCertificateList()->listAll());
     }
+
 }
 
 void MainWindow::onCertificateExportAction() {

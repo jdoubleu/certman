@@ -54,6 +54,10 @@ namespace gui::widget {
         void certificateSelected(Certificate *cert);
 
         void certificatesSelected(vector<Certificate *> certificates);
+
+        void certificateRemoveAction();
+
+        void certificateExportAction();
     };
 
 }
