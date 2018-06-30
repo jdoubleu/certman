@@ -180,10 +180,12 @@ EVP_PKEY *CertificateManager::generateKeyPair(int algorithm, int keySize) {
     // Algorithm specific key generation
     switch (algorithm) {
         case EVP_PKEY_RSA:
+            EVP_PKEY_keygen_init(keygenContext);
             EVP_PKEY_CTX_set_rsa_keygen_bits(keygenContext, keySize);
             EVP_PKEY_keygen(keygenContext, &keyPair);
             break;
         case EVP_PKEY_DSA:
+            EVP_PKEY_paramgen_init(keygenContext);
             EVP_PKEY_CTX_set_dsa_paramgen_bits(keygenContext, keySize);
             EVP_PKEY_paramgen(keygenContext, &keyPair);
         default:
