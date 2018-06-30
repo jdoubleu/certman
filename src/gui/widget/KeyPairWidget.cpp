@@ -84,7 +84,7 @@ void KeyPairWidget::on_wrappingAlgorithmComboBox_currentIndexChanged(int index) 
 
 bool KeyPairWidget::validate() {
     if (!ui->keyPassword->isHidden()) {
-
+        return ui->keyPassword->validate();
     }
 
     return true;
