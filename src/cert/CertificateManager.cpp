@@ -209,3 +209,15 @@ X509_STORE *CertificateManager::getCertificateListAsX509Store() {
 
     return store;
 }
+
+void CertificateManager::importNewCertificate(CERT_EXPORT newCertificate) {
+    Certificate *cert = newCertificate.certificate;
+    exportCertificate(cert, getCertificateDefaultLocation(cert));
+
+    BIO *keyFile = BIO_new_file(getPrivateKeyDefaultLocation(cert).c_str(), "w");
+    newCertificate.keyPairExport.exportFunc(keyFile);
+    BIO_free(keyFile);
+
+    certificateList->add(cert);
+}
+

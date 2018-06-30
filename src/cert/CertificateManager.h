@@ -63,6 +63,8 @@ namespace cert {
 
         EVP_PKEY *generateKeyPair(int algorithm, int keySize);
 
+        void importNewCertificate(CERT_EXPORT newCertificate);
+
     private:
         CertificateList *certificateList;
     };
