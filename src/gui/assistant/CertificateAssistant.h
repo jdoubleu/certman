@@ -4,9 +4,11 @@
 #include <QWizard>
 #include "../../cert/CertificateManager.h"
 #include "../../cert/Certificate.h"
+#include "../widget/KeyPairWidget.h"
 
 using cert::CertificateManager;
 using cert::Certificate;
+using cert::CERT_EXPORT;
 
 namespace Ui {
     class CertificateAssistant;
@@ -33,7 +35,7 @@ namespace gui::assistant {
 
     signals:
 
-        void created(bool successful);
+        void created(CERT_EXPORT newCertificate);
     };
 
 }

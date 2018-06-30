@@ -3,10 +3,12 @@
 #include <QPushButton>
 #include <QtWidgets/QDialogButtonBox>
 #include <QDate>
+#include "../widget/KeyPairWidget.h"
 #include "../widget/NameWidget.h"
 
 using std::string;
 using gui::widget::NameWidget;
+using cert::KEYPAIR_EXPORT;
 
 using namespace gui::assistant;
 using namespace cert;
@@ -15,6 +17,8 @@ CertificateAssistant::CertificateAssistant(CertificateManager *crtMgr, QWidget *
                                                                                           ui(new Ui::CertificateAssistant),
                                                                                           crtMgr(crtMgr) {
     ui->setupUi(this);
+
+    ui->keyPairWidget->injectCertificateManager(crtMgr);
 
     // validity
     auto now = QDate::currentDate();
@@ -33,27 +37,6 @@ CertificateAssistant::CertificateAssistant(CertificateManager *crtMgr, QWidget *
 
     connect(ui->validityperiod_field, QOverload<int>::of(&QSpinBox::valueChanged), this,
             update_validityPeriod_until_field);
-
-    //Algorithem
-    ui->algorithm_field->addItem(QString(SN_rsa), EVP_PKEY_RSA);
-    //ui->algorithm_field->addItem(QString("ECC"), EVP_PKEY_EC);
-    ui->algorithm_field->addItem(QString(SN_dsa), EVP_PKEY_DSA);
-
-    auto update_algorithm_field = [=](const QString &value) {
-        ui->keysize_field->clear();
-
-        if (value.toStdString() == SN_rsa) {
-            ui->keysize_field->addItem(QString("2048"));
-            ui->keysize_field->addItem(QString("4096"));
-        } else if (value.toStdString() == SN_dsa) {
-            ui->keysize_field->addItem(QString("1024"));
-            ui->keysize_field->addItem(QString("2048"));
-        }
-    };
-    update_algorithm_field(ui->algorithm_field->currentText());
-
-    connect(ui->algorithm_field, QOverload<const QString &>::of(&QComboBox::currentIndexChanged), this,
-            update_algorithm_field);
 }
 
 CertificateAssistant::~CertificateAssistant() {
@@ -67,13 +50,13 @@ void CertificateAssistant::accept() {
 }
 
 void CertificateAssistant::createCertificate() {
-    auto currentAlgorithm = ui->algorithm_field->currentData().toInt();
-    auto keySize = ui->keysize_field->currentText().toInt();
+    KEYPAIR_EXPORT keyPairExport = ui->keyPairWidget->generateKeyPair();
+    X509_NAME *subject = ui->subject_name->getX509Name();
     int validityDays = ui->validityperiod_field->value();
+    Certificate *certificate = crtMgr->createCertificate(subject, X509_NAME_dup(subject), validityDays, keyPairExport.keyPair);
 
-    auto *name = ui->subject_name->getX509Name();
-
-    bool successful = crtMgr->createCertificate(currentAlgorithm, keySize, validityDays, name, X509_NAME_dup(name));
-
-    emit created(successful);
+    emit created({
+            certificate,
+            keyPairExport
+    });
 }

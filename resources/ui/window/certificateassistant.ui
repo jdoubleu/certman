@@ -62,11 +62,17 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWizardPage" name="page_algorithm">
+  <widget class="QWizardPage" name="page_keyPair">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <property name="title">
     <string>Algorithm</string>
    </property>
-   <layout class="QVBoxLayout" name="layout_page_algorithm">
+   <layout class="QVBoxLayout" name="layout_page_keyPair">
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -80,44 +86,14 @@
      <number>0</number>
     </property>
     <item>
-     <layout class="QFormLayout" name="algorithm_layout">
-      <property name="fieldGrowthPolicy">
-       <enum>QFormLayout::ExpandingFieldsGrow</enum>
+     <widget class="gui::widget::KeyPairWidget" name="keyPairWidget" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
-      <property name="rowWrapPolicy">
-       <enum>QFormLayout::DontWrapRows</enum>
-      </property>
-      <property name="verticalSpacing">
-       <number>-1</number>
-      </property>
-      <property name="bottomMargin">
-       <number>10</number>
-      </property>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="algorithm_field">
-        <property name="currentText">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="algorithm_label">
-        <property name="text">
-         <string>Algorithm</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="keysize_label">
-        <property name="text">
-         <string>Key Size</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QComboBox" name="keysize_field"/>
-      </item>
-     </layout>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -204,6 +180,12 @@
    <class>gui::widget::NameWidget</class>
    <extends>QWidget</extends>
    <header location="global">src/gui/widget/NameWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>gui::widget::KeyPairWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">src/gui/widget/KeyPairWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
