@@ -12,7 +12,8 @@ namespace gui::widget {
 
     struct algorithmComboBox_field_st {
         const char *name;
-        const int algorithm;
+        const int algorithm = EVP_PKEY_NONE;
+        const int *keyLengths;
     };
 
     typedef struct algorithmComboBox_field_st SUPPORTED_KEY_ALG;
@@ -36,6 +37,7 @@ namespace gui::widget {
 
     public Q_SLOTS:
 
+        void on_algorithmComboBox_currentIndexChanged(int index);
         void on_wrappingAlgorithmComboBox_currentIndexChanged(int index);
 
     private:
@@ -44,11 +46,14 @@ namespace gui::widget {
 
         void addSupportedKeyAlgorithms();
 
+        void setSupportedKeySizes(const int sizes[]);
+
         void addSupportedKeyWrappingAlgorithms();
     };
 
 };
 
+Q_DECLARE_METATYPE(gui::widget::SUPPORTED_KEY_ALG);
 Q_DECLARE_METATYPE(gui::widget::SUPPORTED_WRAPPING_ALG);
 
 #endif //KEYPAIRWIDGET_H

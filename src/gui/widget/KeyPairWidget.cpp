@@ -6,11 +6,12 @@
 using namespace gui::widget;
 
 const SUPPORTED_KEY_ALG supportedKeyAlgorithms[] = {
-    {"RSA", EVP_PKEY_RSA},
-    {"DSA", EVP_PKEY_DSA},
+    {"RSA", EVP_PKEY_RSA, (int[]){2048, 4096}},
+    {"DSA", EVP_PKEY_DSA, (int[]){2048, 3072}},
 };
 
 const SUPPORTED_WRAPPING_ALG supportedWrappingAlgorithms[] = {
+    {"None", EVP_enc_null()},
     {"DES", NULL},
     {"DESede3 CBC", EVP_des_ede3_cbc()},
     {"AES", NULL},
@@ -35,12 +36,12 @@ KeyPairWidget::~KeyPairWidget() {
 
 void KeyPairWidget::addSupportedKeyAlgorithms() {
     for (const SUPPORTED_KEY_ALG &alg : supportedKeyAlgorithms) {
-        ui->algorithmComboBox->addItem(tr(alg.name), QVariant(alg.algorithm));
+        ui->algorithmComboBox->addItem(tr(alg.name), QVariant::fromValue(alg));
     }
 }
 
 void KeyPairWidget::addSupportedKeyWrappingAlgorithms() {
-    int row = 1;
+    int row = 0;
 
     for (const SUPPORTED_WRAPPING_ALG &wrappingAlg : supportedWrappingAlgorithms) {
         QVariant data;
@@ -56,6 +57,20 @@ void KeyPairWidget::addSupportedKeyWrappingAlgorithms() {
 
         row++;
     }
+}
+
+void KeyPairWidget::setSupportedKeySizes(const int *sizes) {
+    ui->keySizeComboBox->clear();
+
+    for (int i = 0; i < sizeof(sizes) / sizeof(int); i++) {
+        auto value = QVariant(sizes[i]);
+        ui->keySizeComboBox->addItem(value.toString(), value);
+    }
+}
+
+void KeyPairWidget::on_algorithmComboBox_currentIndexChanged(int index) {
+    auto alg = ui->algorithmComboBox->itemData(index, Qt::UserRole).value<SUPPORTED_KEY_ALG>();
+    setSupportedKeySizes(alg.keyLengths);
 }
 
 void KeyPairWidget::on_wrappingAlgorithmComboBox_currentIndexChanged(int index) {

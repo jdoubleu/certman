@@ -31,18 +31,7 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QComboBox" name="keySizeComboBox">
-        <item>
-         <property name="text">
-          <string>2048</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>4096</string>
-         </property>
-        </item>
-       </widget>
+       <widget class="QComboBox" name="keySizeComboBox"/>
       </item>
       <item row="0" column="0">
        <widget class="QLabel" name="algorithmLabel">
@@ -95,13 +84,7 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QComboBox" name="wrappingAlgorithmComboBox">
-           <item>
-            <property name="text">
-             <string>None</string>
-            </property>
-           </item>
-          </widget>
+          <widget class="QComboBox" name="wrappingAlgorithmComboBox"/>
          </item>
         </layout>
        </widget>
