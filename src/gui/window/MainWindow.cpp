@@ -11,6 +11,7 @@ using gui::assistant::ImportAssistant;
 using gui::assistant::ExportAssistant;
 using gui::widget::CertificateDetailWidget;
 using gui::assistant::CertificateAssistant;
+using cert::CERT_EXPORT;
 
 using namespace gui::window;
 
@@ -122,7 +123,8 @@ void MainWindow::onCertificateExportAction() {
 void MainWindow::onNewCertificateAction() {
     CertificateAssistant cea(crtMgr, this);
 
-    connect(&cea, &CertificateAssistant::created, this, [=]() {
+    connect(&cea, &CertificateAssistant::created, this, [=](CERT_EXPORT newCert) {
+        crtMgr->importNewCertificate(newCert);
         this->onCertificateImport(true);
     });
 
