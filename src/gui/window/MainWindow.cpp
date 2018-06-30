@@ -41,6 +41,7 @@ void MainWindow::setupActions() {
     connect(crtList, SIGNAL(certificateSelected(Certificate * )), this, SLOT(onCertificateSelected(Certificate * )));
     connect(crtList, SIGNAL(certificatesSelected(vector<Certificate *>)), this,
             SLOT(onCertificatesSelected(vector<Certificate *>)));
+    connect(crtList, SIGNAL(certificateRemoveAction()), this, SLOT(onCertificateRemoveAction()));
 
     connect(ui->actionDetails, SIGNAL(triggered()), this, SLOT(onCertificateDetailsAction()));
     connect(ui->actionRemove, SIGNAL(triggered()), this, SLOT(onCertificateRemoveAction()));
