@@ -1,6 +1,7 @@
 #include <QtWidgets/QFileDialog>
 #include <src/core/Environment.h>
 #include <QSettings>
+#include <iostream>
 #include "ExportAssistant.h"
 #include "ui_exportassistant.h"
 
@@ -14,8 +15,31 @@ ExportAssistant::ExportAssistant(CertificateManager *crtMgr, Certificate *cert, 
                                                                                                    cert(cert) {
     ui->setupUi(this);
 
-    if (!crtMgr->hasPrivateKey(cert))
-        ui->widget_location_key->hide();
+    string cn = cert->getSubjectField(LN_commonName);
+    if(!cn.empty()) {
+        QString openDir;
+        QSettings settings;
+        openDir = settings.value(EXPORT_LAST_OPEN_DIR, QString::fromStdString(Environment::getHomeDir())).toString();
+
+        cn.erase(std::remove(cn.begin(), cn.end(), '*'), cn.end());
+        std::replace(cn.begin(), cn.end(), '.', '_');
+
+        QFileInfo original(openDir);
+        QString newPath = original.canonicalPath() + QDir::separator() + QString::fromStdString(cn);
+        if (!original.completeSuffix().isEmpty())
+            newPath += "." + original.completeSuffix();
+
+        QString newPathKey = original.canonicalPath() + QDir::separator() + QString::fromStdString(cn) +
+                             QString::fromStdString("_key.pem");
+
+        ui->file_input->setText(newPath);
+
+        if (!crtMgr->hasPrivateKey(cert)) {
+            ui->widget_location_key->hide();
+        } else {
+            ui->key_input->setText(newPathKey);
+        }
+    }
 
     connect(ui->file_choose, SIGNAL(clicked()), this, SLOT(chooseFile()));
     connect(ui->key_choose, SIGNAL(clicked()), this, SLOT(chooseKey()));
