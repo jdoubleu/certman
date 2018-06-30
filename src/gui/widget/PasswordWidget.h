@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QString>
 #include <string>
+#include <openssl/bio.h>
 
 using std::string;
 
@@ -31,6 +32,7 @@ namespace gui::widget {
         bool validate();
 
         string password();
+        BIO *securePassphrase();
 
         void setName(QString name);
         void setDescription(QString description);

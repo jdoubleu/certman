@@ -47,6 +47,14 @@ string PasswordWidget::password() {
     return ui->passwordLineEdit->text().toStdString();
 }
 
+BIO *PasswordWidget::securePassphrase() {
+    BIO *passphrase = BIO_new(BIO_s_secmem());
+    BIO_puts(passphrase, password().c_str());
+    // TODO: make bio read-only
+
+    return passphrase;
+}
+
 void PasswordWidget::setName(QString name) {
     this->name = name;
 
