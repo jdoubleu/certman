@@ -102,3 +102,18 @@ string cert::X509_NAME_get_field(X509_NAME *name, const string field) {
 
     return string(buf);
 };
+
+void cert::removeChars(string *s) {
+    string::iterator it;
+
+    string illegal = R"(\\/:?\"<>|*.)";
+
+    for (it = s->begin(); it < s->end();) {
+        bool found = illegal.find(*it) != string::npos;
+        if (found) {
+            s->erase(it);
+        } else {
+            ++it;
+        }
+    }
+};

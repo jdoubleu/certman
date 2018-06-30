@@ -1,5 +1,4 @@
 #include "NameWidget.h"
-#include "ui_namewidget.h"
 #include "../../core/Environment.h"
 
 using core::Environment;
