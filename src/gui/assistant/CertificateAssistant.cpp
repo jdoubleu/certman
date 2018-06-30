@@ -11,7 +11,6 @@ using gui::widget::NameWidget;
 using cert::KEYPAIR_EXPORT;
 
 using namespace gui::assistant;
-using namespace cert;
 
 CertificateAssistant::CertificateAssistant(CertificateManager *crtMgr, QWidget *parent) : QWizard(parent),
                                                                                           ui(new Ui::CertificateAssistant),
