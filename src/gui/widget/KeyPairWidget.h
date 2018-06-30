@@ -3,6 +3,9 @@
 
 #include <QWidget>
 #include <openssl/evp.h>
+#include "../../cert/CertificateManager.h"
+
+using cert::CertificateManager;
 
 namespace Ui {
     class KeyPairWidget;
@@ -29,9 +32,12 @@ namespace gui::widget {
         Q_OBJECT
 
     public:
+        explicit KeyPairWidget(CertificateManager *crtMgr, QWidget *parent);
         explicit KeyPairWidget(QWidget *parent);
 
         ~KeyPairWidget() override;
+
+        void injectCertificateManager(CertificateManager *crtMgr);
 
         bool validate();
 
@@ -43,6 +49,7 @@ namespace gui::widget {
     private:
 
         Ui::KeyPairWidget *ui;
+        CertificateManager *crtMgr;
 
         void addSupportedKeyAlgorithms();
 

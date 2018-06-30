@@ -21,7 +21,11 @@ const SUPPORTED_WRAPPING_ALG supportedWrappingAlgorithms[] = {
     {"AES256 CFB128", EVP_aes_256_xts()}
 };
 
-KeyPairWidget::KeyPairWidget(QWidget *parent): QWidget(parent), ui(new Ui::KeyPairWidget) {
+KeyPairWidget::KeyPairWidget(QWidget *parent): KeyPairWidget(NULL, parent) {
+}
+
+KeyPairWidget::KeyPairWidget(CertificateManager *crtMgr, QWidget *parent) : QWidget(parent), ui(new Ui::KeyPairWidget),
+                                                                            crtMgr(crtMgr) {
     ui->setupUi(this);
 
     addSupportedKeyAlgorithms();
@@ -84,4 +88,8 @@ bool KeyPairWidget::validate() {
     }
 
     return true;
+}
+
+void KeyPairWidget::injectCertificateManager(CertificateManager *crtMgr) {
+    this->crtMgr = crtMgr;
 }
