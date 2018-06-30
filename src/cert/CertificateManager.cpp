@@ -131,50 +131,45 @@ bool CertificateManager::removeCertifcate(Certificate *cert) {
     return true;
 }
 
-bool CertificateManager::createCertificate(int algorithm, int keySize, int validityDays, X509_NAME *subjectName,
-                                           X509_NAME *issuerName) {
-    EVP_PKEY *privateKey;
-    privateKey = generateKeyPair(algorithm, keySize);
-
-    if(privateKey == nullptr)
-        return false;
+Certificate* CertificateManager::createCertificate(X509_NAME *subject, X509_NAME *issuer, int validityDays,
+                                                  EVP_PKEY *keyPair,
+                                                  const EVP_MD *signMd, long serialNumber) {
+    // TODO: error handling
 
     X509 *x509 = X509_new();
 
-    //Set serialnumber to 1
-    ASN1_INTEGER_set(X509_get_serialNumber(x509), 1);
+    // Version (X509 v3)
+    X509_set_version(x509, 2);
 
-    //Set valid from
+    // Serial Number
+    ASN1_INTEGER_set(X509_get_serialNumber(x509), serialNumber);
+
+    // Validity
     ASN1_TIME *tmFrom = ASN1_TIME_adj(NULL, time(NULL), 0, 0);
     X509_set1_notBefore(x509, tmFrom);
-
-    //Set valid to
     ASN1_TIME *tmAfter = ASN1_TIME_adj(NULL, time(NULL), validityDays, 0);
     X509_set1_notAfter(x509, tmAfter);
 
-    //Set public key
-    X509_set_pubkey(x509, privateKey);
+    // Subject and Issuer
+    X509_set_subject_name(x509, subject);
+    X509_set_issuer_name(x509, issuer);
 
+    // Keys and Signing
+    X509_set_pubkey(x509, keyPair);
+    X509_sign(x509, keyPair, signMd);
 
-    X509_set_subject_name(x509, subjectName);
-    X509_set_issuer_name(x509, issuerName);
+    // Validation
+    if (X509_verify(x509, keyPair) != 1) {
+        return NULL;
+    }
 
-    //sign certificate
-    X509_sign(x509, privateKey, EVP_sha1());
+    return new Certificate(x509);
+}
 
-    if(X509_verify(x509,privateKey) != 1)
-        return false;
-
-    //Save/export certificate and key
-    auto *cert = new Certificate(x509);
-
-    exportPrivateKey(privateKey, getPrivateKeyDefaultLocation(cert));
-
-    exportCertificate(cert, getCertificateDefaultLocation(cert));
-
-    certificateList->add(cert);
-
-    return true;
+Certificate *
+CertificateManager::createCertificate(X509_NAME *subject, X509_NAME *issuer, int validityDays, EVP_PKEY *keyPair,
+                                      long serialNumber) {
+    return createCertificate(subject, issuer, validityDays, keyPair, EVP_sha256(), serialNumber);
 }
 
 EVP_PKEY *CertificateManager::generateKeyPair(int algorithm, int keySize) {

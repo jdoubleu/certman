@@ -41,11 +41,14 @@ namespace cert {
 
         string getPrivateKeyDefaultLocation(Certificate *cert);
 
-        bool createCertificate(int algorithm, int keySize, int validityDays, X509_NAME *subjectName,
-                               X509_NAME *issuerName);
+        Certificate *createCertificate(X509_NAME *subject, X509_NAME *issuer, int validityDays, EVP_PKEY *keyPair,
+                                       const EVP_MD *signMd, long serialNumber = 1);
+
+        Certificate *createCertificate(X509_NAME *subject, X509_NAME *issuer, int validityDays, EVP_PKEY *keyPair,
+                                       long serialNumber = 1);
 
         X509_STORE *getCertificateListAsX509Store();
-        
+
         EVP_PKEY *generateKeyPair(int algorithm, int keySize);
 
     private:
