@@ -134,7 +134,7 @@ bool CertificateManager::removeCertifcate(Certificate *cert) {
 bool CertificateManager::createCertificate(int algorithm, int keySize, int validityDays, X509_NAME *subjectName,
                                            X509_NAME *issuerName) {
     EVP_PKEY *privateKey;
-    privateKey = createKeyPair(algorithm, keySize);
+    privateKey = generateKeyPair(algorithm, keySize);
 
     if(privateKey == nullptr)
         return false;
@@ -177,82 +177,27 @@ bool CertificateManager::createCertificate(int algorithm, int keySize, int valid
     return true;
 }
 
-EVP_PKEY *CertificateManager::createKeyPair(int algorithm, int keySize) {
-    EVP_PKEY *privateKey;
-    privateKey = EVP_PKEY_new();
-    EVP_PKEY_CTX *ctx;
-    EC_KEY *ecKey;
-    int ret = 0;
+EVP_PKEY *CertificateManager::generateKeyPair(int algorithm, int keySize) {
+    // TODO: error handling
+    EVP_PKEY *keyPair = EVP_PKEY_new();
+    EVP_PKEY_CTX *keygenContext = EVP_PKEY_CTX_new_id(algorithm, NULL);
+
+    // Algorithm specific key generation
     switch (algorithm) {
         case EVP_PKEY_RSA:
-            ctx = EVP_PKEY_CTX_new_id(EVP_PKEY_RSA, NULL);
-            if (!ctx)
-                /* Error occurred */
-                ret = -1;
-
-            if (EVP_PKEY_keygen_init(ctx) <= 0)
-                /* Error */
-                ret = -1;
-
-            if (EVP_PKEY_CTX_set_rsa_keygen_bits(ctx, keySize) <= 0)
-                /* Error */
-                ret = -1;
-
-            /* Generate key */
-            if (EVP_PKEY_keygen(ctx, &privateKey) <= 0)
-                ret = -1;
-
-            if (ret == -1) {
-                EVP_PKEY_CTX_free(ctx);
-                EVP_PKEY_free(privateKey);
-                return nullptr;
-            }
-            break;
-        case EVP_PKEY_EC:
-            ecKey = EC_KEY_new_by_curve_name(NID_secp224r1);
-
-            if (!ecKey)
-                /* Error occurred */
-                ret = -1;
-
-            if (EC_KEY_generate_key(ecKey) != 1)
-                ret = -1;
-
-            if (EVP_PKEY_set1_EC_KEY(privateKey, ecKey) <= 0)
-                ret = -1;
-
-            if (ret == -1) {
-                EC_KEY_free(ecKey);
-                EVP_PKEY_free(privateKey);
-                return nullptr;
-            }
+            EVP_PKEY_CTX_set_rsa_keygen_bits(keygenContext, keySize);
+            EVP_PKEY_keygen(keygenContext, &keyPair);
             break;
         case EVP_PKEY_DSA:
-            ctx = EVP_PKEY_CTX_new_id(EVP_PKEY_DSA, NULL);
-            if (!ctx)
-                /* Error occurred */
-                ret = -1;
-
-            if (!EVP_PKEY_paramgen_init(ctx))
-                ret = -1;
-
-            if (!EVP_PKEY_CTX_set_dsa_paramgen_bits(ctx, keySize))
-                ret = -1;
-
-            if (!EVP_PKEY_paramgen(ctx, &privateKey))
-                ret = -1;
-
-            if (ret == -1) {
-                EVP_PKEY_CTX_free(ctx);
-                EVP_PKEY_free(privateKey);
-                return nullptr;
-            }
-            break;
+            EVP_PKEY_CTX_set_dsa_paramgen_bits(keygenContext, keySize);
+            EVP_PKEY_paramgen(keygenContext, &keyPair);
         default:
             break;
     }
 
-    return privateKey;
+    EVP_PKEY_CTX_free(keygenContext);
+
+    return keyPair;
 }
 
 X509_STORE *CertificateManager::getCertificateListAsX509Store() {

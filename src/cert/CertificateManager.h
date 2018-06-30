@@ -45,9 +45,8 @@ namespace cert {
                                X509_NAME *issuerName);
 
         X509_STORE *getCertificateListAsX509Store();
-
-    protected:
-        EVP_PKEY *createKeyPair(int algorithm, int keySize);
+        
+        EVP_PKEY *generateKeyPair(int algorithm, int keySize);
 
     private:
         CertificateList *certificateList;
