@@ -9,6 +9,18 @@ using std::vector;
 
 namespace cert {
 
+    typedef std::function<void(BIO *sink)> EXPORT_PRIVATEKEY_FUNC;
+
+    typedef struct {
+        EVP_PKEY *keyPair;
+        EXPORT_PRIVATEKEY_FUNC exportFunc;
+    } KEYPAIR_EXPORT;
+
+    typedef  struct {
+        Certificate *certificate;
+        KEYPAIR_EXPORT keyPairExport;
+    } CERT_EXPORT;
+
     class CertificateManager {
     Q_DECLARE_TR_FUNCTIONS(CertificateManager)
 
