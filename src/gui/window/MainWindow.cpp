@@ -5,14 +5,14 @@
 #include "../assistant/ExportAssistant.h"
 #include "../widget/CertificateDetailWidget.h"
 #include "../assistant/CreateCertificateAssistant.h"
-#include "../assistant/CAAssistant.h"
+#include "src/gui/assistant/CreateCACertificateAssistant.h"
 
 using cert::CertificateManager;
 using gui::assistant::ImportAssistant;
 using gui::assistant::ExportAssistant;
 using gui::widget::CertificateDetailWidget;
 using gui::assistant::CreateCertificateAssistant;
-using gui::assistant::CAAssistant;
+using gui::assistant::CreateCACertificateAssistant;
 using cert::CERT_EXPORT;
 
 using namespace gui::window;
@@ -138,9 +138,9 @@ void MainWindow::onNewCertificateAction() {
 }
 
 void MainWindow::onNewCertificateAuthorityAction() {
-    CAAssistant caa(crtMgr, this);
+    CreateCACertificateAssistant caa(crtMgr, this);
 
-    connect(&caa, &CAAssistant::created, this, [=](CERT_EXPORT newCert) {
+    connect(&caa, &CreateCACertificateAssistant::created, this, [=](CERT_EXPORT newCert) {
         crtMgr->importNewCertificate(newCert);
         this->onCertificateImport(true);
     });

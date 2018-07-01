@@ -1,5 +1,5 @@
-#include "CAAssistant.h"
-#include "ui_caassistant.h"
+#include "CreateCACertificateAssistant.h"
+#include "ui_createcacertificateassistant.h"
 #include "../../cert/Certificate.h"
 
 using gui::widget::NameWidget;
@@ -8,7 +8,7 @@ using cert::Certificate;
 
 using namespace gui::assistant;
 
-CAAssistant::CAAssistant(CertificateManager *crtMgr, QWidget *parent): QWizard(parent), ui(new Ui::CAAssistant), crtMgr(crtMgr) {
+CreateCACertificateAssistant::CreateCACertificateAssistant(CertificateManager *crtMgr, QWidget *parent): QWizard(parent), ui(new Ui::CreateCACertificateAssistant), crtMgr(crtMgr) {
     ui->setupUi(this);
 
     ui->keyPairWidget->injectCertificateManager(crtMgr);
@@ -32,17 +32,17 @@ CAAssistant::CAAssistant(CertificateManager *crtMgr, QWidget *parent): QWizard(p
             update_validityPeriod_until_field);
 }
 
-CAAssistant::~CAAssistant() {
+CreateCACertificateAssistant::~CreateCACertificateAssistant() {
     delete ui;
 }
 
-void CAAssistant::accept() {
+void CreateCACertificateAssistant::accept() {
     createCACertificate();
 
     QDialog::accept();
 }
 
-void CAAssistant::createCACertificate() {
+void CreateCACertificateAssistant::createCACertificate() {
     KEYPAIR_EXPORT keyPairExport = ui->keyPairWidget->generateKeyPair();
     X509_NAME *subject = ui->nameWidget->getX509Name();
     int validityDays = ui->validityperiod_field->value();

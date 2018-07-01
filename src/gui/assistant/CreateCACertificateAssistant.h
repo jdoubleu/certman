@@ -8,22 +8,22 @@ using cert::CertificateManager;
 using cert::CERT_EXPORT;
 
 namespace Ui {
-    class CAAssistant;
+    class CreateCACertificateAssistant;
 }
 
 namespace gui::assistant {
 
-    class CAAssistant : public QWizard {
+    class CreateCACertificateAssistant : public QWizard {
     Q_OBJECT
     public:
-        explicit CAAssistant(CertificateManager *crtMgr, QWidget *parent = 0);
+        explicit CreateCACertificateAssistant(CertificateManager *crtMgr, QWidget *parent = 0);
 
-        ~CAAssistant();
+        ~CreateCACertificateAssistant();
 
         void accept() override ;
 
     private:
-        Ui::CAAssistant *ui;
+        Ui::CreateCACertificateAssistant *ui;
 
         CertificateManager *crtMgr;
 
