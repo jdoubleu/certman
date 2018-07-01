@@ -16,7 +16,7 @@ namespace cert {
         EXPORT_PRIVATEKEY_FUNC exportFunc;
     } KEYPAIR_EXPORT;
 
-    typedef  struct {
+    typedef struct {
         Certificate *certificate;
         KEYPAIR_EXPORT keyPairExport;
     } CERT_EXPORT;
@@ -60,7 +60,7 @@ namespace cert {
         X509_STORE *getCertificateListAsX509Store();
 
         bool signCertificate(Certificate *cert, EVP_PKEY *pKey, X509_NAME *issuer);
-        
+
         EVP_PKEY *generateKeyPair(int algorithm, int keySize);
 
         void importNewCertificate(CERT_EXPORT newCertificate);

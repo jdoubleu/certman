@@ -2,9 +2,6 @@
 #include "ui_createcertificateassistant.h"
 #include <QPushButton>
 #include <QtWidgets/QDialogButtonBox>
-#include <QDate>
-#include "../widget/KeyPairWidget.h"
-#include "../widget/NameWidget.h"
 
 using std::string;
 using gui::widget::NameWidget;
@@ -13,8 +10,8 @@ using cert::KEYPAIR_EXPORT;
 using namespace gui::assistant;
 
 CreateCertificateAssistant::CreateCertificateAssistant(CertificateManager *crtMgr, QWidget *parent) : QWizard(parent),
-                                                                                          ui(new Ui::CertificateAssistant),
-                                                                                          crtMgr(crtMgr) {
+                                                                                                      ui(new Ui::CertificateAssistant),
+                                                                                                      crtMgr(crtMgr) {
     ui->setupUi(this);
 
     ui->keyPairWidget->injectCertificateManager(crtMgr);
@@ -52,10 +49,11 @@ void CreateCertificateAssistant::createCertificate() {
     KEYPAIR_EXPORT keyPairExport = ui->keyPairWidget->generateKeyPair();
     X509_NAME *subject = ui->subject_name->getX509Name();
     int validityDays = ui->validityperiod_field->value();
-    Certificate *certificate = crtMgr->createCertificate(subject, X509_NAME_dup(subject), validityDays, keyPairExport.keyPair);
+    Certificate *certificate = crtMgr->createCertificate(subject, X509_NAME_dup(subject), validityDays,
+                                                         keyPairExport.keyPair);
 
     emit created({
-            certificate,
-            keyPairExport
-    });
+                         certificate,
+                         keyPairExport
+                 });
 }
