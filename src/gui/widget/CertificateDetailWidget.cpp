@@ -34,7 +34,7 @@ QDialog *CertificateDetailWidget::asDialog(Certificate certificate, CertificateM
 
     dialog->setLayout(layout);
 
-    dialog->setFixedWidth(460);
+    dialog->setMinimumWidth(450);
 
     return dialog;
 }
