@@ -3,6 +3,7 @@
 #include <QSettings>
 #include "ExportAssistant.h"
 #include "ui_exportassistant.h"
+#include "../../cert/util.h"
 
 using core::Environment;
 
@@ -14,8 +15,29 @@ ExportAssistant::ExportAssistant(CertificateManager *crtMgr, Certificate *cert, 
                                                                                                    cert(cert) {
     ui->setupUi(this);
 
-    if (!crtMgr->hasPrivateKey(cert))
-        ui->widget_location_key->hide();
+    string cn = cert->getSubjectField(LN_commonName);
+    if (!cn.empty()) {
+        QString openDir;
+        QSettings settings;
+        openDir = settings.value(EXPORT_LAST_OPEN_DIR, QString::fromStdString(Environment::getHomeDir())).toString();
+
+        cert::removeChars(&cn);
+
+        QFileInfo original(openDir);
+        QString newPath = original.canonicalPath() + QDir::separator() + QString::fromStdString(cn);
+        QString newPathKey = newPath + QString::fromStdString("_key.pem");
+
+        if (!original.completeSuffix().isEmpty())
+            newPath += "." + original.completeSuffix();
+
+        ui->file_input->setText(newPath);
+
+        if (!crtMgr->hasPrivateKey(cert)) {
+            ui->widget_location_key->hide();
+        } else {
+            ui->key_input->setText(newPathKey);
+        }
+    }
 
     connect(ui->file_choose, SIGNAL(clicked()), this, SLOT(chooseFile()));
     connect(ui->key_choose, SIGNAL(clicked()), this, SLOT(chooseKey()));

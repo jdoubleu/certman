@@ -27,6 +27,8 @@ namespace cert {
     time_t ASN1_TIME_to_time(ASN1_TIME *time);
 
     string time_to_string(time_t _tm);
+
+    void removeChars(string *s);
 }
 
 #endif
