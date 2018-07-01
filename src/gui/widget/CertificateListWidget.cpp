@@ -135,5 +135,11 @@ void CertificateListWidget::generateContextMenu(const QPoint &pos) {
     });
     contextMenu.addAction(&showExport);
 
+    QAction showSign(tr("Sign"), this);
+    connect(&showSign, &QAction::triggered, this, [=] {
+        emit certificateSignAction();
+    });
+    contextMenu.addAction(&showSign);
+
     contextMenu.exec(mapToGlobal(pos));
 }

@@ -63,7 +63,7 @@ void ImportAssistant::chooseKey() {
 
     QString key = QFileDialog::getOpenFileName(this, tr("Choose Key"),
                                                openDir,
-                                               tr("Certificate Files (*.pem *.der)"));
+                                               tr("All Files (*)"));
     ui->key_input->setText(key);
 }
 

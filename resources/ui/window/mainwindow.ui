@@ -41,30 +41,31 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>38</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>Fi&amp;le</string>
     </property>
     <addaction name="action_Import"/>
     <addaction name="actionNew_Certificate"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
-     <string>Certificate</string>
+     <string>&amp;Certificate</string>
     </property>
     <addaction name="actionDetails"/>
     <addaction name="actionExport"/>
     <addaction name="actionRemove"/>
+    <addaction name="actionSign"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
   </widget>
   <action name="action_Import">
    <property name="text">
-    <string>&amp;Import Certificate</string>
+    <string>Import Certificate</string>
    </property>
    <property name="toolTip">
     <string>Import existing certificate</string>
@@ -80,7 +81,7 @@
   </action>
   <action name="actionNew_Certificate">
    <property name="text">
-    <string>&amp;New Certificate</string>
+    <string>New Certificate</string>
    </property>
   </action>
   <action name="actionRemove">
@@ -97,6 +98,14 @@
    </property>
    <property name="text">
     <string>Export</string>
+   </property>
+  </action>
+  <action name="actionSign">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Sign</string>
    </property>
   </action>
  </widget>

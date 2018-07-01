@@ -131,9 +131,9 @@ bool CertificateManager::removeCertifcate(Certificate *cert) {
     return true;
 }
 
-Certificate* CertificateManager::createCertificate(X509_NAME *subject, X509_NAME *issuer, int validityDays,
-                                                  EVP_PKEY *keyPair,
-                                                  const EVP_MD *signMd, long serialNumber) {
+Certificate *CertificateManager::createCertificate(X509_NAME *subject, X509_NAME *issuer, int validityDays,
+                                                   EVP_PKEY *keyPair,
+                                                   const EVP_MD *signMd, long serialNumber) {
     // TODO: error handling
 
     X509 *x509 = X509_new();
@@ -201,13 +201,33 @@ X509_STORE *CertificateManager::getCertificateListAsX509Store() {
     X509_STORE *store = X509_STORE_new();
     auto certs = getCertificateList()->listAll();
 
-    for (const auto& cert: *certs) {
+    for (const auto &cert: *certs) {
         X509_STORE_add_cert(store, cert->getX509());
     }
 
     X509_STORE_lock(store);
 
     return store;
+}
+
+bool CertificateManager::signCertificate(Certificate *cert, EVP_PKEY *pKey, X509_NAME *issuer) {
+    string certLocation = getCertificateDefaultLocation(cert);
+    string keyLocation;
+    if (hasPrivateKey(cert))
+        keyLocation = getPrivateKeyDefaultLocation(cert);
+
+    X509_set_issuer_name(cert->getX509(), issuer);
+    int bytes = cert->sign(pKey);
+    if (bytes == 0)
+        return false;
+
+    QFile::remove(QString::fromStdString(certLocation));
+    exportCertificate(cert, getCertificateDefaultLocation(cert));
+
+    if (!keyLocation.empty())
+        QFile::rename(QString::fromStdString(keyLocation), QString::fromStdString(getPrivateKeyDefaultLocation(cert)));
+
+    return true;
 }
 
 void CertificateManager::importNewCertificate(CERT_EXPORT newCertificate) {

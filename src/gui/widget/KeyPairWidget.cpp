@@ -2,29 +2,28 @@
 #include <openssl/pem.h>
 #include "KeyPairWidget.h"
 #include "ui_keypairwidget.h"
-#include "PasswordWidget.h"
 
 using cert::EXPORT_PRIVATEKEY_FUNC;
 
 using namespace gui::widget;
 
 const SUPPORTED_KEY_ALG supportedKeyAlgorithms[] = {
-    {"RSA", EVP_PKEY_RSA, (int[]){2048, 4096}},
-    {"DSA", EVP_PKEY_DSA, (int[]){2048, 3072}},
+        {"RSA", EVP_PKEY_RSA, (int[]) {2048, 4096}},
+        {"DSA", EVP_PKEY_DSA, (int[]) {2048, 3072}},
 };
 
 const SUPPORTED_WRAPPING_ALG supportedWrappingAlgorithms[] = {
-    {"None", EVP_enc_null()},
-    {"DES", NULL},
-    {"DESede3 CBC", EVP_des_ede3_cbc()},
-    {"AES", NULL},
-    {"AES128 CBC", EVP_aes_128_cbc()},
-    {"AES256 CBC", EVP_aes_256_cbc()},
-    {"AES256 XTS", EVP_aes_256_xts()},
-    {"AES256 CFB128", EVP_aes_256_xts()}
+        {"None",          EVP_enc_null()},
+        {"DES", NULL},
+        {"DESede3 CBC",   EVP_des_ede3_cbc()},
+        {"AES", NULL},
+        {"AES128 CBC",    EVP_aes_128_cbc()},
+        {"AES256 CBC",    EVP_aes_256_cbc()},
+        {"AES256 XTS",    EVP_aes_256_xts()},
+        {"AES256 CFB128", EVP_aes_256_xts()}
 };
 
-KeyPairWidget::KeyPairWidget(QWidget *parent): KeyPairWidget(NULL, parent) {
+KeyPairWidget::KeyPairWidget(QWidget *parent) : KeyPairWidget(NULL, parent) {
 }
 
 KeyPairWidget::KeyPairWidget(CertificateManager *crtMgr, QWidget *parent) : QWidget(parent), ui(new Ui::KeyPairWidget),
@@ -96,19 +95,20 @@ bool KeyPairWidget::validate() {
 KEYPAIR_EXPORT KeyPairWidget::generateKeyPair() {
     auto keyAlgorithm = ui->algorithmComboBox->currentData(Qt::UserRole).value<SUPPORTED_KEY_ALG>().algorithm;
     auto keyLength = ui->keySizeComboBox->currentData(Qt::UserRole).value<int>();
-    auto wrappingAlgorithm = ui->wrappingAlgorithmComboBox->currentData(Qt::UserRole).value<SUPPORTED_WRAPPING_ALG>().cipher;
+    auto wrappingAlgorithm = ui->wrappingAlgorithmComboBox->currentData(
+            Qt::UserRole).value<SUPPORTED_WRAPPING_ALG>().cipher;
 
     EVP_PKEY *keyPair = crtMgr->generateKeyPair(keyAlgorithm, keyLength);
 
     string passphrase = ui->keyPassword->password();
     EXPORT_PRIVATEKEY_FUNC exporter = [keyPair, wrappingAlgorithm, passphrase](BIO *sink) {
-        PEM_write_bio_PrivateKey(sink, keyPair, wrappingAlgorithm, NULL, 0, NULL, (void*) &passphrase);
+        PEM_write_bio_PrivateKey(sink, keyPair, wrappingAlgorithm, NULL, 0, NULL, (void *) &passphrase);
         BIO_flush(sink);
     };
 
     return {
-        keyPair,
-        exporter
+            keyPair,
+            exporter
     };
 }
 

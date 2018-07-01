@@ -129,3 +129,8 @@ vector<CertificateExtension *> Certificate::getExtensions() {
 
     return exts;
 }
+
+int Certificate::sign(EVP_PKEY *pKey) {
+    int res = X509_sign(this->certificate, pKey, EVP_sha256());
+    return res;
+}
