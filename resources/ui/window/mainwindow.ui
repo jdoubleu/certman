@@ -65,7 +65,7 @@
   </widget>
   <action name="action_Import">
    <property name="text">
-    <string>&amp;Import Certificate</string>
+    <string>Import Certificate</string>
    </property>
    <property name="toolTip">
     <string>Import existing certificate</string>
@@ -76,12 +76,12 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Information</string>
+    <string>Information</string>
    </property>
   </action>
   <action name="actionNew_Certificate">
    <property name="text">
-    <string>&amp;New Certificate</string>
+    <string>New Certificate</string>
    </property>
   </action>
   <action name="actionRemove">
@@ -89,7 +89,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Remove</string>
+    <string>Remove</string>
    </property>
   </action>
   <action name="actionExport">
@@ -97,7 +97,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Export</string>
+    <string>Export</string>
    </property>
   </action>
   <action name="actionSign">
