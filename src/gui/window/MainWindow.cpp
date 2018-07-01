@@ -65,6 +65,7 @@ void MainWindow::onCertificateImport(bool successful) {
 
 void MainWindow::onCertificateSelected(Certificate *cert) {
     auto detail = CertificateDetailWidget::asDialog(*cert, crtMgr, this);
+    detail->setFixedWidth(465);
     detail->show();
 }
 
