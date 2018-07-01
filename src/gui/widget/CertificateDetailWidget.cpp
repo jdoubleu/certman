@@ -28,11 +28,13 @@ QDialog *CertificateDetailWidget::asDialog(Certificate certificate, CertificateM
     dialog->setWindowTitle(QString::fromStdString(certificate.getSubjectField("commonName")));
 
     auto *layout = new QGridLayout(dialog);
-    layout->setMargin(10);
+    layout->setMargin(5);
 
     layout->addWidget(new CertificateDetailWidget(certificate, crtMgr, dialog));
 
     dialog->setLayout(layout);
+
+    dialog->setMinimumWidth(450);
 
     return dialog;
 }
@@ -156,7 +158,6 @@ void CertificateDetailWidget::renderExtensions() {
 
         auto *content = new QLabel(QString::fromStdString(ext->sprint()), container);
         content->setWordWrap(true);
-        content->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
         extLayout->addWidget(content);
 
         containerLayout->addWidget(extContainer);
