@@ -53,6 +53,8 @@ namespace cert {
 
         vector<CertificateExtension *> getExtensions();
 
+        int sign(EVP_PKEY *pKey);
+
         bool operator==(const Certificate &c);
 
     private:

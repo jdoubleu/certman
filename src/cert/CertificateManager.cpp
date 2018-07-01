@@ -268,9 +268,20 @@ X509_STORE *CertificateManager::getCertificateListAsX509Store() {
     return store;
 }
 
-int CertificateManager::signCertificate(Certificate *cert) {
-    X509 *x509 = cert->getX509();
-    EVP_PKEY *pKey = getKey(getPrivateKeyDefaultLocation(cert));
+bool CertificateManager::signCertificate(Certificate *cert, EVP_PKEY *pKey) {
+    string certLocation = getPrivateKeyDefaultLocation(cert);
+    string keyLocation;
+    if(hasPrivateKey(cert))
+        keyLocation = getPrivateKeyDefaultLocation(cert);
 
-    return X509_sign(x509,pKey, EVP_sha256());
+    int bytes = cert->sign(pKey);
+    if(bytes == 0)
+        return false;
+
+    QFile::remove(QString::fromStdString(certLocation));
+    if(!keyLocation.empty())
+        QFile::remove(QString::fromStdString(keyLocation));
+
+    exportCertificate(cert,getCertificateDefaultLocation(cert));
+    return true;
 }

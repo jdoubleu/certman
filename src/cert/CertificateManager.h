@@ -17,8 +17,6 @@ namespace cert {
 
         bool removeCertifcate(Certificate *cert);
 
-        void signCertificate();
-
         void importCertificate(string pathCert, string pathPrivateKey);
 
         void exportCertificate(Certificate *cert, string path);
@@ -46,7 +44,7 @@ namespace cert {
 
         X509_STORE *getCertificateListAsX509Store();
 
-        int signCertificate(Certificate *cert);
+        bool signCertificate(Certificate *cert, EVP_PKEY *pKey);
 
     protected:
         EVP_PKEY *createKeyPair(int algorithm, int keySize);
