@@ -42,7 +42,8 @@ MainWindow::~MainWindow() {
 void MainWindow::setupActions() {
     connect(ui->action_Import, SIGNAL(triggered()), this, SLOT(importCertificate()));
     connect(ui->actionNew_Certificate, &QAction::triggered, this, &MainWindow::onNewCertificateAction);
-    connect(ui->actionNew_Certificate_Authority, &QAction::triggered, this, &MainWindow::onNewCertificateAuthorityAction);
+    connect(ui->actionNew_Certificate_Authority, &QAction::triggered, this,
+            &MainWindow::onNewCertificateAuthorityAction);
 
     connect(crtList, SIGNAL(certificateSelected(Certificate * )), this, SLOT(onCertificateSelected(Certificate * )));
     connect(crtList, SIGNAL(certificatesSelected(vector<Certificate *>)), this,

@@ -1,6 +1,5 @@
 #include "CreateCACertificateAssistant.h"
 #include "ui_createcacertificateassistant.h"
-#include "../../cert/Certificate.h"
 
 using gui::widget::NameWidget;
 using cert::KEYPAIR_EXPORT;
@@ -8,7 +7,8 @@ using cert::Certificate;
 
 using namespace gui::assistant;
 
-CreateCACertificateAssistant::CreateCACertificateAssistant(CertificateManager *crtMgr, QWidget *parent): QWizard(parent), ui(new Ui::CreateCACertificateAssistant), crtMgr(crtMgr) {
+CreateCACertificateAssistant::CreateCACertificateAssistant(CertificateManager *crtMgr, QWidget *parent) : QWizard(
+        parent), ui(new Ui::CreateCACertificateAssistant), crtMgr(crtMgr) {
     ui->setupUi(this);
 
     ui->keyPairWidget->injectCertificateManager(crtMgr);
@@ -53,7 +53,7 @@ void CreateCACertificateAssistant::createCACertificate() {
     ca->addKeyUsage(true, true, false, false, false, false, true);
 
     emit created({
-            ca,
-            keyPairExport
-    });
+                         ca,
+                         keyPairExport
+                 });
 }

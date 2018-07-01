@@ -20,7 +20,7 @@ namespace gui::assistant {
 
         ~CreateCACertificateAssistant();
 
-        void accept() override ;
+        void accept() override;
 
     private:
         Ui::CreateCACertificateAssistant *ui;

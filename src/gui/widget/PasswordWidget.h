@@ -19,17 +19,17 @@ namespace gui::widget {
 
         Q_PROPERTY(QString name
                            MEMBER
-                           name
+                                   name
                            WRITE
                            setName)
         Q_PROPERTY(QString description
                            MEMBER
-                           description
+                                   description
                            WRITE
                            setDescription)
         Q_PROPERTY(bool repeat
                            MEMBER
-                           repeat
+                                   repeat
                            WRITE
                            setRepeat)
 
