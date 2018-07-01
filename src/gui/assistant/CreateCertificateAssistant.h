@@ -4,9 +4,11 @@
 #include <QWizard>
 #include "../../cert/CertificateManager.h"
 #include "../../cert/Certificate.h"
+#include "../widget/KeyPairWidget.h"
 
 using cert::CertificateManager;
 using cert::Certificate;
+using cert::CERT_EXPORT;
 
 namespace Ui {
     class CertificateAssistant;
@@ -14,13 +16,13 @@ namespace Ui {
 
 namespace gui::assistant {
 
-    class CertificateAssistant : public QWizard {
+    class CreateCertificateAssistant : public QWizard {
     Q_OBJECT
 
     public:
-        explicit CertificateAssistant(CertificateManager *crtMgr, QWidget *parent = 0);
+        explicit CreateCertificateAssistant(CertificateManager *crtMgr, QWidget *parent = 0);
 
-        ~CertificateAssistant();
+        ~CreateCertificateAssistant();
 
         void accept() override;
 
@@ -33,7 +35,7 @@ namespace gui::assistant {
 
     signals:
 
-        void created(bool successful);
+        void created(CERT_EXPORT newCertificate);
     };
 
 }
