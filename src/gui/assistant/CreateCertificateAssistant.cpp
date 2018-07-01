@@ -1,5 +1,5 @@
-#include "CertificateAssistant.h"
-#include "ui_certificateassistant.h"
+#include "CreateCertificateAssistant.h"
+#include "ui_createcertificateassistant.h"
 #include <QPushButton>
 #include <QtWidgets/QDialogButtonBox>
 #include <QDate>
@@ -12,7 +12,7 @@ using cert::KEYPAIR_EXPORT;
 
 using namespace gui::assistant;
 
-CertificateAssistant::CertificateAssistant(CertificateManager *crtMgr, QWidget *parent) : QWizard(parent),
+CreateCertificateAssistant::CreateCertificateAssistant(CertificateManager *crtMgr, QWidget *parent) : QWizard(parent),
                                                                                           ui(new Ui::CertificateAssistant),
                                                                                           crtMgr(crtMgr) {
     ui->setupUi(this);
@@ -38,17 +38,17 @@ CertificateAssistant::CertificateAssistant(CertificateManager *crtMgr, QWidget *
             update_validityPeriod_until_field);
 }
 
-CertificateAssistant::~CertificateAssistant() {
+CreateCertificateAssistant::~CreateCertificateAssistant() {
     delete ui;
 }
 
-void CertificateAssistant::accept() {
+void CreateCertificateAssistant::accept() {
     createCertificate();
 
     QDialog::accept();
 }
 
-void CertificateAssistant::createCertificate() {
+void CreateCertificateAssistant::createCertificate() {
     KEYPAIR_EXPORT keyPairExport = ui->keyPairWidget->generateKeyPair();
     X509_NAME *subject = ui->subject_name->getX509Name();
     int validityDays = ui->validityperiod_field->value();

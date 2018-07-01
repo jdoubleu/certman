@@ -16,13 +16,13 @@ namespace Ui {
 
 namespace gui::assistant {
 
-    class CertificateAssistant : public QWizard {
+    class CreateCertificateAssistant : public QWizard {
     Q_OBJECT
 
     public:
-        explicit CertificateAssistant(CertificateManager *crtMgr, QWidget *parent = 0);
+        explicit CreateCertificateAssistant(CertificateManager *crtMgr, QWidget *parent = 0);
 
-        ~CertificateAssistant();
+        ~CreateCertificateAssistant();
 
         void accept() override;
 
