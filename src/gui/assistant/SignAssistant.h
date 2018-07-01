@@ -30,6 +30,7 @@ namespace gui::assistant {
         CertificateManager *crtMgr;
 
     private slots:
+
         void submit();
 
     signals:

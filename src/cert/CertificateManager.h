@@ -44,7 +44,7 @@ namespace cert {
 
         X509_STORE *getCertificateListAsX509Store();
 
-        bool signCertificate(Certificate *cert, EVP_PKEY *pKey);
+        bool signCertificate(Certificate *cert, EVP_PKEY *pKey, X509_NAME *issuer);
 
     protected:
         EVP_PKEY *createKeyPair(int algorithm, int keySize);

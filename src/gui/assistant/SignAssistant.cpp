@@ -19,7 +19,8 @@ SignAssistant::SignAssistant(CertificateManager *crtMgr, Certificate *cert, QWid
     for (it = allCerts->begin(); it != allCerts->end(); ++it) {
         Certificate *certifcate = *it;
         struct CertificateContainer container = {certifcate};
-        ui->signing_input->addItem(QString::fromStdString(certifcate->getSubjectField(LN_commonName)), QVariant::fromValue(container));
+        ui->signing_input->addItem(QString::fromStdString(certifcate->getSubjectField(LN_commonName)),
+                                   QVariant::fromValue(container));
     }
 
     string cn = cert->getSubjectField(LN_commonName);
@@ -35,12 +36,12 @@ SignAssistant::~SignAssistant() {
 void SignAssistant::submit() {
     auto signing = ui->signing_input->currentData(Qt::UserRole).value<CertificateContainer>().certificate;
     bool hasKey = crtMgr->hasPrivateKey(signing);
-    if(hasKey) {
+    if (hasKey) {
 
         //Get signing key
         EVP_PKEY *pKey = crtMgr->getKey(crtMgr->getPrivateKeyDefaultLocation(signing));
-
-        bool successful = crtMgr->signCertificate(cert, pKey);
+        X509_NAME *issuer = X509_get_issuer_name(signing->getX509());
+        bool successful = crtMgr->signCertificate(cert, pKey, issuer);
         emit certificateSigned(successful);
     }
 }

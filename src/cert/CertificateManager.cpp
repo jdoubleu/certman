@@ -268,20 +268,22 @@ X509_STORE *CertificateManager::getCertificateListAsX509Store() {
     return store;
 }
 
-bool CertificateManager::signCertificate(Certificate *cert, EVP_PKEY *pKey) {
-    string certLocation = getPrivateKeyDefaultLocation(cert);
+bool CertificateManager::signCertificate(Certificate *cert, EVP_PKEY *pKey, X509_NAME *issuer) {
+    string certLocation = getCertificateDefaultLocation(cert);
     string keyLocation;
-    if(hasPrivateKey(cert))
+    if (hasPrivateKey(cert))
         keyLocation = getPrivateKeyDefaultLocation(cert);
 
+    X509_set_issuer_name(cert->getX509(), issuer);
     int bytes = cert->sign(pKey);
-    if(bytes == 0)
+    if (bytes == 0)
         return false;
 
     QFile::remove(QString::fromStdString(certLocation));
-    if(!keyLocation.empty())
-        QFile::remove(QString::fromStdString(keyLocation));
+    exportCertificate(cert, getCertificateDefaultLocation(cert));
 
-    exportCertificate(cert,getCertificateDefaultLocation(cert));
+    if (!keyLocation.empty())
+        QFile::rename(QString::fromStdString(keyLocation), QString::fromStdString(getPrivateKeyDefaultLocation(cert)));
+
     return true;
 }

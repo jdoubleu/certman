@@ -138,8 +138,8 @@ void MainWindow::onNewCertificateAction() {
 
 void MainWindow::onCertificateSignAction() {
     if (selectedCertificate != NULL) {
-        SignAssistant sia(crtMgr,selectedCertificate, this);
-        connect(&sia,&SignAssistant::certificateSigned, this,&MainWindow::onCertificateImport);
+        SignAssistant sia(crtMgr, selectedCertificate, this);
+        connect(&sia, &SignAssistant::certificateSigned, this, &MainWindow::onCertificateImport);
         sia.exec();
     }
 }
