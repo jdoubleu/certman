@@ -14,20 +14,16 @@ namespace Ui {
 
 namespace gui::widget {
 
-    struct algorithmComboBox_field_st {
+    typedef struct {
         const char *name;
         const int algorithm = EVP_PKEY_NONE;
         const int *keyLengths;
-    };
+    } SUPPORTED_KEY_ALG;
 
-    typedef struct algorithmComboBox_field_st SUPPORTED_KEY_ALG;
-
-    struct wrappingAlgorithmComboBox_field_st {
+    typedef struct {
         const char *name;
         const EVP_CIPHER *cipher;
-    };
-
-    typedef struct wrappingAlgorithmComboBox_field_st SUPPORTED_WRAPPING_ALG;
+    } SUPPORTED_WRAPPING_ALG;
 
     class KeyPairWidget : public QWidget {
         Q_OBJECT
