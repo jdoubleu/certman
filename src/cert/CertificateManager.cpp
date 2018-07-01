@@ -184,10 +184,14 @@ EVP_PKEY *CertificateManager::generateKeyPair(int algorithm, int keySize) {
             EVP_PKEY_CTX_set_rsa_keygen_bits(keygenContext, keySize);
             EVP_PKEY_keygen(keygenContext, &keyPair);
             break;
-        case EVP_PKEY_DSA:
-            EVP_PKEY_paramgen_init(keygenContext);
-            EVP_PKEY_CTX_set_dsa_paramgen_bits(keygenContext, keySize);
-            EVP_PKEY_paramgen(keygenContext, &keyPair);
+        case EVP_PKEY_DSA: {
+            DSA *dsa = DSA_new();
+            DSA_generate_parameters_ex(dsa, keySize, NULL, 0, NULL, NULL, NULL);
+            DSA_generate_key(dsa);
+
+            EVP_PKEY_set1_DSA(keyPair, dsa);
+            break;
+        }
         default:
             break;
     }
