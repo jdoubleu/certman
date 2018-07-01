@@ -28,11 +28,13 @@ QDialog *CertificateDetailWidget::asDialog(Certificate certificate, CertificateM
     dialog->setWindowTitle(QString::fromStdString(certificate.getSubjectField("commonName")));
 
     auto *layout = new QGridLayout(dialog);
-    layout->setMargin(10);
+    layout->setMargin(5);
 
     layout->addWidget(new CertificateDetailWidget(certificate, crtMgr, dialog));
 
     dialog->setLayout(layout);
+
+    dialog->setFixedWidth(460);
 
     return dialog;
 }
