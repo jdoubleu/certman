@@ -37,7 +37,7 @@ find_package(OpenSSL REQUIRED)
 # Create executable
 file(GLOB_RECURSE CERTMAN_SRC "src/*.h" "src/*.cpp")
 
-add_executable(certman ${OS_BUNDLE} ${CERTMAN_SRC} ${META_FILES_TO_INCLUDE})
+add_executable(${PROJECT_NAME} ${OS_BUNDLE} ${CERTMAN_SRC} ${META_FILES_TO_INCLUDE})
 
 # Link dependent libraries
 target_link_libraries(certman Qt5::Widgets)
