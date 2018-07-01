@@ -23,6 +23,11 @@ include(ExternalProject)
 # Required custom modules
 include(QtApplicationMeta)
 
+# project meta information
+set(COMPANY "Certman")
+set(COPYRIGHT "Copyright (c) 2018 Max van Aerssen, Timo Ribbers, Joshua Westerheide. All rights reserved.")
+set(IDENTIFIER "de.hs-duesseldorf.certman")
+
 add_project_meta(META_FILES_TO_INCLUDE)
 
 # Find external required pacakges
