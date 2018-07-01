@@ -5,6 +5,7 @@
 #include "../../cert/CertificateManager.h"
 
 using cert::CertificateManager;
+using cert::CERT_EXPORT;
 
 namespace Ui {
     class CAAssistant;
@@ -19,9 +20,18 @@ namespace gui::assistant {
 
         ~CAAssistant();
 
+        void accept() override ;
+
     private:
         Ui::CAAssistant *ui;
+
         CertificateManager *crtMgr;
+
+        void createCACertificate();
+
+    signals:
+
+        void created(CERT_EXPORT newCACertificate);
     };
 
 }

@@ -140,5 +140,10 @@ void MainWindow::onNewCertificateAction() {
 void MainWindow::onNewCertificateAuthorityAction() {
     CAAssistant caa(crtMgr, this);
 
+    connect(&caa, &CAAssistant::created, this, [=](CERT_EXPORT newCert) {
+        crtMgr->importNewCertificate(newCert);
+        this->onCertificateImport(true);
+    });
+
     caa.exec();
 }

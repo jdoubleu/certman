@@ -19,9 +19,157 @@
   <property name="options">
    <set>QWizard::CancelButtonOnLeft|QWizard::IndependentPages|QWizard::NoBackButtonOnStartPage|QWizard::NoDefaultButton</set>
   </property>
-  <widget class="QWizardPage" name="wizardPage1"/>
-  <widget class="QWizardPage" name="wizardPage2"/>
+  <widget class="QWizardPage" name="subjectPage">
+   <property name="title">
+    <string>Subject</string>
+   </property>
+   <layout class="QVBoxLayout" name="subjectPageLayout">
+    <item>
+     <widget class="gui::widget::NameWidget" name="nameWidget" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWizardPage" name="keypairPage">
+   <property name="title">
+    <string>Key Pair</string>
+   </property>
+   <layout class="QVBoxLayout" name="keypairPageLayout">
+    <item>
+     <widget class="gui::widget::KeyPairWidget" name="keyPairWidget" native="true"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWizardPage" name="caPage">
+   <property name="title">
+    <string>Certificate Authority</string>
+   </property>
+   <property name="subTitle">
+    <string>Basic Constraints X509v3 extension settings</string>
+   </property>
+   <layout class="QFormLayout" name="caPageLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="certificateAuthorityLabel">
+      <property name="text">
+       <string>Certificate Authority</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QCheckBox" name="certificateAuthorityCheckBox">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="pathLengthLabel">
+      <property name="text">
+       <string>Path Length Constraint</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QSpinBox" name="pathLengthSpinBox">
+      <property name="maximum">
+       <number>1</number>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWizardPage" name="validityPage">
+   <property name="title">
+    <string>Validity</string>
+   </property>
+   <layout class="QVBoxLayout" name="validityPageLayout">
+    <item>
+     <layout class="QFormLayout" name="validity_layout">
+      <property name="fieldGrowthPolicy">
+       <enum>QFormLayout::FieldsStayAtSizeHint</enum>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="validityperiod_label">
+        <property name="text">
+         <string>Validity (Period in Days)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QSpinBox" name="validityperiod_field">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>16777215</number>
+        </property>
+        <property name="value">
+         <number>3655</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="validtiyperiod_from_label">
+        <property name="text">
+         <string>Valid from</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLabel" name="validityperiod_from_field">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="validityperiod_until_label">
+        <property name="text">
+         <string>Valid until</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLabel" name="validityperiod_until_field">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>gui::widget::NameWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">src/gui/widget/NameWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>gui::widget::KeyPairWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">src/gui/widget/KeyPairWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
