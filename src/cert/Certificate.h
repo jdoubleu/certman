@@ -53,6 +53,8 @@ namespace cert {
 
         vector<CertificateExtension *> getExtensions();
 
+        int sign(EVP_PKEY *pKey);
+
         void addBasicConstraints(bool ca, int pathLen);
 
         void addKeyUsage(bool critical, bool digitalSignature = false, bool nonRepudation = false, bool keyEncipherment = false,

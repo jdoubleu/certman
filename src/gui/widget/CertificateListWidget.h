@@ -58,6 +58,8 @@ namespace gui::widget {
         void certificateRemoveAction();
 
         void certificateExportAction();
+
+        void certificateSignAction();
     };
 
 }

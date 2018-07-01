@@ -26,10 +26,11 @@ namespace gui::widget {
     } SUPPORTED_WRAPPING_ALG;
 
     class KeyPairWidget : public QWidget {
-        Q_OBJECT
+    Q_OBJECT
 
     public:
         explicit KeyPairWidget(CertificateManager *crtMgr, QWidget *parent);
+
         explicit KeyPairWidget(QWidget *parent);
 
         ~KeyPairWidget() override;
@@ -43,6 +44,7 @@ namespace gui::widget {
     public Q_SLOTS:
 
         void on_algorithmComboBox_currentIndexChanged(int index);
+
         void on_wrappingAlgorithmComboBox_currentIndexChanged(int index);
 
     private:
@@ -60,6 +62,7 @@ namespace gui::widget {
 };
 
 Q_DECLARE_METATYPE(gui::widget::SUPPORTED_KEY_ALG);
+
 Q_DECLARE_METATYPE(gui::widget::SUPPORTED_WRAPPING_ALG);
 
 #endif //KEYPAIRWIDGET_H

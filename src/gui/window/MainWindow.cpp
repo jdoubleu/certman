@@ -5,11 +5,13 @@
 #include "../assistant/ExportAssistant.h"
 #include "../widget/CertificateDetailWidget.h"
 #include "../assistant/CreateCertificateAssistant.h"
-#include "src/gui/assistant/CreateCACertificateAssistant.h"
+#include "../assistant/CreateCACertificateAssistant.h"
+#include "../assistant/SignAssistant.h"
 
 using cert::CertificateManager;
 using gui::assistant::ImportAssistant;
 using gui::assistant::ExportAssistant;
+using gui::assistant::SignAssistant;
 using gui::widget::CertificateDetailWidget;
 using gui::assistant::CreateCertificateAssistant;
 using gui::assistant::CreateCACertificateAssistant;
@@ -47,10 +49,12 @@ void MainWindow::setupActions() {
             SLOT(onCertificatesSelected(vector<Certificate *>)));
     connect(crtList, SIGNAL(certificateRemoveAction()), this, SLOT(onCertificateRemoveAction()));
     connect(crtList, SIGNAL(certificateExportAction()), this, SLOT(onCertificateExportAction()));
+    connect(crtList, SIGNAL(certificateSignAction()), this, SLOT(onCertificateSignAction()));
 
     connect(ui->actionDetails, SIGNAL(triggered()), this, SLOT(onCertificateDetailsAction()));
     connect(ui->actionRemove, SIGNAL(triggered()), this, SLOT(onCertificateRemoveAction()));
     connect(ui->actionExport, SIGNAL(triggered()), this, SLOT(onCertificateExportAction()));
+    connect(ui->actionSign, SIGNAL(triggered()), this, SLOT(onCertificateSignAction()));
 }
 
 void MainWindow::importCertificate() {
@@ -78,6 +82,7 @@ void MainWindow::onCertificatesSelected(vector<Certificate *> certificates) {
         ui->actionDetails->setDisabled(true);
         ui->actionRemove->setDisabled(true);
         ui->actionExport->setDisabled(true);
+        ui->actionSign->setDisabled(true);
 
         selectedCertificate = NULL;
     } else {
@@ -87,6 +92,7 @@ void MainWindow::onCertificatesSelected(vector<Certificate *> certificates) {
         ui->actionDetails->setDisabled(false);
         ui->actionRemove->setDisabled(false);
         ui->actionExport->setDisabled(false);
+        ui->actionSign->setDisabled(false);
     }
 }
 
@@ -146,4 +152,12 @@ void MainWindow::onNewCertificateAuthorityAction() {
     });
 
     caa.exec();
+}
+
+void MainWindow::onCertificateSignAction() {
+    if (selectedCertificate != NULL) {
+        SignAssistant sia(crtMgr, selectedCertificate, this);
+        connect(&sia, &SignAssistant::certificateSigned, this, &MainWindow::onCertificateImport);
+        sia.exec();
+    }
 }

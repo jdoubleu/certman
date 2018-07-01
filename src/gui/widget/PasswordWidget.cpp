@@ -3,16 +3,18 @@
 
 using namespace gui::widget;
 
-PasswordWidget::PasswordWidget(QWidget *parent): PasswordWidget(NULL, NULL, false, parent) {
+PasswordWidget::PasswordWidget(QWidget *parent) : PasswordWidget(NULL, NULL, false, parent) {
 }
 
-PasswordWidget::PasswordWidget(const QString name, QWidget *parent): PasswordWidget(name, NULL, false, parent) {
+PasswordWidget::PasswordWidget(const QString name, QWidget *parent) : PasswordWidget(name, NULL, false, parent) {
 }
 
-PasswordWidget::PasswordWidget(QString name, bool repeat, QWidget *parent): PasswordWidget(name, NULL, repeat, parent) {
+PasswordWidget::PasswordWidget(QString name, bool repeat, QWidget *parent) : PasswordWidget(name, NULL, repeat,
+                                                                                            parent) {
 }
 
-PasswordWidget::PasswordWidget(const QString name, const QString description, bool repeat, QWidget *parent): QWidget(parent), ui(new Ui::PasswordWidget) {
+PasswordWidget::PasswordWidget(const QString name, const QString description, bool repeat, QWidget *parent) : QWidget(
+        parent), ui(new Ui::PasswordWidget) {
     ui->setupUi(this);
 
     setName(name);

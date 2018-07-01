@@ -130,6 +130,11 @@ vector<CertificateExtension *> Certificate::getExtensions() {
     return exts;
 }
 
+int Certificate::sign(EVP_PKEY *pKey) {
+    int res = X509_sign(this->certificate, pKey, EVP_sha256());
+    return res;
+}
+
 void Certificate::addBasicConstraints(bool ca, int pathLen) {
     ASN1_INTEGER *pl = ASN1_INTEGER_new();
     ASN1_INTEGER_set_int64(pl, pathLen);
