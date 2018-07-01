@@ -1,9 +1,9 @@
 #include <QLabel>
 #include "CertificateDetailWidget.h"
 #include "ui_certificatedetail.h"
-#include <openssl/safestack.h>
 
 using cert::CertificateContainer;
+using cert::CertificateExtension;
 
 using namespace gui::widget;
 
@@ -15,7 +15,8 @@ CertificateDetailWidget::CertificateDetailWidget(Certificate certificate, Certif
 
     renderCertificate();
 
-    connect(ui->certificate_chain_tree, &QTreeWidget::itemActivated, this, &CertificateDetailWidget::onCertificatePathItemDoubleClicked);
+    connect(ui->certificate_chain_tree, &QTreeWidget::itemActivated, this,
+            &CertificateDetailWidget::onCertificatePathItemDoubleClicked);
 }
 
 CertificateDetailWidget::~CertificateDetailWidget() {
@@ -41,12 +42,18 @@ void CertificateDetailWidget::renderCertificate() {
     createDetailInformationSection("Issuer", cert.getIssuerFields());
 
     renderCertificatePath();
+
+    renderExtensions();
 }
 
 QWidget *CertificateDetailWidget::createDetailSection(QString name) {
     auto *section = new QGroupBox(ui->certificate_details);
     section->setTitle(name);
     section->setFlat(true);
+
+    QFont font;
+    font.setBold(true);
+    section->setFont(font);
 
     ui->certificate_details->layout()->addWidget(section);
 
@@ -123,4 +130,35 @@ void CertificateDetailWidget::onCertificatePathItemDoubleClicked(QTreeWidgetItem
 
     auto dialog = CertificateDetailWidget::asDialog(*cert, crtMgr, this);
     dialog->show();
+}
+
+void CertificateDetailWidget::renderExtensions() {
+    auto *container = createDetailSection(tr("Extensions"));
+    auto *containerLayout = new QVBoxLayout(container);
+    containerLayout->setContentsMargins(12, 0, 0, 0);
+
+    QFont defaultFont;
+    defaultFont.setBold(false);
+
+    for (CertificateExtension *ext: cert.getExtensions()) {
+        auto extensionName = QString(ext->critical()
+                                     ? tr("%1 (critical)")
+                                     : "%1")
+                .arg(tr(ext->type().c_str()));
+
+        auto *extContainer = new QGroupBox(container);
+        extContainer->setFlat(true);
+        extContainer->setTitle(extensionName);
+        extContainer->setFont(defaultFont);
+
+        auto *extLayout = new QVBoxLayout(extContainer);
+        extLayout->setContentsMargins(24, 10, 0, 0);
+
+        auto *content = new QLabel(QString::fromStdString(ext->sprint()), container);
+        content->setWordWrap(true);
+        content->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
+        extLayout->addWidget(content);
+
+        containerLayout->addWidget(extContainer);
+    }
 }

@@ -123,5 +123,17 @@ void CertificateListWidget::generateContextMenu(const QPoint &pos) {
     });
     contextMenu.addAction(&showDetails);
 
+    QAction showRemove(tr("Remove"), this);
+    connect(&showRemove, &QAction::triggered, this, [=] {
+        emit certificateRemoveAction();
+    });
+    contextMenu.addAction(&showRemove);
+
+    QAction showExport(tr("Export"), this);
+    connect(&showExport, &QAction::triggered, this, [=] {
+        emit certificateExportAction();
+    });
+    contextMenu.addAction(&showExport);
+
     contextMenu.exec(mapToGlobal(pos));
 }

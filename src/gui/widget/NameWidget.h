@@ -27,6 +27,7 @@ namespace gui::widget {
         X509_NAME *getX509Name();
 
     public Q_SLOTS:
+
         void on_optional_fields_toggle_stateChanged(int state);
 
     private:

@@ -4,15 +4,16 @@
 #include "../assistant/ImportAssistant.h"
 #include "../assistant/ExportAssistant.h"
 #include "../widget/CertificateDetailWidget.h"
-#include "../assistant/CertificateAssistant.h"
+#include "../assistant/CreateCertificateAssistant.h"
 #include "../assistant/CAAssistant.h"
 
 using cert::CertificateManager;
 using gui::assistant::ImportAssistant;
 using gui::assistant::ExportAssistant;
 using gui::widget::CertificateDetailWidget;
-using gui::assistant::CertificateAssistant;
+using gui::assistant::CreateCertificateAssistant;
 using gui::assistant::CAAssistant;
+using cert::CERT_EXPORT;
 
 using namespace gui::window;
 
@@ -44,6 +45,8 @@ void MainWindow::setupActions() {
     connect(crtList, SIGNAL(certificateSelected(Certificate * )), this, SLOT(onCertificateSelected(Certificate * )));
     connect(crtList, SIGNAL(certificatesSelected(vector<Certificate *>)), this,
             SLOT(onCertificatesSelected(vector<Certificate *>)));
+    connect(crtList, SIGNAL(certificateRemoveAction()), this, SLOT(onCertificateRemoveAction()));
+    connect(crtList, SIGNAL(certificateExportAction()), this, SLOT(onCertificateExportAction()));
 
     connect(ui->actionDetails, SIGNAL(triggered()), this, SLOT(onCertificateDetailsAction()));
     connect(ui->actionRemove, SIGNAL(triggered()), this, SLOT(onCertificateRemoveAction()));
@@ -113,6 +116,7 @@ void MainWindow::onCertificateRemoveAction() {
         if (success)
             crtList->showCertificates(*crtMgr->getCertificateList()->listAll());
     }
+
 }
 
 void MainWindow::onCertificateExportAction() {
@@ -123,9 +127,10 @@ void MainWindow::onCertificateExportAction() {
 }
 
 void MainWindow::onNewCertificateAction() {
-    CertificateAssistant cea(crtMgr, this);
+    CreateCertificateAssistant cea(crtMgr, this);
 
-    connect(&cea, &CertificateAssistant::created, this, [=]() {
+    connect(&cea, &CreateCertificateAssistant::created, this, [=](CERT_EXPORT newCert) {
+        crtMgr->importNewCertificate(newCert);
         this->onCertificateImport(true);
     });
 
