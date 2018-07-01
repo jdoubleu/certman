@@ -156,7 +156,6 @@ void CertificateDetailWidget::renderExtensions() {
 
         auto *content = new QLabel(QString::fromStdString(ext->sprint()), container);
         content->setWordWrap(true);
-        content->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Expanding);
         extLayout->addWidget(content);
 
         containerLayout->addWidget(extContainer);
