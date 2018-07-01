@@ -41,7 +41,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>38</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -50,6 +50,7 @@
     </property>
     <addaction name="action_Import"/>
     <addaction name="actionNew_Certificate"/>
+    <addaction name="actionNew_Certificate_Authority"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -82,6 +83,11 @@
   <action name="actionNew_Certificate">
    <property name="text">
     <string>New Certificate</string>
+   </property>
+  </action>
+  <action name="actionNew_Certificate_Authority">
+   <property name="text">
+    <string>New Certificate Authority</string>
    </property>
   </action>
   <action name="actionRemove">

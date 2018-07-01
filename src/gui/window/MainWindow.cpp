@@ -5,6 +5,7 @@
 #include "../assistant/ExportAssistant.h"
 #include "../widget/CertificateDetailWidget.h"
 #include "../assistant/CreateCertificateAssistant.h"
+#include "../assistant/CreateCACertificateAssistant.h"
 #include "../assistant/SignAssistant.h"
 
 using cert::CertificateManager;
@@ -13,6 +14,7 @@ using gui::assistant::ExportAssistant;
 using gui::assistant::SignAssistant;
 using gui::widget::CertificateDetailWidget;
 using gui::assistant::CreateCertificateAssistant;
+using gui::assistant::CreateCACertificateAssistant;
 using cert::CERT_EXPORT;
 
 using namespace gui::window;
@@ -30,8 +32,6 @@ MainWindow::MainWindow(CertificateManager *crtMgr, Environment *env, QWidget *pa
 
     crtMgr->loadCertificates();
     onCertificateImport(true);
-
-
 }
 
 MainWindow::~MainWindow() {
@@ -42,6 +42,8 @@ MainWindow::~MainWindow() {
 void MainWindow::setupActions() {
     connect(ui->action_Import, SIGNAL(triggered()), this, SLOT(importCertificate()));
     connect(ui->actionNew_Certificate, &QAction::triggered, this, &MainWindow::onNewCertificateAction);
+    connect(ui->actionNew_Certificate_Authority, &QAction::triggered, this,
+            &MainWindow::onNewCertificateAuthorityAction);
 
     connect(crtList, SIGNAL(certificateSelected(Certificate * )), this, SLOT(onCertificateSelected(Certificate * )));
     connect(crtList, SIGNAL(certificatesSelected(vector<Certificate *>)), this,
@@ -140,6 +142,17 @@ void MainWindow::onNewCertificateAction() {
     });
 
     cea.exec();
+}
+
+void MainWindow::onNewCertificateAuthorityAction() {
+    CreateCACertificateAssistant caa(crtMgr, this);
+
+    connect(&caa, &CreateCACertificateAssistant::created, this, [=](CERT_EXPORT newCert) {
+        crtMgr->importNewCertificate(newCert);
+        this->onCertificateImport(true);
+    });
+
+    caa.exec();
 }
 
 void MainWindow::onCertificateSignAction() {

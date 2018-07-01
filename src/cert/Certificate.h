@@ -55,6 +55,14 @@ namespace cert {
 
         int sign(EVP_PKEY *pKey);
 
+        void addBasicConstraints(bool ca, int pathLen);
+
+        void addKeyUsage(bool critical, bool digitalSignature = false, bool nonRepudation = false,
+                         bool keyEncipherment = false,
+                         bool dataEncipherment = false, bool keyAgreement = false, bool keyCertSign = false,
+                         bool cRLSign = false, bool encipherOnly = false,
+                         bool decipherOnly = false);
+
         bool operator==(const Certificate &c);
 
     private:

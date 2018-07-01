@@ -56,6 +56,8 @@ namespace gui::window {
 
         void onNewCertificateAction();
 
+        void onNewCertificateAuthorityAction();
+
         void onCertificateSignAction();
     };
 
