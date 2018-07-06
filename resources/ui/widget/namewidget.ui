@@ -41,7 +41,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <property name="usesScrollButtons">
       <bool>false</bool>
@@ -57,7 +57,7 @@
      </property>
      <widget class="QWidget" name="required_fields_tab">
       <attribute name="title">
-       <string>Required Fields</string>
+       <string>Common Fields</string>
       </attribute>
       <layout class="QFormLayout" name="required_fields_layout">
        <item row="1" column="0">
@@ -131,7 +131,7 @@
        <bool>true</bool>
       </property>
       <attribute name="title">
-       <string>Optional Fields</string>
+       <string>Additional Fields</string>
       </attribute>
       <layout class="QFormLayout" name="required_fields_layout_2">
        <item row="0" column="0">
@@ -201,7 +201,7 @@
    <item>
     <widget class="QCheckBox" name="optional_fields_toggle">
      <property name="text">
-      <string>Use optional fields</string>
+      <string>Use additional fields</string>
      </property>
     </widget>
    </item>
