@@ -52,8 +52,10 @@ void CreateCertificateAssistant::createCertificate() {
     Certificate *certificate = crtMgr->createCertificate(subject, X509_NAME_dup(subject), validityDays,
                                                          keyPairExport.keyPair);
 
-    emit created({
-                         certificate,
-                         keyPairExport
-                 });
+    auto * ext = ui->keyUsageWidget->getKeyUsageExtensions();
+    if(ui->keyUsageWidget->isEnabled()) {
+        certificate->addKeyUsage(ext);
+    }
+
+    emit created({certificate, keyPairExport});
 }

@@ -63,6 +63,12 @@ namespace cert {
 
         EVP_PKEY *generateKeyPair(int algorithm, int keySize);
 
+        X509_EXTENSION *generateKeyUsageExtensions(bool critical, bool digitalSignature = false, bool nonRepudation = false,
+                                                   bool keyEncipherment = false,
+                                                   bool dataEncipherment = false, bool keyAgreement = false, bool keyCertSign = false,
+                                                   bool cRLSign = false, bool encipherOnly = false,
+                                                   bool decipherOnly = false);
+
         void importNewCertificate(CERT_EXPORT newCertificate);
 
     private:
