@@ -10,7 +10,7 @@ using cert::KEYPAIR_EXPORT;
 using namespace gui::assistant;
 
 CreateCertificateAssistant::CreateCertificateAssistant(CertificateManager *crtMgr, QWidget *parent) : QWizard(parent),
-                                                                                                      ui(new Ui::CertificateAssistant),
+                                                                                                      ui(new Ui::CreateCertificateAssistant),
                                                                                                       crtMgr(crtMgr) {
     ui->setupUi(this);
 
