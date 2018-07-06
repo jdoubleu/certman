@@ -60,68 +60,68 @@
        <string>Required Fields</string>
       </attribute>
       <layout class="QFormLayout" name="required_fields_layout">
-       <item row="0" column="0">
+       <item row="1" column="0">
         <widget class="QLabel" name="countryName_label">
          <property name="text">
           <string>Country Name</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item row="1" column="1">
         <widget class="QComboBox" name="countryName_field">
          <property name="editable">
           <bool>true</bool>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="2" column="0">
         <widget class="QLabel" name="stateorprovince_label">
          <property name="text">
           <string>State/Province</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
+       <item row="2" column="1">
         <widget class="QLineEdit" name="stateorprovince_field"/>
        </item>
-       <item row="2" column="0">
+       <item row="3" column="0">
         <widget class="QLabel" name="locality_label">
          <property name="text">
           <string>City (Locality)</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
+       <item row="3" column="1">
         <widget class="QLineEdit" name="locality_field"/>
        </item>
-       <item row="3" column="0">
+       <item row="4" column="0">
         <widget class="QLabel" name="organization_label">
          <property name="text">
           <string>Organization Name</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item row="4" column="1">
         <widget class="QLineEdit" name="organization_field"/>
        </item>
-       <item row="4" column="0">
+       <item row="5" column="0">
         <widget class="QLabel" name="organizationalunit_label">
          <property name="text">
           <string>Organizational Unit</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
+       <item row="5" column="1">
         <widget class="QLineEdit" name="organizationalunit_field"/>
        </item>
-       <item row="5" column="0">
+       <item row="0" column="0">
         <widget class="QLabel" name="commonName_label">
          <property name="text">
           <string>Common Name</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
+       <item row="0" column="1">
         <widget class="QLineEdit" name="commonName_field"/>
        </item>
       </layout>
