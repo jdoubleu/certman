@@ -41,7 +41,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <property name="usesScrollButtons">
       <bool>false</bool>
@@ -207,6 +207,22 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>commonName_field</tabstop>
+  <tabstop>countryName_field</tabstop>
+  <tabstop>stateorprovince_field</tabstop>
+  <tabstop>locality_field</tabstop>
+  <tabstop>organization_field</tabstop>
+  <tabstop>organizationalunit_field</tabstop>
+  <tabstop>optional_fields_toggle</tabstop>
+  <tabstop>pseudonym_field</tabstop>
+  <tabstop>title_field</tabstop>
+  <tabstop>surname_field</tabstop>
+  <tabstop>givenName_field</tabstop>
+  <tabstop>initials_field</tabstop>
+  <tabstop>generationQualifier_field</tabstop>
+  <tabstop>fields_tabs</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
