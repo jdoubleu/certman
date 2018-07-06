@@ -59,15 +59,16 @@ namespace cert {
 
         X509_STORE *getCertificateListAsX509Store();
 
-        bool signCertificate(Certificate *cert, EVP_PKEY *pKey, X509_NAME *issuer);
+        bool signCertificate(Certificate *cert, EVP_PKEY *pKey, X509_NAME *parentSubject);
 
         EVP_PKEY *generateKeyPair(int algorithm, int keySize);
 
-        X509_EXTENSION *generateKeyUsageExtensions(bool critical, bool digitalSignature = false, bool nonRepudation = false,
-                                                   bool keyEncipherment = false,
-                                                   bool dataEncipherment = false, bool keyAgreement = false, bool keyCertSign = false,
-                                                   bool cRLSign = false, bool encipherOnly = false,
-                                                   bool decipherOnly = false);
+        X509_EXTENSION *
+        generateKeyUsageExtensions(bool critical, bool digitalSignature = false, bool nonRepudation = false,
+                                   bool keyEncipherment = false,
+                                   bool dataEncipherment = false, bool keyAgreement = false, bool keyCertSign = false,
+                                   bool cRLSign = false, bool encipherOnly = false,
+                                   bool decipherOnly = false);
 
         void importNewCertificate(CERT_EXPORT newCertificate);
 

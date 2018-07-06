@@ -214,13 +214,13 @@ X509_STORE *CertificateManager::getCertificateListAsX509Store() {
     return store;
 }
 
-bool CertificateManager::signCertificate(Certificate *cert, EVP_PKEY *pKey, X509_NAME *issuer) {
+bool CertificateManager::signCertificate(Certificate *cert, EVP_PKEY *pKey, X509_NAME *parentSubject) {
     string certLocation = getCertificateDefaultLocation(cert);
     string keyLocation;
     if (hasPrivateKey(cert))
         keyLocation = getPrivateKeyDefaultLocation(cert);
 
-    X509_set_issuer_name(cert->getX509(), issuer);
+    X509_set_issuer_name(cert->getX509(), parentSubject);
     int bytes = cert->sign(pKey);
     if (bytes == 0)
         return false;
