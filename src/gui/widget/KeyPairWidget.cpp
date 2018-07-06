@@ -13,14 +13,12 @@ const SUPPORTED_KEY_ALG supportedKeyAlgorithms[] = {
 };
 
 const SUPPORTED_WRAPPING_ALG supportedWrappingAlgorithms[] = {
-        {"None",          EVP_enc_null()},
+        {"None",          NULL},
         {"DES", NULL},
         {"DESede3 CBC",   EVP_des_ede3_cbc()},
         {"AES", NULL},
         {"AES128 CBC",    EVP_aes_128_cbc()},
-        {"AES256 CBC",    EVP_aes_256_cbc()},
-        {"AES256 XTS",    EVP_aes_256_xts()},
-        {"AES256 CFB128", EVP_aes_256_xts()}
+        {"AES256 CBC",    EVP_aes_256_cbc()}
 };
 
 KeyPairWidget::KeyPairWidget(QWidget *parent) : KeyPairWidget(NULL, parent) {
