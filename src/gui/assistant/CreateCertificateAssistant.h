@@ -11,7 +11,7 @@ using cert::Certificate;
 using cert::CERT_EXPORT;
 
 namespace Ui {
-    class CertificateAssistant;
+    class CreateCertificateAssistant;
 }
 
 namespace gui::assistant {
@@ -27,7 +27,7 @@ namespace gui::assistant {
         void accept() override;
 
     private:
-        Ui::CertificateAssistant *ui;
+        Ui::CreateCertificateAssistant *ui;
 
         CertificateManager *crtMgr;
 
