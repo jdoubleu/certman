@@ -40,12 +40,12 @@ string CertificateExtension::sprint() {
 
     X509V3_EXT_print(mem, extension, 0, 0);
 
-    BUF_MEM *memptr;
-    BIO_get_mem_ptr(mem, &memptr);
-    size_t length = memptr->length;
+    uint64_t length = BIO_number_written(mem);
 
-    char buf[length];
-    int read = BIO_gets(mem, buf, length);
+    char cbuf[length];
+    int read = BIO_read(mem, cbuf, (int)length);
 
-    return string(buf);
+    BIO_free(mem);
+
+    return string(cbuf, (unsigned long)read);
 }
