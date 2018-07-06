@@ -43,9 +43,9 @@ string CertificateExtension::sprint() {
     uint64_t length = BIO_number_written(mem);
 
     char cbuf[length];
-    int read = BIO_read(mem, cbuf, (int)length);
+    int read = BIO_read(mem, cbuf, (int) length);
 
     BIO_free(mem);
 
-    return string(cbuf, (unsigned long)read);
+    return string(cbuf, (unsigned long) read);
 }
