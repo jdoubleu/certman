@@ -3,6 +3,9 @@
 
 #include <QWidget>
 #include <openssl/x509v3.h>
+#include "../../cert/CertificateManager.h"
+
+using cert::CertificateManager;
 
 namespace Ui {
     class KeyUsageWidget;
@@ -13,6 +16,8 @@ namespace gui::widget {
     Q_OBJECT
 
     public:
+        explicit KeyUsageWidget(CertificateManager *crtMgr, QWidget *parent);
+
         explicit KeyUsageWidget(QWidget *parent);
 
         ~KeyUsageWidget();
@@ -21,8 +26,12 @@ namespace gui::widget {
 
         X509_EXTENSION *getKeyUsageExtensions();
 
+        void injectCertificateManager(CertificateManager *crtMgr);
+
     private:
         Ui::KeyUsageWidget *ui;
+
+        CertificateManager *crtMgr;
 
     };
 }

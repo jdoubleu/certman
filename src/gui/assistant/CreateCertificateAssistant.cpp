@@ -15,6 +15,7 @@ CreateCertificateAssistant::CreateCertificateAssistant(CertificateManager *crtMg
     ui->setupUi(this);
 
     ui->keyPairWidget->injectCertificateManager(crtMgr);
+    ui->keyUsageWidget->injectCertificateManager(crtMgr);
 
     // validity
     auto now = QDate::currentDate();
