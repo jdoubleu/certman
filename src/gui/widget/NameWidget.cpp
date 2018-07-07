@@ -74,7 +74,9 @@ void NameWidget::setValue(X509_NAME *name) {
 
     char *countryNameBuf;
     certman_X509_NAME_get_entry(name, NID_countryName, countryNameBuf);
+    bool countryNameSignalsBlocked = ui->countryName_field->blockSignals(true);
     ui->countryName_field->setCurrentText(QString(countryNameBuf));
+    ui->countryName_field->blockSignals(countryNameSignalsBlocked);
 
     certman_qt_X509_NAME_get_entry(name, NID_pseudonym, ui->pseudonym_field);
     certman_qt_X509_NAME_get_entry(name, NID_title, ui->title_field);

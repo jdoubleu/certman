@@ -17,7 +17,9 @@
 #define certman_qt_X509_NAME_get_entry(name, nid, f) \
     char *cbuf##nid; \
     certman_X509_NAME_get_entry(name, nid, cbuf##nid); \
-    (f)->setText(QString(cbuf##nid));
+    bool signalsBlocked##nid = (f)->blockSignals(true); \
+    (f)->setText(QString(cbuf##nid)); \
+    (f)->blockSignals(signalsBlocked##nid);
 
 #define clearLineEdit(f) ui->f->clear();
 
