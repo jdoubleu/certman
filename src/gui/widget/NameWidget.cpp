@@ -16,6 +16,8 @@ NameWidget::NameWidget(QWidget *parent) : QWidget(parent), ui(new Ui::NameWidget
         ui->countryName_field->addItem(QString::fromStdString(cc));
     }
     ui->countryName_field->setCurrentText(QLocale::system().name().remove(0, 3));
+
+    connectChildrenChangeEvents();
 }
 
 NameWidget::~NameWidget() {
@@ -50,8 +52,80 @@ X509_NAME *NameWidget::generateX509Name() {
     return name;
 }
 
-bool NameWidget::validate() {
-    return true;
+X509_NAME *NameWidget::value() {
+    X509_NAME *name = NULL;
+
+    if (ui->commonName_field->hasAcceptableInput()) {
+        name = generateX509Name();
+    }
+
+    return name;
 }
 
+void NameWidget::setValue(X509_NAME *name) {
+    certman_qt_X509_NAME_get_entry(name, NID_commonName, ui->commonName_field);
+    certman_qt_X509_NAME_get_entry(name, NID_organizationName, ui->organization_field);
+    certman_qt_X509_NAME_get_entry(name, NID_organizationalUnitName, ui->organizationalunit_field);
+    certman_qt_X509_NAME_get_entry(name, NID_localityName, ui->locality_field);
+    certman_qt_X509_NAME_get_entry(name, NID_stateOrProvinceName, ui->stateorprovince_field);
 
+    char *countryNameBuf;
+    certman_X509_NAME_get_entry(name, NID_countryName, countryNameBuf);
+    ui->countryName_field->setCurrentText(QString(countryNameBuf));
+
+    certman_qt_X509_NAME_get_entry(name, NID_pseudonym, ui->pseudonym_field);
+    certman_qt_X509_NAME_get_entry(name, NID_title, ui->title_field);
+    certman_qt_X509_NAME_get_entry(name, NID_surname, ui->surname_field);
+    certman_qt_X509_NAME_get_entry(name, NID_givenName, ui->givenName_field);
+    certman_qt_X509_NAME_get_entry(name, NID_initials, ui->initials_field);
+    certman_qt_X509_NAME_get_entry(name, NID_generationQualifier, ui->generationQualifier_field);
+
+    if (ui->pseudonym_field->hasAcceptableInput() || ui->title_field->hasAcceptableInput() ||
+        ui->surname_field->hasAcceptableInput() || ui->givenName_field->hasAcceptableInput() ||
+        ui->initials_field->hasAcceptableInput() || ui->generationQualifier_field->hasAcceptableInput()) {
+        ui->optional_fields_toggle->setChecked(true);
+    }
+
+    emit valueChanged(name);
+}
+
+void NameWidget::reset() {
+    clearLineEdit(commonName_label);
+    clearLineEdit(organization_field);
+    clearLineEdit(organizationalunit_field);
+    clearLineEdit(locality_field);
+    clearLineEdit(stateorprovince_field);
+
+    ui->countryName_field->setCurrentText(QLocale::system().name().remove(0, 3));
+
+    clearLineEdit(pseudonym_field)
+    clearLineEdit(title_field)
+    clearLineEdit(surname_field)
+    clearLineEdit(givenName_field)
+    clearLineEdit(initials_field)
+    clearLineEdit(generationQualifier_field)
+
+    ui->optional_fields_toggle->setChecked(false);
+
+    emit valueChanged(NULL);
+}
+
+void NameWidget::connectChildrenChangeEvents() {
+    connect(ui->commonName_field, &QLineEdit::textChanged, this, &NameWidget::fieldValueChanged);
+    connect(ui->organization_field, &QLineEdit::textChanged, this, &NameWidget::fieldValueChanged);
+    connect(ui->organizationalunit_field, &QLineEdit::textChanged, this, &NameWidget::fieldValueChanged);
+    connect(ui->locality_field, &QLineEdit::textChanged, this, &NameWidget::fieldValueChanged);
+    connect(ui->stateorprovince_field, &QLineEdit::textChanged, this, &NameWidget::fieldValueChanged);
+    connect(ui->pseudonym_field, &QLineEdit::textChanged, this, &NameWidget::fieldValueChanged);
+    connect(ui->title_field, &QLineEdit::textChanged, this, &NameWidget::fieldValueChanged);
+    connect(ui->surname_field, &QLineEdit::textChanged, this, &NameWidget::fieldValueChanged);
+    connect(ui->givenName_field, &QLineEdit::textChanged, this, &NameWidget::fieldValueChanged);
+    connect(ui->initials_field, &QLineEdit::textChanged, this, &NameWidget::fieldValueChanged);
+    connect(ui->generationQualifier_field, &QLineEdit::textChanged, this, &NameWidget::fieldValueChanged);
+
+    connect(ui->countryName_field, &QComboBox::currentTextChanged, this, &NameWidget::fieldValueChanged);
+}
+
+void NameWidget::fieldValueChanged() {
+    emit valueChanged(value());
+}
