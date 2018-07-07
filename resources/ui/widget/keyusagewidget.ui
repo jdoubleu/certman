@@ -40,7 +40,7 @@ the certificate will provide.</string>
       <item>
        <widget class="QCheckBox" name="signature_toggle">
         <property name="text">
-         <string>Signature</string>
+         <string>Digital Signature</string>
         </property>
        </widget>
       </item>
