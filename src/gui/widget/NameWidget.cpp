@@ -37,7 +37,6 @@ X509_NAME *NameWidget::generateX509Name() {
                                 (unsigned char *) ui->countryName_field->currentText().toStdString().c_str());
     certman_qt_X509_NAME_add_entry(NID_localityName, ui->locality_field);
     certman_qt_X509_NAME_add_entry(NID_stateOrProvinceName, ui->stateorprovince_field);
-    certman_qt_X509_NAME_add_entry(NID_organizationName, ui->organization_field);
 
     if (!ui->optional_fields_tab->isHidden()) {
         certman_qt_X509_NAME_add_entry(NID_pseudonym, ui->pseudonym_field);
