@@ -45,7 +45,7 @@ void CreateCACertificateAssistant::accept() {
 
 void CreateCACertificateAssistant::createCACertificate() {
     KEYPAIR_EXPORT keyPairExport = ui->keyPairWidget->generateKeyPair();
-    X509_NAME *subject = field("nameWidget").value<X509_NAME*>();
+    X509_NAME *subject = field("nameWidget").value<X509_NAME *>();
     int validityDays = ui->validityperiod_field->value();
     int pathLen = ui->pathLengthSpinBox->value();
 

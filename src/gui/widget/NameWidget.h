@@ -77,6 +77,7 @@ namespace gui::widget {
 }
 
 Q_DECLARE_OPAQUE_POINTER(X509_NAME*);
+
 Q_DECLARE_METATYPE(X509_NAME*);
 
 #endif //NAMEWIDGET_H

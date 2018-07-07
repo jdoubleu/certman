@@ -97,7 +97,7 @@ void NameWidget::setValue(X509_NAME *name) {
 }
 
 void NameWidget::reset() {
-    QList<QLineEdit*> editFields = findChildren<QLineEdit*>();
+    QList<QLineEdit *> editFields = findChildren<QLineEdit *>();
     for (QLineEdit *field: editFields) {
         field->clear();
     }
@@ -108,7 +108,7 @@ void NameWidget::reset() {
 }
 
 void NameWidget::connectChildrenChangeEvents() {
-    QList<QLineEdit*> editFields = findChildren<QLineEdit*>();
+    QList<QLineEdit *> editFields = findChildren<QLineEdit *>();
     for (QLineEdit *field: editFields) {
         connect(field, &QLineEdit::textChanged, this, &NameWidget::fieldValueChanged);
     }

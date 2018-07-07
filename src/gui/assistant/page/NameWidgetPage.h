@@ -8,7 +8,7 @@ namespace Ui {
 }
 
 namespace gui::assistant::page {
-    class NameWidgetPage: public QWizardPage {
+    class NameWidgetPage : public QWizardPage {
     Q_OBJECT
     public:
         explicit NameWidgetPage(QWidget *parent = 0);
