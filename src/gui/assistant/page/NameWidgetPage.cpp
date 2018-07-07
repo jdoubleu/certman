@@ -6,7 +6,7 @@ using namespace gui::assistant::page;
 NameWidgetPage::NameWidgetPage(QWidget *parent) : QWizardPage(parent), ui(new Ui::NameWidgetPage) {
     ui->setupUi(this);
 
-    registerField("nameWidget*", ui->nameWidget);
+    registerField("nameWidget*", ui->nameWidget, "value", SIGNAL(valueChanged(X509_NAME*)));
 }
 
 NameWidgetPage::~NameWidgetPage() {
