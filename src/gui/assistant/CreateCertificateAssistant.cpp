@@ -16,6 +16,7 @@ CreateCertificateAssistant::CreateCertificateAssistant(CertificateManager *crtMg
     ui->setupUi(this);
 
     ui->keyPairWidget->injectCertificateManager(crtMgr);
+    ui->keyUsageWidget->injectCertificateManager(crtMgr);
 
     // validity
     auto now = QDate::currentDate();
@@ -53,8 +54,9 @@ void CreateCertificateAssistant::createCertificate() {
     Certificate *certificate = crtMgr->createCertificate(subject, X509_NAME_dup(subject), validityDays,
                                                          keyPairExport.keyPair);
 
-    emit created({
-                         certificate,
-                         keyPairExport
-                 });
+    if (ui->keyUsageWidget->isEnabled()) {
+        certificate->appendExtension(ui->keyUsageWidget->getKeyUsageExtensions());
+    }
+
+    emit created({certificate, keyPairExport});
 }
