@@ -9,7 +9,6 @@ using namespace gui::widget;
 NameWidget::NameWidget(QWidget *parent) : QWidget(parent), ui(new Ui::NameWidget) {
     ui->setupUi(this);
 
-    ui->commonName_field->setValidator(new QRegExpValidator(QRegExp("[a-zA-Z0-9*.]+"), this));
     ui->countryName_field->setValidator(new QRegExpValidator(QRegExp("[A-Z]{2}"), this));
 
     on_optional_fields_toggle_stateChanged(0);
@@ -60,7 +59,7 @@ X509_NAME *NameWidget::generateX509Name() {
 X509_NAME *NameWidget::value() {
     X509_NAME *name = NULL;
 
-    if (ui->commonName_field->hasAcceptableInput()) {
+    if (!ui->commonName_field->text().isEmpty()) {
         name = generateX509Name();
     }
 
@@ -74,7 +73,7 @@ void NameWidget::setValue(X509_NAME *name) {
     certman_qt_X509_NAME_get_entry(name, NID_localityName, ui->locality_field);
     certman_qt_X509_NAME_get_entry(name, NID_stateOrProvinceName, ui->stateorprovince_field);
 
-    char *countryNameBuf;
+    char *countryNameBuf = NULL;
     certman_X509_NAME_get_entry(name, NID_countryName, countryNameBuf);
     bool countryNameSignalsBlocked = ui->countryName_field->blockSignals(true);
     ui->countryName_field->setCurrentText(QString(countryNameBuf));
@@ -87,9 +86,9 @@ void NameWidget::setValue(X509_NAME *name) {
     certman_qt_X509_NAME_get_entry(name, NID_initials, ui->initials_field);
     certman_qt_X509_NAME_get_entry(name, NID_generationQualifier, ui->generationQualifier_field);
 
-    if (ui->pseudonym_field->hasAcceptableInput() || ui->title_field->hasAcceptableInput() ||
-        ui->surname_field->hasAcceptableInput() || ui->givenName_field->hasAcceptableInput() ||
-        ui->initials_field->hasAcceptableInput() || ui->generationQualifier_field->hasAcceptableInput()) {
+    if (!ui->pseudonym_field->text().isEmpty() || !ui->title_field->text().isEmpty() ||
+        !ui->surname_field->text().isEmpty() || !ui->givenName_field->text().isEmpty() ||
+        !ui->initials_field->text().isEmpty() || !ui->generationQualifier_field->text().isEmpty()) {
         ui->optional_fields_toggle->setChecked(true);
     }
 
@@ -123,7 +122,7 @@ void NameWidget::fieldValueChanged() {
 }
 
 void NameWidget::renderValidation() {
-    if (!ui->commonName_field->hasAcceptableInput()) {
+    if (ui->commonName_field->text().isEmpty()) {
         ui->errorMessage->setText(tr("Common Name must be filled!"));
     } else {
         ui->errorMessage->setText(NULL);
