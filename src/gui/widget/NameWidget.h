@@ -8,18 +8,18 @@
 #define certman_qt_X509_NAME_add_entry(n, v) { QString text = (v)->text(); \
     if (!text.isEmpty()) X509_NAME_add_entry_by_NID(name, n, V_ASN1_UTF8STRING, (unsigned char *) text.toStdString().c_str(), -1, -1, 0); }
 
-#define certman_X509_NAME_get_entry(name, nid, cbuf) \
-    int length##nid = X509_NAME_get_text_by_NID(name, nid, NULL, 0); \
-    char cbuf##nid[length##nid + 1]; \
-    X509_NAME_get_text_by_NID(name, nid, cbuf##nid, length##nid + 1); \
-    (cbuf) = cbuf##nid
+#define certman_X509_NAME_get_entry(name, nid, bref) {\
+        int length = X509_NAME_get_text_by_NID(name, nid, NULL, 0); \
+        X509_NAME_get_text_by_NID(name, nid, bref, length + 1); \
+    }
 
-#define certman_qt_X509_NAME_get_entry(name, nid, f) \
-    char *cbuf##nid; \
-    certman_X509_NAME_get_entry(name, nid, cbuf##nid); \
-    bool signalsBlocked##nid = (f)->blockSignals(true); \
-    (f)->setText(QString(cbuf##nid)); \
-    (f)->blockSignals(signalsBlocked##nid);
+#define certman_qt_X509_NAME_get_entry(name, nid, f) {\
+        char *cbuf; \
+        certman_X509_NAME_get_entry(name, nid, cbuf); \
+        bool signalsBlocked = (f)->blockSignals(true); \
+        (f)->setText(QString(cbuf)); \
+        (f)->blockSignals(signalsBlocked); \
+    }
 
 namespace Ui {
     class NameWidget;
