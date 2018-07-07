@@ -148,25 +148,6 @@ void Certificate::addBasicConstraints(bool ca, int pathLen) {
     X509_add1_ext_i2d(certificate, NID_basic_constraints, &basicConstraints, true, X509V3_ADD_APPEND);
 }
 
-void Certificate::addKeyUsage(bool critical, bool digitalSignature, bool nonRepudation, bool keyEncipherment,
-                              bool dataEncipherment, bool keyAgreement, bool keyCertSign, bool cRLSign,
-                              bool encipherOnly, bool decipherOnly) {
-    ASN1_BIT_STRING *keyUsage = ASN1_BIT_STRING_new();
-    ASN1_BIT_STRING_set_bit(keyUsage, 0, digitalSignature);
-    ASN1_BIT_STRING_set_bit(keyUsage, 1, nonRepudation);
-    ASN1_BIT_STRING_set_bit(keyUsage, 2, keyEncipherment);
-    ASN1_BIT_STRING_set_bit(keyUsage, 3, dataEncipherment);
-    ASN1_BIT_STRING_set_bit(keyUsage, 4, keyAgreement);
-    ASN1_BIT_STRING_set_bit(keyUsage, 5, keyCertSign);
-    ASN1_BIT_STRING_set_bit(keyUsage, 6, cRLSign);
-    ASN1_BIT_STRING_set_bit(keyUsage, 7, encipherOnly);
-    ASN1_BIT_STRING_set_bit(keyUsage, 8, decipherOnly);
-
-    unsigned char *buf = NULL;
-    int len = i2d_ASN1_BIT_STRING(keyUsage, &buf);
-    ASN1_OCTET_STRING *data = ASN1_OCTET_STRING_new();
-    ASN1_OCTET_STRING_set(data, buf, len);
-
-    X509_EXTENSION *ext = X509_EXTENSION_create_by_NID(NULL, NID_key_usage, critical, data);
+void Certificate::appendExtension(X509_EXTENSION *ext) {
     X509_add_ext(certificate, ext, -1);
 }

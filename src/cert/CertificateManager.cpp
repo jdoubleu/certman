@@ -214,13 +214,13 @@ X509_STORE *CertificateManager::getCertificateListAsX509Store() {
     return store;
 }
 
-bool CertificateManager::signCertificate(Certificate *cert, EVP_PKEY *pKey, X509_NAME *issuer) {
+bool CertificateManager::signCertificate(Certificate *cert, EVP_PKEY *pKey, X509_NAME *parentSubject) {
     string certLocation = getCertificateDefaultLocation(cert);
     string keyLocation;
     if (hasPrivateKey(cert))
         keyLocation = getPrivateKeyDefaultLocation(cert);
 
-    X509_set_issuer_name(cert->getX509(), issuer);
+    X509_set_issuer_name(cert->getX509(), parentSubject);
     int bytes = cert->sign(pKey);
     if (bytes == 0)
         return false;
@@ -243,5 +243,29 @@ void CertificateManager::importNewCertificate(CERT_EXPORT newCertificate) {
     BIO_free(keyFile);
 
     certificateList->add(cert);
+}
+
+X509_EXTENSION *CertificateManager::generateKeyUsageExtensions(bool critical, bool digitalSignature, bool nonRepudation,
+                                                               bool keyEncipherment, bool dataEncipherment,
+                                                               bool keyAgreement, bool keyCertSign, bool cRLSign,
+                                                               bool encipherOnly, bool decipherOnly) {
+    ASN1_BIT_STRING *keyUsage = ASN1_BIT_STRING_new();
+    ASN1_BIT_STRING_set_bit(keyUsage, 0, digitalSignature);
+    ASN1_BIT_STRING_set_bit(keyUsage, 1, nonRepudation);
+    ASN1_BIT_STRING_set_bit(keyUsage, 2, keyEncipherment);
+    ASN1_BIT_STRING_set_bit(keyUsage, 3, dataEncipherment);
+    ASN1_BIT_STRING_set_bit(keyUsage, 4, keyAgreement);
+    ASN1_BIT_STRING_set_bit(keyUsage, 5, keyCertSign);
+    ASN1_BIT_STRING_set_bit(keyUsage, 6, cRLSign);
+    ASN1_BIT_STRING_set_bit(keyUsage, 7, encipherOnly);
+    ASN1_BIT_STRING_set_bit(keyUsage, 8, decipherOnly);
+
+    unsigned char *buf = NULL;
+    int len = i2d_ASN1_BIT_STRING(keyUsage, &buf);
+    ASN1_OCTET_STRING *data = ASN1_OCTET_STRING_new();
+    ASN1_OCTET_STRING_set(data, buf, len);
+
+    X509_EXTENSION *ext = X509_EXTENSION_create_by_NID(NULL, NID_key_usage, critical, data);
+    return ext;
 }
 

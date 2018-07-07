@@ -40,8 +40,8 @@ void SignAssistant::submit() {
 
         //Get signing key
         EVP_PKEY *pKey = crtMgr->getKey(crtMgr->getPrivateKeyDefaultLocation(signing));
-        X509_NAME *issuer = X509_get_issuer_name(signing->getX509());
-        bool successful = crtMgr->signCertificate(cert, pKey, issuer);
+        X509_NAME *parentSubject = X509_get_subject_name(signing->getX509());
+        bool successful = crtMgr->signCertificate(cert, pKey, parentSubject);
         emit certificateSigned(successful);
     }
 }
