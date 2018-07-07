@@ -4,9 +4,9 @@
 #include <QWidget>
 #include <openssl/x509.h>
 
-#define certman_X509_NAME_add_entry(n, v) X509_NAME_add_entry_by_NID(name, n, MBSTRING_UTF8, v, -1, -1, 0);
+#define certman_X509_NAME_add_entry(n, v) X509_NAME_add_entry_by_NID(name, n, V_ASN1_UTF8STRING, v, -1, -1, 0);
 #define certman_qt_X509_NAME_add_entry(n, v) { QString text = (v)->text(); \
-    if (!text.isEmpty()) X509_NAME_add_entry_by_NID(name, n, MBSTRING_UTF8, (unsigned char *) text.toStdString().c_str(), -1, -1, 0); }
+    if (!text.isEmpty()) X509_NAME_add_entry_by_NID(name, n, V_ASN1_UTF8STRING, (unsigned char *) text.toStdString().c_str(), -1, -1, 0); }
 
 #define certman_X509_NAME_get_entry(name, nid, cbuf) \
     int length##nid = X509_NAME_get_text_by_NID(name, nid, NULL, 0); \
