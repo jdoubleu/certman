@@ -25,9 +25,14 @@ bool KeyUsageWidget::isEnabled() {
 }
 
 X509_EXTENSION *KeyUsageWidget::getKeyUsageExtensions() {
-    return crtMgr->generateKeyUsageExtensions(false, ui->signature_toggle->isChecked(), false, false, false,
+    return crtMgr->generateKeyUsageExtensions(false,
+                                              ui->signature_toggle->isChecked(),
+                                              false,
+                                              false,
+                                              false,
                                               ui->key_agreement_toggle->isChecked(),
-                                              ui->certificate_singing_toggle->isChecked(), false,
+                                              ui->certificate_singing_toggle->isChecked(),
+                                              false,
                                               ui->encipher_only_toggle->isChecked(),
                                               ui->decipher_only_toggle->isChecked());
 }
