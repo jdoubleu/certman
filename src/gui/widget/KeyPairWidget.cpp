@@ -13,7 +13,7 @@ const SUPPORTED_KEY_ALG supportedKeyAlgorithms[] = {
 };
 
 const SUPPORTED_WRAPPING_ALG supportedWrappingAlgorithms[] = {
-        {"None", NULL},
+        {"None", EVP_enc_null()},
         {"DES",  NULL},
         {"DESede3 CBC", EVP_des_ede3_cbc()},
         {"AES",  NULL},
@@ -95,6 +95,11 @@ KEYPAIR_EXPORT KeyPairWidget::generateKeyPair() {
     auto keyLength = ui->keySizeComboBox->currentData(Qt::UserRole).value<int>();
     auto wrappingAlgorithm = ui->wrappingAlgorithmComboBox->currentData(
             Qt::UserRole).value<SUPPORTED_WRAPPING_ALG>().cipher;
+
+    if (wrappingAlgorithm == EVP_enc_null()) {
+        // Fixes key generation without key wrapping
+        wrappingAlgorithm = NULL;
+    }
 
     EVP_PKEY *keyPair = crtMgr->generateKeyPair(keyAlgorithm, keyLength);
 
