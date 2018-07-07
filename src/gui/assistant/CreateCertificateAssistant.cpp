@@ -54,7 +54,7 @@ void CreateCertificateAssistant::createCertificate() {
 
     auto *ext = ui->keyUsageWidget->getKeyUsageExtensions();
     if (ui->keyUsageWidget->isEnabled()) {
-        certificate->addKeyUsage(ext);
+        certificate->appendExtension(ext);
     }
 
     emit created({certificate, keyPairExport});

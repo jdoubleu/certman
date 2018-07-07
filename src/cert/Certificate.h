@@ -57,7 +57,7 @@ namespace cert {
 
         void addBasicConstraints(bool ca, int pathLen);
 
-        void addKeyUsage(X509_EXTENSION *ext);
+        void appendExtension(X509_EXTENSION *ext);
 
         bool operator==(const Certificate &c);
 

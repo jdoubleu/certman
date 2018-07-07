@@ -51,7 +51,7 @@ void CreateCACertificateAssistant::createCACertificate() {
     Certificate *ca = crtMgr->createCertificate(subject, X509_NAME_dup(subject), validityDays, keyPairExport.keyPair);
     ca->addBasicConstraints(true, pathLen);
     auto *ext = crtMgr->generateKeyUsageExtensions(true, true, false, false, false, false, true);
-    ca->addKeyUsage(ext);
+    ca->appendExtension(ext);
 
     emit created({
                          ca,

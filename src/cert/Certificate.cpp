@@ -148,6 +148,6 @@ void Certificate::addBasicConstraints(bool ca, int pathLen) {
     X509_add1_ext_i2d(certificate, NID_basic_constraints, &basicConstraints, true, X509V3_ADD_APPEND);
 }
 
-void Certificate::addKeyUsage(X509_EXTENSION *ext) {
+void Certificate::appendExtension(X509_EXTENSION *ext) {
     X509_add_ext(certificate, ext, -1);
 }
