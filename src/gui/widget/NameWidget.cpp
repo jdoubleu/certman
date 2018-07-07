@@ -9,6 +9,8 @@ using namespace gui::widget;
 NameWidget::NameWidget(QWidget *parent) : QWidget(parent), ui(new Ui::NameWidget) {
     ui->setupUi(this);
 
+    ui->commonName_field->setValidator(new QRegExpValidator(QRegExp("[a-zA-Z0-9*.]+"), this));
+
     on_optional_fields_toggle_stateChanged(0);
 
     // Fill country name field with iso3166 alpha2 codes
