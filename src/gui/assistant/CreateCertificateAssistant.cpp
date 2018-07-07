@@ -48,7 +48,7 @@ void CreateCertificateAssistant::accept() {
 
 void CreateCertificateAssistant::createCertificate() {
     KEYPAIR_EXPORT keyPairExport = ui->keyPairWidget->generateKeyPair();
-    X509_NAME *subject = field("nameWidget").value<NameWidget *>()->generateX509Name();
+    X509_NAME *subject = field("nameWidget").value<X509_NAME*>();
     int validityDays = ui->validityperiod_field->value();
     Certificate *certificate = crtMgr->createCertificate(subject, X509_NAME_dup(subject), validityDays,
                                                          keyPairExport.keyPair);
