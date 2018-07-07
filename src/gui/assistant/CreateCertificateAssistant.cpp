@@ -2,10 +2,11 @@
 #include "ui_createcertificateassistant.h"
 #include <QPushButton>
 #include <QtWidgets/QDialogButtonBox>
+#include "../widget/NameWidget.h"
 
 using std::string;
-using gui::widget::NameWidget;
 using cert::KEYPAIR_EXPORT;
+using gui::widget::NameWidget;
 
 using namespace gui::assistant;
 
@@ -48,7 +49,7 @@ void CreateCertificateAssistant::accept() {
 
 void CreateCertificateAssistant::createCertificate() {
     KEYPAIR_EXPORT keyPairExport = ui->keyPairWidget->generateKeyPair();
-    X509_NAME *subject = ui->subject_name->getX509Name();
+    X509_NAME *subject = field("nameWidget").value<X509_NAME *>();
     int validityDays = ui->validityperiod_field->value();
     Certificate *certificate = crtMgr->createCertificate(subject, X509_NAME_dup(subject), validityDays,
                                                          keyPairExport.keyPair);

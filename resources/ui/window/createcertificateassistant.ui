@@ -28,7 +28,7 @@
   <property name="options">
    <set>QWizard::CancelButtonOnLeft|QWizard::IndependentPages|QWizard::NoBackButtonOnStartPage|QWizard::NoDefaultButton</set>
   </property>
-  <widget class="QWizardPage" name="page_namefields">
+  <widget class="gui::assistant::page::NameWidgetPage" name="page_namefields">
    <property name="sizePolicy">
     <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
      <horstretch>0</horstretch>
@@ -42,25 +42,8 @@
     </size>
    </property>
    <property name="title">
-    <string>Subject Name</string>
+    <string>Subject &amp; Issuer</string>
    </property>
-   <layout class="QVBoxLayout" name="layout_page_namefields">
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
-     <number>0</number>
-    </property>
-    <item>
-     <widget class="gui::widget::NameWidget" name="subject_name" native="true"/>
-    </item>
-   </layout>
   </widget>
   <widget class="QWizardPage" name="page_keyPair">
    <property name="sizePolicy">
@@ -190,15 +173,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>gui::widget::NameWidget</class>
-   <extends>QWidget</extends>
-   <header location="global">src/gui/widget/NameWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>gui::widget::KeyPairWidget</class>
    <extends>QWidget</extends>
    <header location="global">src/gui/widget/KeyPairWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>gui::assistant::page::NameWidgetPage</class>
+   <extends>QWizardPage</extends>
+   <header location="global">src/gui/assistant/page/NameWidgetPage.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
