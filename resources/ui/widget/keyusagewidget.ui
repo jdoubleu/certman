@@ -45,6 +45,13 @@ the certificate will provide.</string>
        </widget>
       </item>
       <item>
+       <widget class="QCheckBox" name="key_encipherment">
+        <property name="text">
+         <string>Key Encipherment</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QCheckBox" name="key_agreement_toggle">
         <property name="text">
          <string>Key agreement</string>
