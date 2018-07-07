@@ -23,8 +23,8 @@ namespace gui::widget {
         ~NameWidget();
 
         bool validate();
+        X509_NAME *generateX509Name();
 
-        X509_NAME *getX509Name();
 
     public Q_SLOTS:
 

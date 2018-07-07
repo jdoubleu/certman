@@ -26,7 +26,7 @@ void NameWidget::on_optional_fields_toggle_stateChanged(int state) {
     ui->fields_tabs->setTabEnabled(1, state >= 1);
 }
 
-X509_NAME *NameWidget::getX509Name() {
+X509_NAME *NameWidget::generateX509Name() {
     X509_NAME *name = X509_NAME_new();
 
     // Fill X509_NAME struct from fields
