@@ -21,6 +21,8 @@ NameWidget::NameWidget(QWidget *parent) : QWidget(parent), ui(new Ui::NameWidget
     ui->countryName_field->setCurrentText(QLocale::system().name().remove(0, 3));
 
     connectChildrenChangeEvents();
+
+    renderValidation();
 }
 
 NameWidget::~NameWidget() {
@@ -115,5 +117,15 @@ void NameWidget::connectChildrenChangeEvents() {
 }
 
 void NameWidget::fieldValueChanged() {
+    renderValidation();
+
     emit valueChanged();
+}
+
+void NameWidget::renderValidation() {
+    if (!ui->commonName_field->hasAcceptableInput()) {
+        ui->errorMessage->setText(tr("Common Name must be filled!"));
+    } else {
+        ui->errorMessage->setText(NULL);
+    }
 }

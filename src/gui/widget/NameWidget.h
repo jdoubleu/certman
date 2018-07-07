@@ -66,6 +66,8 @@ namespace gui::widget {
 
         void connectChildrenChangeEvents();
 
+        void renderValidation();
+
     Q_SIGNALS:
 
         void valueChanged();
