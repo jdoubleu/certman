@@ -86,9 +86,9 @@ void NameWidget::setValue(X509_NAME *name) {
     certman_qt_X509_NAME_get_entry(name, NID_initials, ui->initials_field);
     certman_qt_X509_NAME_get_entry(name, NID_generationQualifier, ui->generationQualifier_field);
 
-    if (ui->pseudonym_field->hasAcceptableInput() || ui->title_field->hasAcceptableInput() ||
-        ui->surname_field->hasAcceptableInput() || ui->givenName_field->hasAcceptableInput() ||
-        ui->initials_field->hasAcceptableInput() || ui->generationQualifier_field->hasAcceptableInput()) {
+    if (!ui->pseudonym_field->text().isEmpty() || !ui->title_field->text().isEmpty() ||
+        !ui->surname_field->text().isEmpty() || !ui->givenName_field->text().isEmpty() ||
+        !ui->initials_field->text().isEmpty() || !ui->generationQualifier_field->text().isEmpty()) {
         ui->optional_fields_toggle->setChecked(true);
     }
 
