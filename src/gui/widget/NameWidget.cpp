@@ -95,36 +95,21 @@ void NameWidget::setValue(X509_NAME *name) {
 }
 
 void NameWidget::reset() {
-    clearLineEdit(commonName_label);
-    clearLineEdit(organization_field);
-    clearLineEdit(organizationalunit_field);
-    clearLineEdit(locality_field);
-    clearLineEdit(stateorprovince_field);
+    QList<QLineEdit*> editFields = findChildren<QLineEdit*>();
+    for (QLineEdit *field: editFields) {
+        field->clear();
+    }
 
     ui->countryName_field->setCurrentText(QLocale::system().name().remove(0, 3));
-
-    clearLineEdit(pseudonym_field)
-    clearLineEdit(title_field)
-    clearLineEdit(surname_field)
-    clearLineEdit(givenName_field)
-    clearLineEdit(initials_field)
-    clearLineEdit(generationQualifier_field)
 
     ui->optional_fields_toggle->setChecked(false);
 }
 
 void NameWidget::connectChildrenChangeEvents() {
-    connect(ui->commonName_field, &QLineEdit::textChanged, this, &NameWidget::fieldValueChanged);
-    connect(ui->organization_field, &QLineEdit::textChanged, this, &NameWidget::fieldValueChanged);
-    connect(ui->organizationalunit_field, &QLineEdit::textChanged, this, &NameWidget::fieldValueChanged);
-    connect(ui->locality_field, &QLineEdit::textChanged, this, &NameWidget::fieldValueChanged);
-    connect(ui->stateorprovince_field, &QLineEdit::textChanged, this, &NameWidget::fieldValueChanged);
-    connect(ui->pseudonym_field, &QLineEdit::textChanged, this, &NameWidget::fieldValueChanged);
-    connect(ui->title_field, &QLineEdit::textChanged, this, &NameWidget::fieldValueChanged);
-    connect(ui->surname_field, &QLineEdit::textChanged, this, &NameWidget::fieldValueChanged);
-    connect(ui->givenName_field, &QLineEdit::textChanged, this, &NameWidget::fieldValueChanged);
-    connect(ui->initials_field, &QLineEdit::textChanged, this, &NameWidget::fieldValueChanged);
-    connect(ui->generationQualifier_field, &QLineEdit::textChanged, this, &NameWidget::fieldValueChanged);
+    QList<QLineEdit*> editFields = findChildren<QLineEdit*>();
+    for (QLineEdit *field: editFields) {
+        connect(field, &QLineEdit::textChanged, this, &NameWidget::fieldValueChanged);
+    }
 
     connect(ui->countryName_field, &QComboBox::currentTextChanged, this, &NameWidget::fieldValueChanged);
 }

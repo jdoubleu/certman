@@ -21,8 +21,6 @@
     (f)->setText(QString(cbuf##nid)); \
     (f)->blockSignals(signalsBlocked##nid);
 
-#define clearLineEdit(f) ui->f->clear();
-
 namespace Ui {
     class NameWidget;
 }
