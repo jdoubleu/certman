@@ -68,7 +68,7 @@ namespace gui::widget {
 
     Q_SIGNALS:
 
-        void valueChanged(X509_NAME *name);
+        void valueChanged();
 
     };
 

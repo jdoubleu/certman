@@ -89,7 +89,7 @@ void NameWidget::setValue(X509_NAME *name) {
         ui->optional_fields_toggle->setChecked(true);
     }
 
-    emit valueChanged(name);
+    emit valueChanged();
 }
 
 void NameWidget::reset() {
@@ -109,8 +109,6 @@ void NameWidget::reset() {
     clearLineEdit(generationQualifier_field)
 
     ui->optional_fields_toggle->setChecked(false);
-
-    emit valueChanged(NULL);
 }
 
 void NameWidget::connectChildrenChangeEvents() {
@@ -130,5 +128,5 @@ void NameWidget::connectChildrenChangeEvents() {
 }
 
 void NameWidget::fieldValueChanged() {
-    emit valueChanged(value());
+    emit valueChanged();
 }
