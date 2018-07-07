@@ -9,7 +9,6 @@ using namespace gui::widget;
 NameWidget::NameWidget(QWidget *parent) : QWidget(parent), ui(new Ui::NameWidget) {
     ui->setupUi(this);
 
-    ui->commonName_field->setValidator(new QRegExpValidator(QRegExp("[a-zA-Z0-9*.]+"), this));
     ui->countryName_field->setValidator(new QRegExpValidator(QRegExp("[A-Z]{2}"), this));
 
     on_optional_fields_toggle_stateChanged(0);
@@ -60,7 +59,7 @@ X509_NAME *NameWidget::generateX509Name() {
 X509_NAME *NameWidget::value() {
     X509_NAME *name = NULL;
 
-    if (ui->commonName_field->hasAcceptableInput()) {
+    if (!ui->commonName_field->text().isEmpty()) {
         name = generateX509Name();
     }
 
@@ -123,7 +122,7 @@ void NameWidget::fieldValueChanged() {
 }
 
 void NameWidget::renderValidation() {
-    if (!ui->commonName_field->hasAcceptableInput()) {
+    if (ui->commonName_field->text().isEmpty()) {
         ui->errorMessage->setText(tr("Common Name must be filled!"));
     } else {
         ui->errorMessage->setText(NULL);
