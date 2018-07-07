@@ -42,12 +42,18 @@ the certificate will provide.</string>
         <property name="text">
          <string>Digital Signature</string>
         </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="key_encipherment">
         <property name="text">
          <string>Key Encipherment</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
