@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>451</width>
+    <height>351</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,22 +19,16 @@
   <property name="options">
    <set>QWizard::CancelButtonOnLeft|QWizard::IndependentPages|QWizard::NoBackButtonOnStartPage|QWizard::NoDefaultButton</set>
   </property>
-  <widget class="QWizardPage" name="subjectPage">
-   <property name="title">
-    <string>Subject</string>
+  <widget class="gui::assistant::page::NameWidgetPage" name="subjectPage">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
    </property>
-   <layout class="QVBoxLayout" name="subjectPageLayout">
-    <item>
-     <widget class="gui::widget::NameWidget" name="nameWidget" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-     </widget>
-    </item>
-   </layout>
+   <property name="title">
+    <string>Distinguished Name</string>
+   </property>
   </widget>
   <widget class="QWizardPage" name="keypairPage">
    <property name="title">
@@ -158,15 +152,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>gui::widget::NameWidget</class>
-   <extends>QWidget</extends>
-   <header location="global">src/gui/widget/NameWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>gui::widget::KeyPairWidget</class>
    <extends>QWidget</extends>
    <header location="global">src/gui/widget/KeyPairWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>gui::assistant::page::NameWidgetPage</class>
+   <extends>QWizardPage</extends>
+   <header location="global">src/gui/assistant/page/NameWidgetPage.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
