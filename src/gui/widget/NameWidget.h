@@ -14,7 +14,7 @@
     }
 
 #define certman_qt_X509_NAME_get_entry(name, nid, f) {\
-        char *cbuf; \
+        char *cbuf = NULL; \
         certman_X509_NAME_get_entry(name, nid, cbuf); \
         bool signalsBlocked = (f)->blockSignals(true); \
         (f)->setText(QString(cbuf)); \
