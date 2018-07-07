@@ -10,6 +10,7 @@ NameWidget::NameWidget(QWidget *parent) : QWidget(parent), ui(new Ui::NameWidget
     ui->setupUi(this);
 
     ui->commonName_field->setValidator(new QRegExpValidator(QRegExp("[a-zA-Z0-9*.]+"), this));
+    ui->countryName_field->setValidator(new QRegExpValidator(QRegExp("[A-Z]{2}"), this));
 
     on_optional_fields_toggle_stateChanged(0);
 
