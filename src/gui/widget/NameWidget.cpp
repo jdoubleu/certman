@@ -91,7 +91,7 @@ void NameWidget::setValue(X509_NAME *name) {
         ui->optional_fields_toggle->setChecked(true);
     }
 
-    emit valueChanged();
+    fieldValueChanged();
 }
 
 void NameWidget::reset() {
