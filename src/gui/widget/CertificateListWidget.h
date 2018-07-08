@@ -12,6 +12,7 @@ using std::unordered_set;
 using std::vector;
 using cert::Certificate;
 using cert::CertificateList;
+using cert::CertificateListSet;
 
 namespace Ui {
     class CertificateList;
@@ -52,8 +53,7 @@ namespace gui::widget {
          * Show all certificates.
          * @param list Set of certificates to show.
          */
-        void showCertificates(
-                unordered_set<Certificate *, CertificateList::CertificateHashByThumbprint, CertificateList::CertificateEqualByThumbprint> list);
+        void showCertificates(CertificateListSet list);
 
     private:
 

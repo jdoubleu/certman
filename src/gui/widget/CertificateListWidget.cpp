@@ -36,14 +36,13 @@ bool CertificateListWidget::isEmpty() {
     return treeList->topLevelItemCount() == 0;
 }
 
-void CertificateListWidget::showCertificates(
-        unordered_set<Certificate *, CertificateList::CertificateHashByThumbprint, CertificateList::CertificateEqualByThumbprint> certificates) {
+void CertificateListWidget::showCertificates(CertificateListSet certificates) {
     if (!isEmpty()) {
         clear();
     }
 
     QList<QTreeWidgetItem *> items;
-    unordered_set<Certificate *, CertificateList::CertificateHashByThumbprint, CertificateList::CertificateEqualByThumbprint>::const_iterator it;
+    CertificateListSet::const_iterator it;
     int i = 0;
 
     for (it = certificates.begin(); it != certificates.end(); ++it, i++) {

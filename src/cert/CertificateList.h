@@ -9,10 +9,43 @@ using std::unordered_set;
 namespace cert {
 
     /**
+     * Structure to compare certificates by the thumbprint.
+     */
+    struct CertificateEqualByThumbprint {
+    public:
+
+        /**
+         * Compares two certificates by there thumbprint.
+         * @param lhs First certificate to compare.
+         * @param rhs Second certificate to compare.
+         * @return Boolean if the certificates are equal.
+         */
+        bool operator()(const Certificate *lhs, const Certificate *rhs) const;
+    };
+
+    /**
+     * Structure to create a hash by the thumbprint.
+     */
+    struct CertificateHashByThumbprint {
+    public:
+
+        /**
+         * Compares two certificates by their hashes.
+         * @param cert Certificate to compare with.
+         * @return Boolean if the certificates are equal.
+         */
+        size_t operator()(const Certificate *cert) const;
+    };
+
+    /**
+     * A set used for storing certificates internally.
+     */
+    typedef unordered_set<Certificate *, CertificateHashByThumbprint, CertificateEqualByThumbprint> CertificateListSet;
+
+    /**
      * Class represents a list of certificate objects.
      */
     class CertificateList {
-
     public:
 
         /**
@@ -21,40 +54,10 @@ namespace cert {
         CertificateList();
 
         /**
-         * Structure to compare certificates by the thumbprint.
-         */
-        struct CertificateEqualByThumbprint {
-        public:
-
-            /**
-             * Compares two certificates by there thumbprint.
-             * @param lhs First certificate to compare.
-             * @param rhs Second certificate to compare.
-             * @return Boolean if the certificates are equal.
-             */
-            bool operator()(const Certificate *lhs, const Certificate *rhs) const;
-        };
-
-        /**
-         * Structure to create a hash by the thumbprint.
-         */
-        struct CertificateHashByThumbprint {
-        public:
-
-            /**
-             * Compares two certificates by their hashes.
-             * @param cert Certificate to compare with.
-             * @return Boolean if the certificates are equal.
-             */
-            size_t operator()(const Certificate *cert) const;
-        };
-
-        /**
          * List all certificates.
          * @return unordered set containing all certificates.
          */
-        unordered_set<Certificate *, CertificateList::CertificateHashByThumbprint, CertificateList::CertificateEqualByThumbprint> *
-        listAll();
+        CertificateListSet *listAll();
 
         /**
          * Adds a certificate to the certificateList.
@@ -73,9 +76,8 @@ namespace cert {
         /**
          * unordered set of all certificates inside the certificateList.
          */
-        unordered_set<Certificate *, CertificateHashByThumbprint, CertificateEqualByThumbprint> *certificates;
+        CertificateListSet *certificates;
     };
-
 }
 
 #endif
