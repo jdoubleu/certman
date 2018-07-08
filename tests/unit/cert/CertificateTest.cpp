@@ -10,10 +10,11 @@ namespace cert {
 
     class CertificateTest : public testing::Test {
     protected:
+        CertificateManager *manager;
         Certificate *certificate;
 
         virtual void SetUp() {
-            auto *manager = new CertificateManager();
+            manager = new CertificateManager();
             certificate = new Certificate(manager->getX509(FIXTURE("/certs/test.cer")));
         }
 
@@ -45,5 +46,11 @@ namespace cert {
 
     TEST_F(CertificateTest, KeySizeEquals) {
         EXPECT_EQ(certificate->getKeySize(), 256);
+    }
+
+    TEST_F(CertificateTest, HasExtensions) {
+        auto *certificate = new Certificate(manager->getX509(FIXTURE("/certs/ca1/certs/ca.pem")));
+
+        EXPECT_EQ(certificate->getExtensions().size(), 4);
     }
 }
