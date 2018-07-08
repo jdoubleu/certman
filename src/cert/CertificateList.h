@@ -8,32 +8,32 @@ using std::unordered_set;
 
 namespace cert {
 
+    struct CertificateEqualByThumbprint {
+    public:
+        bool operator()(const Certificate *lhs, const Certificate *rhs) const;
+    };
+
+    struct CertificateHashByThumbprint {
+    public:
+        size_t operator()(const Certificate *cert) const;
+    };
+
+    typedef unordered_set<Certificate *, CertificateHashByThumbprint, CertificateEqualByThumbprint> CertificateListSet;
+
     class CertificateList {
 
     public:
         CertificateList();
 
-        struct CertificateEqualByThumbprint {
-        public:
-            bool operator()(const Certificate *lhs, const Certificate *rhs) const;
-        };
-
-        struct CertificateHashByThumbprint {
-        public:
-            size_t operator()(const Certificate *cert) const;
-        };
-
-        unordered_set<Certificate *, CertificateList::CertificateHashByThumbprint, CertificateList::CertificateEqualByThumbprint> *
-        listAll();
+        CertificateListSet *listAll();
 
         void add(Certificate *);
 
         void remove(Certificate *);
 
     private:
-        unordered_set<Certificate *, CertificateHashByThumbprint, CertificateEqualByThumbprint> *certificates;
+        CertificateListSet *certificates;
     };
-
 }
 
 #endif

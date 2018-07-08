@@ -2,6 +2,7 @@
 #include "ui_signassistant.h"
 
 using cert::CertificateContainer;
+using cert::CertificateListSet;
 
 using namespace gui::assistant;
 
@@ -12,8 +13,8 @@ SignAssistant::SignAssistant(CertificateManager *crtMgr, Certificate *cert, QWid
     ui->setupUi(this);
 
     CertificateList *certList = crtMgr->getCertificateList();
-    unordered_set<Certificate *, CertificateList::CertificateHashByThumbprint, CertificateList::CertificateEqualByThumbprint> *allCerts = certList->listAll();
-    unordered_set<Certificate *, CertificateList::CertificateHashByThumbprint, CertificateList::CertificateEqualByThumbprint>::const_iterator it;
+    CertificateListSet *allCerts = certList->listAll();
+    CertificateListSet::const_iterator it;
 
 
     for (it = allCerts->begin(); it != allCerts->end(); ++it) {

@@ -12,6 +12,7 @@ using std::unordered_set;
 using std::vector;
 using cert::Certificate;
 using cert::CertificateList;
+using cert::CertificateListSet;
 
 namespace Ui {
     class CertificateList;
@@ -30,8 +31,7 @@ namespace gui::widget {
 
         bool isEmpty();
 
-        void showCertificates(
-                unordered_set<Certificate *, CertificateList::CertificateHashByThumbprint, CertificateList::CertificateEqualByThumbprint>);
+        void showCertificates(CertificateListSet);
 
     private:
         Ui::CertificateList *ui;
