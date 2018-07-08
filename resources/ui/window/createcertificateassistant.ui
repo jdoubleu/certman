@@ -53,7 +53,7 @@
     </sizepolicy>
    </property>
    <property name="title">
-    <string>Algorithm</string>
+    <string>Key Pair</string>
    </property>
   </widget>
   <widget class="QWizardPage" name="page_validity">
