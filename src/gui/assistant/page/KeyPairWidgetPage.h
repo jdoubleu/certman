@@ -20,6 +20,12 @@ namespace gui::assistant::page {
 
         void injectCertificateManager(CertificateManager *crtMgr);
 
+        bool isComplete() const override;
+
+    public Q_SLOTS:
+
+        void on_keyPairWidget_keyPairChanged();
+
     private:
         Ui::KeyPairWidgetPage *ui;
     };
