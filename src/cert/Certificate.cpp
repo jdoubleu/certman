@@ -59,10 +59,6 @@ string Certificate::getSubjectField(const string field) {
     return X509_NAME_get_field(X509_get_subject_name(this->certificate), field);
 }
 
-string Certificate::getSignatureAlgorithm() {
-    return OBJ_nid2ln(X509_get_signature_type(this->certificate));
-}
-
 string Certificate::getKeyType() {
     EVP_PKEY *pkey = X509_get_pubkey(this->certificate);
     int key_type = EVP_PKEY_id(pkey);
