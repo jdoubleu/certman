@@ -15,7 +15,7 @@ CreateCertificateAssistant::CreateCertificateAssistant(CertificateManager *crtMg
                                                                                                       crtMgr(crtMgr) {
     ui->setupUi(this);
 
-    ui->keyPairWidget->injectCertificateManager(crtMgr);
+    ui->page_keyPair->injectCertificateManager(crtMgr);
     ui->keyUsageWidget->injectCertificateManager(crtMgr);
 
     // validity

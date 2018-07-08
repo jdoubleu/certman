@@ -12,7 +12,7 @@ CreateCACertificateAssistant::CreateCACertificateAssistant(CertificateManager *c
         parent), ui(new Ui::CreateCACertificateAssistant), crtMgr(crtMgr) {
     ui->setupUi(this);
 
-    ui->keyPairWidget->injectCertificateManager(crtMgr);
+    ui->keypairPage->injectCertificateManager(crtMgr);
 
     // validity
     auto now = QDate::currentDate();
