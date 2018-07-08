@@ -11,17 +11,17 @@ namespace cert {
 
     class CertificateExtensionTest : public testing::Test {
     protected:
-        vector<CertificateExtension *> extenstion;
+        vector<CertificateExtension *> extensions;
 
         virtual void SetUp() {
             auto *manager = new CertificateManager();
             auto *certificate = new Certificate(manager->getX509(FIXTURE("/certs/ca1/certs/ca.pem")));
-            extenstion = certificate->getExtensions();
+            extensions = certificate->getExtensions();
         }
 
     };
 
     TEST_F(CertificateExtensionTest, ExtensionsExists) {
-        EXPECT_EQ(extenstion.size(), 4);
+        EXPECT_EQ(extensions.size(), 4);
     }
 }
