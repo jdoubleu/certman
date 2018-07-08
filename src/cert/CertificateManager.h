@@ -9,15 +9,42 @@ using std::vector;
 
 namespace cert {
 
+    /**
+     * Callback function which is used to process the key pair before exporting.
+     * E.g. key wrapping with algorithm and password.
+     * @param sink BIO to write to
+     */
     typedef std::function<void(BIO *sink)> EXPORT_PRIVATEKEY_FUNC;
 
+    /**
+     * Container structure used whenever a key pair is exported or internally passed
+     */
     typedef struct {
+
+        /**
+         * Reference to the OpenSSL key pair structure.
+         */
         EVP_PKEY *keyPair;
+
+        /**
+         * Function used for exporting of the above key pair.
+         */
         EXPORT_PRIVATEKEY_FUNC exportFunc;
     } KEYPAIR_EXPORT;
 
+    /**
+     * Container structure used for exporting whole certificates.
+     */
     typedef struct {
+
+        /**
+         * The subject of this export.
+         */
         Certificate *certificate;
+
+        /**
+         * Belonging key pair export container structure of the above certificate.
+         */
         KEYPAIR_EXPORT keyPairExport;
     } CERT_EXPORT;
 
