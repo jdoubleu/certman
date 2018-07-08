@@ -111,8 +111,6 @@ namespace cert {
          */
         time_t getExpires();
 
-        vector<string> getASN();
-
         /**
          * Get the extensions of the certificate.
          * @return The extensions of the certificate.
