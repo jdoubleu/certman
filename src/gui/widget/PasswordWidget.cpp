@@ -107,7 +107,7 @@ QDialog *PasswordWidget::asDialog(const QString name, const QString description,
     auto *okButton = dialogUi->buttonBox->button(QDialogButtonBox::Ok);
     okButton->setAutoDefault(false);
     okButton->setCheckable(false);
-    
+
     connect(passwordWidget, &PasswordWidget::passwordChanged, [&okButton, &passwordWidget]() {
         okButton->setCheckable(passwordWidget->validate());
     });

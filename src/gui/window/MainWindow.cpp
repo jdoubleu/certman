@@ -19,11 +19,11 @@ using cert::CERT_EXPORT;
 
 using namespace gui::window;
 
-MainWindow::MainWindow(CertificateManager *crtMgr, Environment *env, QWidget *parent) :
+MainWindow::MainWindow(CertificateManager *crtMgr, QWidget *parent) :
         QMainWindow(parent),
         ui(new Ui::MainWindow),
         crtList(new CertificateListWidget(this)),
-        crtMgr(crtMgr), env(env) {
+        crtMgr(crtMgr) {
     ui->setupUi(this);
 
     this->setupActions();
@@ -118,7 +118,7 @@ void MainWindow::onCertificateRemoveAction() {
             return;
         }
 
-        bool success = crtMgr->removeCertifcate(selectedCertificate);
+        bool success = crtMgr->removeCertificate(selectedCertificate);
 
         if (success)
             crtList->showCertificates(*crtMgr->getCertificateList()->listAll());

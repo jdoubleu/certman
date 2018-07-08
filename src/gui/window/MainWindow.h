@@ -18,46 +18,104 @@ namespace Ui {
 
 namespace gui::window {
 
+    /**
+     * Represents the main interaction point with the application.
+     */
     class MainWindow : public QMainWindow {
     Q_OBJECT
 
     public:
-        explicit MainWindow(CertificateManager *crtMgr, Environment *env, QWidget *parent = 0);
+        /**
+         * Constructor for the Window.
+         * @param crtMgr Instance of certificate manager.
+         * @param parent Parent widget.
+         */
+        explicit MainWindow(CertificateManager *crtMgr, QWidget *parent = 0);
 
+        /**
+         * Destructor for the Window.
+         */
         ~MainWindow();
 
     private:
+        /**
+         * Instance of the window ui.
+         */
         Ui::MainWindow *ui;
 
+        /**
+         * Instance of the certificate manager.
+         */
         CertificateManager *crtMgr;
-        Environment *env;
 
+        /**
+         * Instance of the certificate list widget.
+         */
         CertificateListWidget *crtList;
 
+        /**
+         * Reference to the selected certificate.
+         */
         Certificate *selectedCertificate;
 
+        /**
+         * Setup the the window state.
+         */
         void setupActions();
 
     private slots:
 
-        void importCertificate();
-
-        void onCertificateImport(bool successful);
-
-        void onCertificateDetailsAction();
-
-        void onCertificateExportAction();
-
-        void onCertificateSelected(Certificate *cert);
-
+        /**
+         * Selects the certificate.
+         * @param certificates Selected certificates.
+         */
         void onCertificatesSelected(vector<Certificate *> certificates);
 
+        /**
+         * Opens the import assistant.
+         */
+        void importCertificate();
+
+        /**
+         * Handle the result of the import.
+         * @param successful Assistant dialog passed.
+         */
+        void onCertificateImport(bool successful);
+
+        /**
+         * Opens the detail dialog.
+         * @param cert Certificate to be viewed.
+         */
+        void onCertificateSelected(Certificate *cert);
+
+        /**
+         * Handle the certificate detail action.
+         */
+        void onCertificateDetailsAction();
+
+        /**
+         * Opens the export assistant dialog.
+         */
+        void onCertificateExportAction();
+
+        /**
+         * Opens the remove certificate dialog.
+         */
         void onCertificateRemoveAction();
 
+        /**
+         * Opens the new certificate assistant dialog.
+         */
         void onNewCertificateAction();
 
+        /**
+         * Opens the new certificate authority assistant dialog.
+         */
         void onNewCertificateAuthorityAction();
 
+        /**
+         * Opens the certificate signing assistant dialog.
+         */
         void onCertificateSignAction();
     };
 

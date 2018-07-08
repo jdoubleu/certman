@@ -118,7 +118,7 @@ void CertificateManager::exportPrivateKey(EVP_PKEY *pkey, string location) {
     BIO_free(bio);
 }
 
-bool CertificateManager::removeCertifcate(Certificate *cert) {
+bool CertificateManager::removeCertificate(Certificate *cert) {
     bool success = QFile::remove(QString::fromStdString(getCertificateDefaultLocation(cert)));
 
     if (!success)
@@ -246,13 +246,14 @@ void CertificateManager::importNewCertificate(CERT_EXPORT newCertificate) {
     certificateList->add(cert);
 }
 
-X509_EXTENSION *CertificateManager::generateKeyUsageExtensions(bool critical, bool digitalSignature, bool nonRepudation,
-                                                               bool keyEncipherment, bool dataEncipherment,
-                                                               bool keyAgreement, bool keyCertSign, bool cRLSign,
-                                                               bool encipherOnly, bool decipherOnly) {
+X509_EXTENSION *
+CertificateManager::generateKeyUsageExtensions(bool critical, bool digitalSignature, bool nonRepudiation,
+                                               bool keyEncipherment, bool dataEncipherment,
+                                               bool keyAgreement, bool keyCertSign, bool cRLSign,
+                                               bool encipherOnly, bool decipherOnly) {
     ASN1_BIT_STRING *keyUsage = ASN1_BIT_STRING_new();
     ASN1_BIT_STRING_set_bit(keyUsage, 0, digitalSignature);
-    ASN1_BIT_STRING_set_bit(keyUsage, 1, nonRepudation);
+    ASN1_BIT_STRING_set_bit(keyUsage, 1, nonRepudiation);
     ASN1_BIT_STRING_set_bit(keyUsage, 2, keyEncipherment);
     ASN1_BIT_STRING_set_bit(keyUsage, 3, dataEncipherment);
     ASN1_BIT_STRING_set_bit(keyUsage, 4, keyAgreement);

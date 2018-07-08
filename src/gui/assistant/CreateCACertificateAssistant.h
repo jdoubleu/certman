@@ -13,24 +13,52 @@ namespace Ui {
 
 namespace gui::assistant {
 
+    /**
+     * Represents the CA certificate assistant wizard.
+     */
     class CreateCACertificateAssistant : public QWizard {
     Q_OBJECT
     public:
+
+        /**
+         * Constructor for initial wizard setup.
+         * @param crtMgr Reference to certificate manager.
+         * @param parent Parent widget.
+         */
         explicit CreateCACertificateAssistant(CertificateManager *crtMgr, QWidget *parent = 0);
 
+        /**
+         * Destructs the wizard ui.
+         */
         ~CreateCACertificateAssistant();
 
+        /**
+         * Creates a CA certificate if the wizard result is successful.
+         */
         void accept() override;
 
     private:
+        /**
+         * Reference to the assistant ui.
+         */
         Ui::CreateCACertificateAssistant *ui;
 
+        /**
+         * Reference to the certificate manager.
+         */
         CertificateManager *crtMgr;
 
+        /**
+         * Creates the CA certificate based on the wizard content.
+         */
         void createCACertificate();
 
     signals:
 
+        /**
+         * Inform the main window.
+         * @param newCACertificate New CA certificate.
+         */
         void created(CERT_EXPORT newCACertificate);
     };
 
