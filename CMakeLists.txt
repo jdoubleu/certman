@@ -22,6 +22,7 @@ include(ExternalProject)
 
 # Required custom modules
 include(QtApplicationMeta)
+include(Documentation)
 include(UnitTests)
 
 # project meta information

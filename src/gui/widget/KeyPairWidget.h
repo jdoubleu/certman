@@ -28,6 +28,16 @@ namespace gui::widget {
     class KeyPairWidget : public QWidget {
     Q_OBJECT
 
+        Q_PROPERTY(cert::KEYPAIR_EXPORT keyPair
+                           READ generateKeyPair
+                           NOTIFY keyPairChanged
+                           DESIGNABLE
+                           false
+                           SCRIPTABLE
+                           false
+                           STORED
+                           false)
+
     public:
         explicit KeyPairWidget(CertificateManager *crtMgr, QWidget *parent);
 
@@ -47,6 +57,14 @@ namespace gui::widget {
 
         void on_wrappingAlgorithmComboBox_currentIndexChanged(int index);
 
+        void on_keySizeComboBox_currentIndexChanged(int index);
+
+        void on_keyPassword_passwordChanged();
+
+    Q_SIGNALS:
+
+        void keyPairChanged();
+
     private:
 
         Ui::KeyPairWidget *ui;
@@ -64,5 +82,7 @@ namespace gui::widget {
 Q_DECLARE_METATYPE(gui::widget::SUPPORTED_KEY_ALG);
 
 Q_DECLARE_METATYPE(gui::widget::SUPPORTED_WRAPPING_ALG);
+
+Q_DECLARE_METATYPE(cert::KEYPAIR_EXPORT);
 
 #endif //KEYPAIRWIDGET_H
