@@ -11,7 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>WizardPage</string>
+   <string>Key Pair</string>
+  </property>
+  <property name="title">
+   <string>Key Pair</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
