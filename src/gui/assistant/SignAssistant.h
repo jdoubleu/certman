@@ -16,25 +16,55 @@ namespace Ui {
 
 namespace gui::assistant {
 
+    /**
+     * Represents the dialog for certificate signing.
+     */
     class SignAssistant : public QDialog {
     Q_OBJECT
 
     public:
+        /**
+         * Constructor for dialog.
+         * @param crtMgr Certificate manger.
+         * @param cert Certificate to be signed.
+         * @param parent Parent widget.
+         */
         explicit SignAssistant(CertificateManager *crtMgr, Certificate *cert, QWidget *parent);
 
+        /**
+         * Cleanup the ui dialog.
+         */
         ~SignAssistant();
 
     private:
+        /**
+         * Reference to the assistant ui.
+         */
         Ui::SignAssistant *ui;
+
+        /**
+         * Certificate to be signed.
+         */
         Certificate *cert;
+
+        /**
+         * Reference to certificate manager.
+         */
         CertificateManager *crtMgr;
 
     private slots:
 
+        /**
+         * Dialog submit action.
+         */
         void submit();
 
     signals:
 
+        /**
+         * Signal to inform the main window.
+         * @param successful Result of the dialog.
+         */
         void certificateSigned(bool successful);
 
     };
