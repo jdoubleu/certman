@@ -48,6 +48,7 @@ namespace gui::assistant {
         CertificateManager *crtMgr;
 
     private slots:
+
         /**
          * Action after certificate file is chosen.
          */
@@ -64,6 +65,7 @@ namespace gui::assistant {
         void submit();
 
     signals:
+
         /**
          * Informs the main window of the dialog result.
          * @param successful Result of the dialog.

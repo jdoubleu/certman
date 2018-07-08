@@ -3,7 +3,6 @@
 #include <QPushButton>
 #include <QtWidgets/QDialogButtonBox>
 #include "../widget/NameWidget.h"
-#include "../widget/KeyPairWidget.h"
 
 using std::string;
 using cert::KEYPAIR_EXPORT;

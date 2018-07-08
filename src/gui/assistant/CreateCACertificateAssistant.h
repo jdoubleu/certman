@@ -20,11 +20,11 @@ namespace gui::assistant {
     Q_OBJECT
     public:
 
-         /**
-          * Constructor for initial wizard setup.
-          * @param crtMgr Reference to certificate manager.
-          * @param parent Parent widget.
-          */
+        /**
+         * Constructor for initial wizard setup.
+         * @param crtMgr Reference to certificate manager.
+         * @param parent Parent widget.
+         */
         explicit CreateCACertificateAssistant(CertificateManager *crtMgr, QWidget *parent = 0);
 
         /**
@@ -54,6 +54,7 @@ namespace gui::assistant {
         void createCACertificate();
 
     signals:
+
         /**
          * Inform the main window.
          * @param newCACertificate New CA certificate.

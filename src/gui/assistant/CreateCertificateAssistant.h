@@ -57,6 +57,7 @@ namespace gui::assistant {
         void createCertificate();
 
     signals:
+
         /**
          * Inform the main window.
          * @param newCertificate New certificate.
