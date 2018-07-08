@@ -131,3 +131,18 @@ string PasswordWidget::passwordDialog(const QString name, const QString descript
 
     return "";
 }
+
+int PasswordWidget::asCallbackDialog(char *buf, int size, int rwflag, void *u) {
+    auto *description = (string *) u;
+    const QString &descriptionLabel = description != NULL ? QString::fromStdString(*description) : "";
+
+    string password = PasswordWidget::passwordDialog(tr("Password"), descriptionLabel, false, NULL);
+
+    if (password.empty())
+        return 0;
+
+    auto len = std::min(password.length(), (unsigned long) size);
+    password.copy(buf, len, 0);
+
+    return (int) len;
+}

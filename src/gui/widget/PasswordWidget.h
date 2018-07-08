@@ -70,6 +70,8 @@ namespace gui::widget {
 
         static string passwordDialog(const QString name, const QString description, bool repeat, QWidget *parent = 0);
 
+        static int asCallbackDialog(char *buf, int size, int rwflag, void *u);
+
     public Q_SLOTS:
 
         void on_passwordLineEdit_textChanged(const QString &value);
