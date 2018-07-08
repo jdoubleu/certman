@@ -2,6 +2,7 @@
 #define PASSWORDWIDGET_H
 
 #include <QWidget>
+#include <QDialog>
 #include <QString>
 #include <string>
 #include <openssl/bio.h>
@@ -10,6 +11,7 @@ using std::string;
 
 namespace Ui {
     class PasswordWidget;
+    class PasswordDialog;
 }
 
 namespace gui::widget {
@@ -63,6 +65,10 @@ namespace gui::widget {
         void setDescription(QString description);
 
         void setRepeat(bool repeat);
+
+        static QDialog *asDialog(const QString name, const QString description, bool repeat, QWidget *parent = 0);
+
+        static string passwordDialog(const QString name, const QString description, bool repeat, QWidget *parent = 0);
 
     public Q_SLOTS:
 

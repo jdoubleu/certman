@@ -1,5 +1,7 @@
 #include "PasswordWidget.h"
 #include "ui_passwordwidget.h"
+#include "ui_passworddialog.h"
+#include <QPushButton>
 
 using namespace gui::widget;
 
@@ -88,4 +90,44 @@ void PasswordWidget::on_repeatPasswordLineEdit_textChanged(const QString &value)
     validate();
 
     emit passwordChanged();
+}
+
+QDialog *PasswordWidget::asDialog(const QString name, const QString description, bool repeat, QWidget *parent) {
+    auto *dialogUi = new Ui::PasswordDialog;
+    auto *dialog = new QDialog(parent);
+    dialogUi->setupUi(dialog);
+
+    dialog->setWindowTitle(name);
+
+    PasswordWidget *passwordWidget = dialogUi->passwordWidget;
+    passwordWidget->setName(name);
+    passwordWidget->setDescription(description);
+    passwordWidget->setRepeat(repeat);
+
+    auto *okButton = dialogUi->buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setAutoDefault(false);
+    okButton->setCheckable(false);
+    
+    connect(passwordWidget, &PasswordWidget::passwordChanged, [&okButton, &passwordWidget]() {
+        okButton->setCheckable(passwordWidget->validate());
+    });
+
+    return dialog;
+}
+
+string PasswordWidget::passwordDialog(const QString name, const QString description, bool repeat, QWidget *parent) {
+    auto *dialog = PasswordWidget::asDialog(name, description, repeat, parent);
+
+    if (dialog->exec() == QDialog::Accepted) {
+        auto *widget = dialog->findChild<PasswordWidget *>("passwordWidget");
+
+        if (!widget) {
+            // TODO: throw exception
+            return "";
+        }
+
+        return widget->password();
+    }
+
+    return "";
 }
