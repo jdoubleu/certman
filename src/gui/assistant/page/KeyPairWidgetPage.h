@@ -25,7 +25,7 @@ namespace gui::assistant::page {
         explicit KeyPairWidgetPage(QWidget *parent = 0);
 
         /**
-         * Destructor for the widget.
+         * Destructor for the wizard page.
          */
         ~KeyPairWidgetPage();
 

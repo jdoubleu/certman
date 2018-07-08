@@ -22,7 +22,7 @@ namespace gui::assistant::page {
         explicit NameWidgetPage(QWidget *parent = 0);
 
         /**
-         * Destructor for the widget.
+         * Destructor for the wizard page.
          */
         ~NameWidgetPage();
 
