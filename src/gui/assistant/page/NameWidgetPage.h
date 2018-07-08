@@ -17,7 +17,7 @@ namespace gui::assistant::page {
     public:
         /**
          * Constructor for the wizard page.
-         * @param parent
+         * @param parent Reference to the parent widget.
          */
         explicit NameWidgetPage(QWidget *parent = 0);
 
