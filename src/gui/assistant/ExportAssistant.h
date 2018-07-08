@@ -19,6 +19,9 @@ namespace gui::assistant {
      */
     const QString EXPORT_LAST_OPEN_DIR("export_open_dir");
 
+    /**
+     * Represent the export assistant.
+     */
     class ExportAssistant : public QDialog {
     Q_OBJECT
 
@@ -53,6 +56,7 @@ namespace gui::assistant {
         Certificate *cert;
 
     private slots:
+
         /**
          * Action after certificate file is chosen.
          */
@@ -69,6 +73,7 @@ namespace gui::assistant {
         void submit();
 
     signals:
+
         /**
          * Informs the main window of the dialog result.
          * @param successful Result of the dialog.
