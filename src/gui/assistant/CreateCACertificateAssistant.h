@@ -28,7 +28,7 @@ namespace gui::assistant {
         explicit CreateCACertificateAssistant(CertificateManager *crtMgr, QWidget *parent = 0);
 
         /**
-         * Destructor of the wizard.
+         * Destructs the wizard ui.
          */
         ~CreateCACertificateAssistant();
 
@@ -49,7 +49,7 @@ namespace gui::assistant {
         CertificateManager *crtMgr;
 
         /**
-         * Creates the CA certificate bases on the wizard content.
+         * Creates the CA certificate based on the wizard content.
          */
         void createCACertificate();
 
