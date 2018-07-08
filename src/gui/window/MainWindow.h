@@ -22,7 +22,7 @@ namespace gui::window {
     Q_OBJECT
 
     public:
-        explicit MainWindow(CertificateManager *crtMgr, Environment *env, QWidget *parent = 0);
+        explicit MainWindow(CertificateManager *crtMgr, QWidget *parent = 0);
 
         ~MainWindow();
 
@@ -30,7 +30,6 @@ namespace gui::window {
         Ui::MainWindow *ui;
 
         CertificateManager *crtMgr;
-        Environment *env;
 
         CertificateListWidget *crtList;
 
