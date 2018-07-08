@@ -19,7 +19,8 @@ CertificateListWidget::CertificateListWidget(QWidget *parent) : QWidget(parent),
                                                                           const QPoint &)));
 
     connect(treeList, SIGNAL(itemDoubleClicked(QTreeWidgetItem * , int)), this, SLOT(
-            onItemDoubleClicked(QTreeWidgetItem * )));
+                                                                                        onItemDoubleClicked(
+                                                                                                QTreeWidgetItem * )));
     connect(ui->treeWidget, SIGNAL(itemSelectionChanged()), this, SLOT(onItemSelectionChanged()));
 }
 

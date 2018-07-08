@@ -6,12 +6,11 @@ using gui::window::MainWindow;
 
 using namespace core;
 
-Application::Application() : crtMgr(new CertificateManager()), env(new Environment()) {
+Application::Application() : crtMgr(new CertificateManager()) {
 }
 
 Application::~Application() {
     delete crtMgr;
-    delete env;
 }
 
 int Application::run(int argc, char *argv[]) {
@@ -22,7 +21,7 @@ int Application::run(int argc, char *argv[]) {
     a.setApplicationName("certman");
     a.setOrganizationDomain("certman.it-sec.medien.hs-duesseldorf.de");
 
-    MainWindow w(crtMgr, env);
+    MainWindow w(crtMgr);
     w.show();
 
     return a.exec();
