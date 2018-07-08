@@ -27,20 +27,20 @@ PasswordWidget::~PasswordWidget() {
 }
 
 bool PasswordWidget::validate() {
-    // TODO: highlight errors in UI
     if (ui->passwordLineEdit->text().isEmpty()) {
+        ui->validationMessage->setText(tr("Password must not be empty!"));
+
         return false;
+    } else if (this->repeat &&
+               ui->passwordLineEdit->text().compare(ui->repeatPasswordLineEdit->text(), Qt::CaseSensitive)) {
+        ui->validationMessage->setText(tr("Passwords do not match!"));
+
+        return false;
+    } else {
+        ui->validationMessage->clear();
+
+        return true;
     }
-
-    if (this->repeat) {
-        int diff = ui->passwordLineEdit->text().compare(ui->repeatPasswordLineEdit->text(), Qt::CaseSensitive);
-
-        if (diff != 0) {
-            return false;
-        }
-    }
-
-    return true;
 }
 
 string PasswordWidget::password() {
@@ -75,4 +75,12 @@ void PasswordWidget::setRepeat(bool repeat) {
 
     ui->repeatPasswordLabel->setHidden(!repeat);
     ui->repeatPasswordLineEdit->setHidden(!repeat);
+}
+
+void PasswordWidget::on_passwordLineEdit_textChanged(const QString &value) {
+    validate();
+}
+
+void PasswordWidget::on_repeatPasswordLineEdit_textChanged(const QString &value) {
+    validate();
 }

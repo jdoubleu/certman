@@ -56,6 +56,11 @@ namespace gui::widget {
 
         void setRepeat(bool repeat);
 
+    public Q_SLOTS:
+
+        void on_passwordLineEdit_textChanged(const QString &value);
+        void on_repeatPasswordLineEdit_textChanged(const QString &value);
+
     private:
 
         Ui::PasswordWidget *ui;
