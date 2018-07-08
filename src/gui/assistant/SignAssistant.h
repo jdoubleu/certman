@@ -53,16 +53,14 @@ namespace gui::assistant {
         CertificateManager *crtMgr;
 
     private slots:
-
         /**
          * Dialog submit action.
          */
         void submit();
 
     signals:
-
         /**
-         * Signal to inform the main window.
+         * Informs the main window of the dialog result.
          * @param successful Result of the dialog.
          */
         void certificateSigned(bool successful);
