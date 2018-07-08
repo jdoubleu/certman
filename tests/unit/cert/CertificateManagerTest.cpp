@@ -2,9 +2,11 @@
 #include "../CertmanTestCase.cpp"
 #include <src/cert/CertificateManager.h>
 
-namespace cert {
+using cert::CertificateManager;
 
-    class CertificateManagerTest : public tests::unit::CertmanTestCase {
+namespace tests::unit {
+
+    class CertificateManagerTest : public CertmanTestCase {
     protected:
         CertificateManager *crtMgr;
 

@@ -3,9 +3,12 @@
 #include <src/cert/Certificate.h>
 #include <src/cert/CertificateManager.h>
 
-namespace cert {
+using cert::CertificateManager;
+using cert::Certificate;
 
-    class CertificateTest : public tests::unit::CertmanTestCase {
+namespace tests::unit {
+
+    class CertificateTest : public CertmanTestCase {
     protected:
         CertificateManager *manager;
         Certificate *certificate;

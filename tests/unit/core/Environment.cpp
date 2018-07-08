@@ -2,9 +2,11 @@
 #include "../CertmanTestCase.cpp"
 #include <src/core/Environment.h>
 
-namespace core {
+using core::Environment;
 
-    class EnvironmentTest : public tests::unit::CertmanTestCase {};
+namespace tests::unit {
+
+    class EnvironmentTest : public CertmanTestCase {};
 
     TEST_F(EnvironmentTest, CertificatesDirNotNull) {
         EXPECT_GT(Environment::getCertificatesDir().size(), 1);
