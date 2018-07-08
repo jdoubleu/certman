@@ -65,7 +65,7 @@ namespace cert {
 
     /**
      * Sanitize string to be compatible with filesystem limitation.
-     * @param s Pointer to string.
+     * @param s Reference to string.
      */
     void removeChars(string *s);
 }

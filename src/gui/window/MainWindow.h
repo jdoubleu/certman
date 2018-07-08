@@ -54,7 +54,7 @@ namespace gui::window {
         CertificateListWidget *crtList;
 
         /**
-         * Pointer to the selected certificate.
+         * Reference to the selected certificate.
          */
         Certificate *selectedCertificate;
 
