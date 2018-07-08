@@ -87,30 +87,6 @@ time_t Certificate::getExpires() {
     return ASN1_TIME_to_time(date);
 }
 
-vector<string> Certificate::getASN() {
-    vector<string> list;
-    auto *subjectAltNames = (GENERAL_NAMES *) X509_get_ext_d2i(
-            this->certificate, NID_subject_alt_name, nullptr, nullptr
-    );
-    for (int i = 0; i < sk_GENERAL_NAME_num(subjectAltNames); i++) {
-        GENERAL_NAME *gen = sk_GENERAL_NAME_value(subjectAltNames, i);
-        if (gen->type == GEN_URI || gen->type == GEN_DNS || gen->type == GEN_EMAIL) {
-            ASN1_IA5STRING *asn1_str = gen->d.uniformResourceIdentifier;
-            string san = string((char *) ASN1_STRING_get0_data(asn1_str));
-            list.push_back(san);
-        } else if (gen->type == GEN_IPADD) {
-            unsigned char *p = gen->d.ip->data;
-            if (gen->d.ip->length == 4) {
-                stringstream ip;
-                ip << (int) p[0] << '.' << (int) p[1] << '.' << (int) p[2] << '.' << (int) p[3];
-                list.push_back(ip.str());
-            }
-        }
-    }
-    GENERAL_NAMES_free(subjectAltNames);
-    return list;
-}
-
 bool Certificate::operator==(const cert::Certificate &c) {
     return this->getThumbprint() == c.getThumbprint();
 }
