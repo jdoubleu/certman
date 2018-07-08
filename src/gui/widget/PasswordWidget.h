@@ -11,6 +11,7 @@ using std::string;
 
 namespace Ui {
     class PasswordWidget;
+
     class PasswordDialog;
 }
 

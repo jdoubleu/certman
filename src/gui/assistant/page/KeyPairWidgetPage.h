@@ -42,6 +42,7 @@ namespace gui::assistant::page {
         bool isComplete() const override;
 
     public Q_SLOTS:
+
         /**
          * Handles the changed event.
          */
@@ -54,7 +55,6 @@ namespace gui::assistant::page {
         Ui::KeyPairWidgetPage *ui;
     };
 }
-
 
 
 #endif //KEYPAIRWIDGETPAGE_H
