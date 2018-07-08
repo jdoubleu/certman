@@ -36,12 +36,14 @@ find_package(Qt5Widgets)
 find_package(OpenSSL REQUIRED)
 
 # Create executable
-file(GLOB_RECURSE CERTMAN_SRC "src/*.h" "src/*.cpp")
+file(GLOB_RECURSE CERTMAN_SRC "src/*/*.h" "src/*/*.cpp")
 
-add_executable(${PROJECT_NAME} ${OS_BUNDLE} ${CERTMAN_SRC} ${META_FILES_TO_INCLUDE})
+add_executable(${PROJECT_NAME} ${OS_BUNDLE} "src/main.cpp" ${META_FILES_TO_INCLUDE})
+add_library(${PROJECT_NAME}_main STATIC ${CERTMAN_SRC})
+target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}_main)
 
 # Link dependent libraries
-target_link_libraries(certman Qt5::Widgets)
-target_link_libraries(certman OpenSSL::Crypto)
+target_link_libraries(${PROJECT_NAME}_main Qt5::Widgets)
+target_link_libraries(${PROJECT_NAME}_main OpenSSL::Crypto)
 
 add_unit_tests()

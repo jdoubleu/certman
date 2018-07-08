@@ -32,14 +32,12 @@ endif()
 
 function(add_unit_tests)
     file(GLOB_RECURSE CERTMAN_UNIT_TESTS "${PROJECT_SOURCE_DIR}/tests/unit/*.cpp")
-    file(GLOB_RECURSE CERTMAN_TEST_SRC "${PROJECT_SOURCE_DIR}/src/*/*.h" "${PROJECT_SOURCE_DIR}/src/*/*.cpp")
 
     set(CERTMAN_TEST_FIXTURES ${PROJECT_SOURCE_DIR}/tests/fixtures)
     add_definitions(-DCERTMAN_TEST_FIXTURES=${CERTMAN_TEST_FIXTURES})
 
-    add_executable(${PROJECT_NAME}_tests_unit ${CERTMAN_UNIT_TESTS} ${CERTMAN_TEST_SRC})
-    target_link_libraries(${PROJECT_NAME}_tests_unit gtest_main)
-    target_link_libraries(${PROJECT_NAME}_tests_unit Qt5::Widgets)
-    target_link_libraries(${PROJECT_NAME}_tests_unit OpenSSL::Crypto)
-    add_test(NAME unit_test COMMAND ${PROJECT_NAME}_tests_unit)
+    add_executable(${PROJECT_NAME}_tests_unit ${CERTMAN_UNIT_TESTS})
+    target_link_libraries(${PROJECT_NAME}_tests_unit gtest_main ${PROJECT_NAME}_main)
+
+    add_test(NAME unit_tests COMMAND ${PROJECT_NAME}_tests_unit)
 endfunction()
