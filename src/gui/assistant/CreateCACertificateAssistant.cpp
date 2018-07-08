@@ -1,6 +1,7 @@
 #include "CreateCACertificateAssistant.h"
 #include "ui_createcacertificateassistant.h"
 #include "../widget/NameWidget.h"
+#include "../widget/KeyPairWidget.h"
 
 using gui::widget::NameWidget;
 using cert::KEYPAIR_EXPORT;
@@ -12,7 +13,7 @@ CreateCACertificateAssistant::CreateCACertificateAssistant(CertificateManager *c
         parent), ui(new Ui::CreateCACertificateAssistant), crtMgr(crtMgr) {
     ui->setupUi(this);
 
-    ui->keyPairWidget->injectCertificateManager(crtMgr);
+    ui->keypairPage->injectCertificateManager(crtMgr);
 
     // validity
     auto now = QDate::currentDate();
@@ -44,8 +45,8 @@ void CreateCACertificateAssistant::accept() {
 }
 
 void CreateCACertificateAssistant::createCACertificate() {
-    KEYPAIR_EXPORT keyPairExport = ui->keyPairWidget->generateKeyPair();
-    X509_NAME *subject = field("nameWidget").value<X509_NAME *>();
+    auto keyPairExport = field("keyPairWidget").value<KEYPAIR_EXPORT>();
+    auto *subject = field("nameWidget").value<X509_NAME *>();
     int validityDays = ui->validityperiod_field->value();
     int pathLen = ui->pathLengthSpinBox->value();
 

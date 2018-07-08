@@ -1,5 +1,7 @@
 #include "PasswordWidget.h"
 #include "ui_passwordwidget.h"
+#include "ui_passworddialog.h"
+#include <QPushButton>
 
 using namespace gui::widget;
 
@@ -27,26 +29,27 @@ PasswordWidget::~PasswordWidget() {
 }
 
 bool PasswordWidget::validate() {
-    // TODO: highlight errors in UI
     if (ui->passwordLineEdit->text().isEmpty()) {
+        ui->validationMessage->setText(tr("Password must not be empty!"));
+
         return false;
+    } else if (this->repeat &&
+               ui->passwordLineEdit->text().compare(ui->repeatPasswordLineEdit->text(), Qt::CaseSensitive)) {
+        ui->validationMessage->setText(tr("Passwords do not match!"));
+
+        return false;
+    } else {
+        ui->validationMessage->clear();
+
+        return true;
     }
-
-    if (this->repeat) {
-        int diff = ui->passwordLineEdit->text().compare(ui->repeatPasswordLineEdit->text(), Qt::CaseSensitive);
-
-        if (diff != 0) {
-            return false;
-        }
-    }
-
-    return true;
 }
 
 string PasswordWidget::password() {
     // TODO: use BIO_s_secmem
     // TODO: use utf8 compatible format
-    return ui->passwordLineEdit->text().toStdString();
+
+    return validate() ? ui->passwordLineEdit->text().toStdString() : "";
 }
 
 BIO *PasswordWidget::securePassphrase() {
@@ -75,4 +78,71 @@ void PasswordWidget::setRepeat(bool repeat) {
 
     ui->repeatPasswordLabel->setHidden(!repeat);
     ui->repeatPasswordLineEdit->setHidden(!repeat);
+}
+
+void PasswordWidget::on_passwordLineEdit_textChanged(const QString &value) {
+    validate();
+
+    emit passwordChanged();
+}
+
+void PasswordWidget::on_repeatPasswordLineEdit_textChanged(const QString &value) {
+    validate();
+
+    emit passwordChanged();
+}
+
+QDialog *PasswordWidget::asDialog(const QString name, const QString description, bool repeat, QWidget *parent) {
+    auto *dialogUi = new Ui::PasswordDialog;
+    auto *dialog = new QDialog(parent);
+    dialogUi->setupUi(dialog);
+
+    dialog->setWindowTitle(name);
+
+    PasswordWidget *passwordWidget = dialogUi->passwordWidget;
+    passwordWidget->setName(name);
+    passwordWidget->setDescription(description);
+    passwordWidget->setRepeat(repeat);
+
+    auto *okButton = dialogUi->buttonBox->button(QDialogButtonBox::Ok);
+    okButton->setAutoDefault(false);
+    okButton->setCheckable(false);
+    
+    connect(passwordWidget, &PasswordWidget::passwordChanged, [&okButton, &passwordWidget]() {
+        okButton->setCheckable(passwordWidget->validate());
+    });
+
+    return dialog;
+}
+
+string PasswordWidget::passwordDialog(const QString name, const QString description, bool repeat, QWidget *parent) {
+    auto *dialog = PasswordWidget::asDialog(name, description, repeat, parent);
+
+    if (dialog->exec() == QDialog::Accepted) {
+        auto *widget = dialog->findChild<PasswordWidget *>("passwordWidget");
+
+        if (!widget) {
+            // TODO: throw exception
+            return "";
+        }
+
+        return widget->password();
+    }
+
+    return "";
+}
+
+int PasswordWidget::asCallbackDialog(char *buf, int size, int rwflag, void *u) {
+    auto *description = (string *) u;
+    const QString &descriptionLabel = description != NULL ? QString::fromStdString(*description) : "";
+
+    string password = PasswordWidget::passwordDialog(tr("Password"), descriptionLabel, false, NULL);
+
+    if (password.empty())
+        return 0;
+
+    auto len = std::min(password.length(), (unsigned long) size);
+    password.copy(buf, len, 0);
+
+    return (int) len;
 }
