@@ -1,21 +1,18 @@
 #include "gtest/gtest.h"
+#include "../CertmanTestCase.cpp"
 #include <src/cert/util.h>
 #include <src/cert/CertificateManager.h>
 
-#define STRINGIZE(s) XSTRINGIZE(s)
-#define XSTRINGIZE(s) #s
-#define FIXTURE(path) string(STRINGIZE(CERTMAN_TEST_FIXTURES)) + string(path)
-
 namespace cert {
 
-    class UtilTest : public testing::Test {
+    class UtilTest : public tests::unit::CertmanTestCase {
     protected:
         CertificateManager *crtMgr;
         Certificate *cert;
 
         virtual void SetUp() {
             crtMgr = new CertificateManager();
-            cert = new Certificate(crtMgr->getX509(FIXTURE("/certs/test.cer")));
+            cert = new Certificate(crtMgr->getX509(loadFixture("/certs/test.cer")));
         }
 
     };

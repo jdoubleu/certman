@@ -1,14 +1,11 @@
 #include "gtest/gtest.h"
+#include "../CertmanTestCase.cpp"
 #include <src/cert/CertificateList.h>
 #include <src/cert/CertificateManager.h>
 
-#define STRINGIZE(s) XSTRINGIZE(s)
-#define XSTRINGIZE(s) #s
-#define FIXTURE(path) string(STRINGIZE(CERTMAN_TEST_FIXTURES)) + string(path)
-
 namespace cert {
 
-    class CertificateListTest : public testing::Test {
+    class CertificateListTest : public tests::unit::CertmanTestCase {
     protected:
         CertificateManager *crtMgr;
         Certificate *cert;
@@ -16,7 +13,7 @@ namespace cert {
 
         virtual void SetUp() {
             crtMgr = new CertificateManager();
-            cert = new Certificate(crtMgr->getX509(FIXTURE("/certs/test.cer")));
+            cert = new Certificate(crtMgr->getX509(loadFixture("/certs/test.cer")));
             certificateList = new CertificateList();
         }
 

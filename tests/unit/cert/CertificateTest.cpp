@@ -1,21 +1,18 @@
 #include "gtest/gtest.h"
+#include "../CertmanTestCase.cpp"
 #include <src/cert/Certificate.h>
 #include <src/cert/CertificateManager.h>
 
-#define STRINGIZE(s) XSTRINGIZE(s)
-#define XSTRINGIZE(s) #s
-#define FIXTURE(path) string(STRINGIZE(CERTMAN_TEST_FIXTURES)) + string(path)
-
 namespace cert {
 
-    class CertificateTest : public testing::Test {
+    class CertificateTest : public tests::unit::CertmanTestCase {
     protected:
         CertificateManager *manager;
         Certificate *certificate;
 
         virtual void SetUp() {
             manager = new CertificateManager();
-            certificate = new Certificate(manager->getX509(FIXTURE("/certs/test.cer")));
+            certificate = new Certificate(manager->getX509(loadFixture("/certs/test.cer")));
         }
 
     };
@@ -49,7 +46,7 @@ namespace cert {
     }
 
     TEST_F(CertificateTest, HasExtensions) {
-        auto *certificate = new Certificate(manager->getX509(FIXTURE("/certs/ca1/certs/ca.pem")));
+        auto *certificate = new Certificate(manager->getX509(loadFixture("/certs/ca1/certs/ca.pem")));
 
         EXPECT_EQ(certificate->getExtensions().size(), 4);
     }

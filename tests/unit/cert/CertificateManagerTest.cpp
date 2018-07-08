@@ -1,13 +1,10 @@
 #include "gtest/gtest.h"
+#include "../CertmanTestCase.cpp"
 #include <src/cert/CertificateManager.h>
-
-#define STRINGIZE(s) XSTRINGIZE(s)
-#define XSTRINGIZE(s) #s
-#define FIXTURE(path) string(STRINGIZE(CERTMAN_TEST_FIXTURES)) + string(path)
 
 namespace cert {
 
-    class CertificateManagerTest : public testing::Test {
+    class CertificateManagerTest : public tests::unit::CertmanTestCase {
     protected:
         CertificateManager *crtMgr;
 
@@ -18,12 +15,12 @@ namespace cert {
     };
 
     TEST_F(CertificateManagerTest, GetX509NotNull) {
-        EXPECT_NE(crtMgr->getX509(FIXTURE("/certs/test.cer")), nullptr);
+        EXPECT_NE(crtMgr->getX509(loadFixture("/certs/test.cer")), nullptr);
 
     }
 
     TEST_F(CertificateManagerTest, GetKeyNotNull) {
-        EXPECT_NE(crtMgr->getKey(FIXTURE("/certs/test_key.pem")), nullptr);
+        EXPECT_NE(crtMgr->getKey(loadFixture("/certs/test_key.pem")), nullptr);
     }
 
     TEST_F(CertificateManagerTest, GetCertificateListAsX509StoreTest) {

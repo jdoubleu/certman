@@ -1,9 +1,10 @@
 #include "gtest/gtest.h"
+#include "../CertmanTestCase.cpp"
 #include <src/core/Environment.h>
 
 namespace core {
 
-    class EnvironmentTest : public testing::Test {};
+    class EnvironmentTest : public tests::unit::CertmanTestCase {};
 
     TEST_F(EnvironmentTest, CertificatesDirNotNull) {
         EXPECT_GT(Environment::getCertificatesDir().size(), 1);
