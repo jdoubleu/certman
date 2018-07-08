@@ -105,7 +105,7 @@ KEYPAIR_EXPORT KeyPairWidget::generateKeyPair() {
 
     string passphrase = ui->keyPassword->password();
     EXPORT_PRIVATEKEY_FUNC exporter = [keyPair, wrappingAlgorithm, passphrase](BIO *sink) {
-        PEM_write_bio_PrivateKey(sink, keyPair, wrappingAlgorithm, NULL, 0, NULL, (void *) &passphrase);
+        PEM_write_bio_PrivateKey(sink, keyPair, wrappingAlgorithm, NULL, 0, NULL, (void *) passphrase.c_str());
         BIO_flush(sink);
     };
 
