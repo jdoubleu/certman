@@ -59,6 +59,9 @@ namespace gui::widget {
     class KeyPairWidget : public QWidget {
     Q_OBJECT
 
+        /**
+         * KeyPair value which is represented as subject of this widget.
+         */
         Q_PROPERTY(cert::KEYPAIR_EXPORT keyPair
                            READ generateKeyPair
                            NOTIFY keyPairChanged

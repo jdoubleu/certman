@@ -38,6 +38,9 @@ namespace gui::widget {
                            WRITE
                            setRepeat)
 
+        /**
+         * Password property which is the main subject of this widget.
+         */
         Q_PROPERTY(string password
                            READ password
                            NOTIFY passwordChanged
