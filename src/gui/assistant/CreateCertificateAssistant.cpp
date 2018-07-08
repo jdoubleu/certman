@@ -3,6 +3,7 @@
 #include <QPushButton>
 #include <QtWidgets/QDialogButtonBox>
 #include "../widget/NameWidget.h"
+#include "../widget/KeyPairWidget.h"
 
 using std::string;
 using cert::KEYPAIR_EXPORT;
@@ -48,7 +49,7 @@ void CreateCertificateAssistant::accept() {
 }
 
 void CreateCertificateAssistant::createCertificate() {
-    KEYPAIR_EXPORT keyPairExport = ui->keyPairWidget->generateKeyPair();
+    KEYPAIR_EXPORT keyPairExport = field("keyPairWidget").value<KEYPAIR_EXPORT>();
     X509_NAME *subject = field("nameWidget").value<X509_NAME *>();
     int validityDays = ui->validityperiod_field->value();
     Certificate *certificate = crtMgr->createCertificate(subject, X509_NAME_dup(subject), validityDays,

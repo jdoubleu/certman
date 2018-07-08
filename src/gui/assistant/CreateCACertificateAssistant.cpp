@@ -1,6 +1,7 @@
 #include "CreateCACertificateAssistant.h"
 #include "ui_createcacertificateassistant.h"
 #include "../widget/NameWidget.h"
+#include "../widget/KeyPairWidget.h"
 
 using gui::widget::NameWidget;
 using cert::KEYPAIR_EXPORT;
@@ -44,7 +45,7 @@ void CreateCACertificateAssistant::accept() {
 }
 
 void CreateCACertificateAssistant::createCACertificate() {
-    KEYPAIR_EXPORT keyPairExport = ui->keyPairWidget->generateKeyPair();
+    KEYPAIR_EXPORT keyPairExport = field("keyPairWidget").value<KEYPAIR_EXPORT>();
     X509_NAME *subject = field("nameWidget").value<X509_NAME *>();
     int validityDays = ui->validityperiod_field->value();
     int pathLen = ui->pathLengthSpinBox->value();
