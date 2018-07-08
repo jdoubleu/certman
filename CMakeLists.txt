@@ -77,6 +77,11 @@ endif()
 
 # Now simply link against gtest or gtest_main as needed. Eg
 file(GLOB_RECURSE CERTMAN_UNIT_TESTS "tests/unit/*.cpp")
-add_executable(unit ${CERTMAN_UNIT_TESTS})
+file(GLOB_RECURSE CERTMAN_TEST_SRC "src/*/*.h" "src/*/*.cpp")
+set(CERTMAN_TEST_FIXTURES ${PROJECT_SOURCE_DIR}/tests/fixtures)
+add_definitions(-DCERTMAN_TEST_FIXTURES=${CERTMAN_TEST_FIXTURES})
+add_executable(unit ${CERTMAN_UNIT_TESTS} ${CERTMAN_TEST_SRC})
 target_link_libraries(unit gtest_main)
+target_link_libraries(unit Qt5::Widgets)
+target_link_libraries(unit OpenSSL::Crypto)
 add_test(NAME unit_test COMMAND unit)
