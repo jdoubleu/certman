@@ -118,7 +118,7 @@ void MainWindow::onCertificateRemoveAction() {
             return;
         }
 
-        bool success = crtMgr->removeCertifcate(selectedCertificate);
+        bool success = crtMgr->removeCertificate(selectedCertificate);
 
         if (success)
             crtList->showCertificates(*crtMgr->getCertificateList()->listAll());
