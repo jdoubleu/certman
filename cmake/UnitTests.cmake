@@ -36,7 +36,7 @@ function(add_unit_tests)
     set(CERTMAN_TEST_FIXTURES ${PROJECT_SOURCE_DIR}/tests/fixtures)
     add_definitions(-DCERTMAN_TEST_FIXTURES=${CERTMAN_TEST_FIXTURES})
 
-    add_executable(${PROJECT_NAME}_tests_unit ${CERTMAN_UNIT_TESTS})
+    add_executable(${PROJECT_NAME}_tests_unit EXCLUDE_FROM_ALL ${CERTMAN_UNIT_TESTS})
     target_link_libraries(${PROJECT_NAME}_tests_unit gtest_main ${PROJECT_NAME}_main)
 
     add_test(NAME unit_tests COMMAND ${PROJECT_NAME}_tests_unit)
