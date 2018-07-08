@@ -26,4 +26,15 @@ namespace cert {
         EXPECT_NE(crtMgr->getKey(FIXTURE("/certs/test_key.pem")), nullptr);
     }
 
+    TEST_F(CertificateManagerTest, GetCertificateListAsX509StoreTest) {
+        EXPECT_EQ(typeid(X509_STORE_new()), typeid(crtMgr->getCertificateListAsX509Store()));
+    }
+
+    TEST_F(CertificateManagerTest, GenerateKeyUsageExtensionsNotNull) {
+        EXPECT_NE(crtMgr->generateKeyUsageExtensions(false, false, false,
+                                                     false, false,
+                                                     false, false, false,
+                                                     false, false), nullptr);
+    }
+
 }
