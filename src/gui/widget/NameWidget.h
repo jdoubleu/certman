@@ -56,7 +56,7 @@ namespace gui::widget {
      */
     class NameWidget : public QWidget {
     Q_OBJECT
-
+    
         Q_PROPERTY(X509_NAME *value
                            READ value
                            WRITE setValue

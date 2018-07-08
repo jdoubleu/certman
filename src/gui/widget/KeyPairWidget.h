@@ -19,8 +19,20 @@ namespace gui::widget {
      * E.g. RSA, DSA.
      */
     typedef struct {
+
+        /**
+         * Display name in the combo box.
+         */
         const char *name;
+
+        /**
+         * Associated internal key pair algorithm.
+         */
         const int algorithm = EVP_PKEY_NONE;
+
+        /**
+         * List of supported key lengths for this algorithm.
+         */
         const int *keyLengths;
     } SUPPORTED_KEY_ALG;
 
@@ -29,7 +41,15 @@ namespace gui::widget {
      * E.g. DESede3.
      */
     typedef struct {
+
+        /**
+         * Display name in the combo box.
+         */
         const char *name;
+
+        /**
+         * Associated internal cipher for the private key wrapping algorithm.
+         */
         const EVP_CIPHER *cipher;
     } SUPPORTED_WRAPPING_ALG;
 
