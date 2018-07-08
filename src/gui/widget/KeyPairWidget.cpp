@@ -75,39 +75,55 @@ void KeyPairWidget::setSupportedKeySizes(const int *sizes) {
 void KeyPairWidget::on_algorithmComboBox_currentIndexChanged(int index) {
     auto alg = ui->algorithmComboBox->itemData(index, Qt::UserRole).value<SUPPORTED_KEY_ALG>();
     setSupportedKeySizes(alg.keyLengths);
+
+    emit keyPairChanged();
 }
 
 void KeyPairWidget::on_wrappingAlgorithmComboBox_currentIndexChanged(int index) {
     // TODO: fix layout jumping after change
     ui->keyPassword->setHidden(index == 0);
+
+    emit keyPairChanged();
+}
+
+void KeyPairWidget::on_keySizeComboBox_currentIndexChanged(int index) {
+    emit keyPairChanged();
+}
+
+void KeyPairWidget::on_keyPassword_passwordChanged() {
+    emit keyPairChanged();
 }
 
 bool KeyPairWidget::validate() {
     if (!ui->keyPassword->isHidden()) {
-        return ui->keyPassword->validate();
+        return !ui->keyPassword->password().empty();
     }
 
     return true;
 }
 
 KEYPAIR_EXPORT KeyPairWidget::generateKeyPair() {
-    auto keyAlgorithm = ui->algorithmComboBox->currentData(Qt::UserRole).value<SUPPORTED_KEY_ALG>().algorithm;
-    auto keyLength = ui->keySizeComboBox->currentData(Qt::UserRole).value<int>();
-    auto wrappingAlgorithm = ui->wrappingAlgorithmComboBox->currentData(
-            Qt::UserRole).value<SUPPORTED_WRAPPING_ALG>().cipher;
+    if (validate()) {
+        auto keyAlgorithm = ui->algorithmComboBox->currentData(Qt::UserRole).value<SUPPORTED_KEY_ALG>().algorithm;
+        auto keyLength = ui->keySizeComboBox->currentData(Qt::UserRole).value<int>();
+        auto wrappingAlgorithm = ui->wrappingAlgorithmComboBox->currentData(
+                Qt::UserRole).value<SUPPORTED_WRAPPING_ALG>().cipher;
 
-    EVP_PKEY *keyPair = crtMgr->generateKeyPair(keyAlgorithm, keyLength);
+        EVP_PKEY *keyPair = crtMgr->generateKeyPair(keyAlgorithm, keyLength);
 
-    string passphrase = ui->keyPassword->password();
-    EXPORT_PRIVATEKEY_FUNC exporter = [keyPair, wrappingAlgorithm, passphrase](BIO *sink) {
-        PEM_write_bio_PrivateKey(sink, keyPair, wrappingAlgorithm, NULL, 0, NULL, (void *) &passphrase);
-        BIO_flush(sink);
-    };
+        string passphrase = ui->keyPassword->password();
+        EXPORT_PRIVATEKEY_FUNC exporter = [keyPair, wrappingAlgorithm, passphrase](BIO *sink) {
+            PEM_write_bio_PrivateKey(sink, keyPair, wrappingAlgorithm, NULL, 0, NULL, (void *) &passphrase);
+            BIO_flush(sink);
+        };
 
-    return {
-            keyPair,
-            exporter
-    };
+        return {
+                keyPair,
+                exporter
+        };
+    }
+
+    return {};
 }
 
 void KeyPairWidget::injectCertificateManager(CertificateManager *crtMgr) {
