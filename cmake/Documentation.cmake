@@ -1,11 +1,8 @@
 find_package(Doxygen)
-option(BUILD_DOCUMENTATION "Create and install the HTML based API documentation (requires Doxygen)" ${DOXYGEN_FOUND})
 
-if(BUILD_DOCUMENTATION)
-    if(NOT DOXYGEN_FOUND)
-        message(FATAL_ERROR "Doxygen is needed to build the documentation.")
-    endif()
-
+if(NOT DOXYGEN_FOUND)
+    message(SEND_ERROR "Doxygen is needed to build the documentation.")
+else()
     set(doxyfile_in ${PROJECT_SOURCE_DIR}/cmake/Doxyfile.in)
     set(doxyfile ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
 
@@ -16,5 +13,4 @@ if(BUILD_DOCUMENTATION)
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
             COMMENT "Generating API documentation with Doxygen"
             VERBATIM)
-
 endif()
