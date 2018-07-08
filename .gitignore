@@ -11,5 +11,8 @@ CMakeLists.txt.user
 
 /cmake-build-*/
 
+/docs/reference/*
+!/docs/reference/.gitkeep
+
 .idea/
 .vs/
