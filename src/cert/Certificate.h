@@ -85,8 +85,6 @@ namespace cert {
          */
         string getSubjectField(const string field);
 
-        string getSignatureAlgorithm();
-
         /**
          * Get the keyType of the certificates key.
          * @return KeyType of the certificates key.
