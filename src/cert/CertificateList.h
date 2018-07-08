@@ -37,6 +37,9 @@ namespace cert {
         size_t operator()(const Certificate *cert) const;
     };
 
+    /**
+     * A set used for storing certificates internally.
+     */
     typedef unordered_set<Certificate *, CertificateHashByThumbprint, CertificateEqualByThumbprint> CertificateListSet;
 
     /**
