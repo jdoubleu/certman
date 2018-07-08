@@ -46,7 +46,8 @@ bool PasswordWidget::validate() {
 string PasswordWidget::password() {
     // TODO: use BIO_s_secmem
     // TODO: use utf8 compatible format
-    return ui->passwordLineEdit->text().toStdString();
+
+    return validate() ? ui->passwordLineEdit->text().toStdString() : "";
 }
 
 BIO *PasswordWidget::securePassphrase() {
@@ -79,8 +80,12 @@ void PasswordWidget::setRepeat(bool repeat) {
 
 void PasswordWidget::on_passwordLineEdit_textChanged(const QString &value) {
     validate();
+
+    emit passwordChanged();
 }
 
 void PasswordWidget::on_repeatPasswordLineEdit_textChanged(const QString &value) {
     validate();
+
+    emit passwordChanged();
 }

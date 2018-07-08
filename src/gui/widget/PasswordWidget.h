@@ -33,6 +33,16 @@ namespace gui::widget {
                            WRITE
                            setRepeat)
 
+        Q_PROPERTY(string password
+                           READ password
+                           NOTIFY passwordChanged
+                           DESIGNABLE
+                           false
+                           SCRIPTABLE
+                           false
+                           STORED
+                           false)
+
     public:
         explicit PasswordWidget(QWidget *parent);
 
@@ -43,8 +53,6 @@ namespace gui::widget {
         explicit PasswordWidget(QString name, QString description, bool repeat, QWidget *parent);
 
         ~PasswordWidget() override;
-
-        bool validate();
 
         string password();
 
@@ -61,6 +69,10 @@ namespace gui::widget {
         void on_passwordLineEdit_textChanged(const QString &value);
         void on_repeatPasswordLineEdit_textChanged(const QString &value);
 
+    Q_SIGNALS:
+
+        void passwordChanged();
+
     private:
 
         Ui::PasswordWidget *ui;
@@ -68,6 +80,8 @@ namespace gui::widget {
         QString name;
         QString description;
         bool repeat;
+
+        bool validate();
     };
 };
 
