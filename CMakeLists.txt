@@ -23,6 +23,8 @@ include(ExternalProject)
 # Required custom modules
 include(QtApplicationMeta)
 include(UnitTests)
+include(Documentation)
+
 
 # project meta information
 set(COMPANY "Certman")

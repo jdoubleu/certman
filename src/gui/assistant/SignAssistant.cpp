@@ -17,9 +17,9 @@ SignAssistant::SignAssistant(CertificateManager *crtMgr, Certificate *cert, QWid
 
 
     for (it = allCerts->begin(); it != allCerts->end(); ++it) {
-        Certificate *certifcate = *it;
-        struct CertificateContainer container = {certifcate};
-        ui->signing_input->addItem(QString::fromStdString(certifcate->getSubjectField(LN_commonName)),
+        Certificate *certificate = *it;
+        struct CertificateContainer container = {certificate};
+        ui->signing_input->addItem(QString::fromStdString(certificate->getSubjectField(LN_commonName)),
                                    QVariant::fromValue(container));
     }
 

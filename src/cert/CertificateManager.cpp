@@ -2,12 +2,13 @@
 #include <openssl/pem.h>
 #include <QtCore/QDirIterator>
 #include "CertificateManager.h"
-#include "../gui/dialog/PasswordDialog.h"
+#include "../gui/widget/PasswordWidget.h"
 #include "../core/Environment.h"
 
 using std::string;
 using std::vector;
 using core::Environment;
+using gui::widget::PasswordWidget;
 
 using namespace cert;
 
@@ -88,7 +89,7 @@ X509 *CertificateManager::getX509(string path) {
 
 EVP_PKEY *CertificateManager::getKey(string path) {
     auto bio = BIO_new_file(path.c_str(), "r");
-    EVP_PKEY *pkey = PEM_read_bio_PrivateKey(bio, NULL, gui::dialog::passwordCallback, NULL);
+    EVP_PKEY *pkey = PEM_read_bio_PrivateKey(bio, NULL, PasswordWidget::asCallbackDialog, NULL);
     BIO_free(bio);
     return pkey;
 }
@@ -112,7 +113,7 @@ bool CertificateManager::hasPrivateKey(Certificate *cert) {
 void CertificateManager::exportPrivateKey(EVP_PKEY *pkey, string location) {
     auto bio = BIO_new_file(location.c_str(), "w");
     auto label = tr("Please enter passphrase.").toStdString();
-    PEM_write_bio_PrivateKey(bio, pkey, EVP_des_ede3_cbc(), NULL, 0, gui::dialog::passwordCallback, &label);
+    PEM_write_bio_PrivateKey(bio, pkey, EVP_des_ede3_cbc(), NULL, 0, PasswordWidget::asCallbackDialog, &label);
     BIO_flush(bio);
     BIO_free(bio);
 }

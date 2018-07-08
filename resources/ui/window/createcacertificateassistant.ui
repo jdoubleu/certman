@@ -30,15 +30,16 @@
     <string>Distinguished Name</string>
    </property>
   </widget>
-  <widget class="QWizardPage" name="keypairPage">
+  <widget class="gui::assistant::page::KeyPairWidgetPage" name="keypairPage">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <property name="title">
     <string>Key Pair</string>
    </property>
-   <layout class="QVBoxLayout" name="keypairPageLayout">
-    <item>
-     <widget class="gui::widget::KeyPairWidget" name="keyPairWidget" native="true"/>
-    </item>
-   </layout>
   </widget>
   <widget class="QWizardPage" name="caPage">
    <property name="title">
@@ -152,15 +153,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>gui::widget::KeyPairWidget</class>
-   <extends>QWidget</extends>
-   <header location="global">src/gui/widget/KeyPairWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>gui::assistant::page::NameWidgetPage</class>
    <extends>QWizardPage</extends>
    <header location="global">src/gui/assistant/page/NameWidgetPage.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>gui::assistant::page::KeyPairWidgetPage</class>
+   <extends>QWizardPage</extends>
+   <header location="global">src/gui/assistant/page/KeyPairWidgetPage.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
