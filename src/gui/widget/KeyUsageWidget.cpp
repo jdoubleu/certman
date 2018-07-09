@@ -31,7 +31,7 @@ X509_EXTENSION *KeyUsageWidget::getKeyUsageExtensions() {
                                               ui->key_encipherment->isChecked(),
                                               false,
                                               ui->key_agreement_toggle->isChecked(),
-                                              ui->certificate_singing_toggle->isChecked(),
+                                              ui->certificate_signing_toggle->isChecked(),
                                               false,
                                               ui->encipher_only_toggle->isChecked(),
                                               ui->decipher_only_toggle->isChecked());

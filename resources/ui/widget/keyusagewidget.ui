@@ -65,9 +65,9 @@ the certificate will provide.</string>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="certificate_singing_toggle">
+       <widget class="QCheckBox" name="certificate_signing_toggle">
         <property name="text">
-         <string>Certificate singing</string>
+         <string>Certificate signing</string>
         </property>
        </widget>
       </item>
