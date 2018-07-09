@@ -1,7 +1,6 @@
 #include "SignAssistant.h"
 #include "ui_signassistant.h"
 
-using cert::CertificateContainer;
 using cert::CertificateListSet;
 
 using namespace gui::assistant;
@@ -19,9 +18,8 @@ SignAssistant::SignAssistant(CertificateManager *crtMgr, Certificate *cert, QWid
 
     for (it = allCerts->begin(); it != allCerts->end(); ++it) {
         Certificate *certificate = *it;
-        struct CertificateContainer container = {certificate};
         ui->signing_input->addItem(QString::fromStdString(certificate->getSubjectField(LN_commonName)),
-                                   QVariant::fromValue(container));
+                                   QVariant::fromValue(certificate));
     }
 
     string cn = cert->getSubjectField(LN_commonName);
@@ -35,7 +33,7 @@ SignAssistant::~SignAssistant() {
 }
 
 void SignAssistant::submit() {
-    auto signing = ui->signing_input->currentData(Qt::UserRole).value<CertificateContainer>().certificate;
+    auto signing = ui->signing_input->currentData(Qt::UserRole).value<Certificate *>();
     bool hasKey = crtMgr->hasPrivateKey(signing);
     if (hasKey) {
 

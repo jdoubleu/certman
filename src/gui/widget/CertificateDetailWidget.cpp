@@ -2,7 +2,6 @@
 #include "CertificateDetailWidget.h"
 #include "ui_certificatedetail.h"
 
-using cert::CertificateContainer;
 using cert::CertificateExtension;
 
 using namespace gui::widget;
@@ -101,8 +100,7 @@ void CertificateDetailWidget::renderCertificatePath() {
         text << QString::fromStdString(c->getSubjectField(SN_commonName));
 
         auto *cur = new QTreeWidgetItem(text);
-        struct CertificateContainer con = {c};
-        cur->setData(0, Qt::UserRole, QVariant::fromValue(con));
+        cur->setData(0, Qt::UserRole, QVariant::fromValue(c));
 
         if (previous == NULL) {
             ui->certificate_chain_tree->addTopLevelItem(cur);
@@ -124,7 +122,7 @@ void CertificateDetailWidget::onCertificatePathItemDoubleClicked(QTreeWidgetItem
         return;
     }
 
-    auto cert = item->data(0, Qt::UserRole).value<CertificateContainer>().certificate;
+    auto cert = item->data(0, Qt::UserRole).value<Certificate *>();
 
     if (*cert == this->cert) {
         return;
