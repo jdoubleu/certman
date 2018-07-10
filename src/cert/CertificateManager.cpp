@@ -1,12 +1,17 @@
 #include <string>
+#include <ctime>
+#include <sstream>
 #include <openssl/pem.h>
 #include <QtCore/QDirIterator>
 #include "CertificateManager.h"
 #include "../gui/widget/PasswordWidget.h"
 #include "../core/Environment.h"
+#include "util.h"
 
 using std::string;
 using std::vector;
+using std::time;
+using std::stringstream;
 using core::Environment;
 using gui::widget::PasswordWidget;
 
@@ -224,6 +229,15 @@ bool CertificateManager::signCertificate(Certificate *cert, Certificate *signer)
     auto *signerSubjectName = X509_get_subject_name(signer->getX509());
     X509_set_issuer_name(cert->getX509(), signerSubjectName);
     EVP_PKEY *pKey = getKey(getPrivateKeyDefaultLocation(signer));
+
+    BIGNUM *serialNumber = BN_new();
+    stringstream times;
+    times << signer->getCreated() << time(NULL) << cert->getCreated();
+    BN_asc2bn(&serialNumber, times.str().c_str());
+    ASN1_INTEGER *serial = BN_to_ASN1_INTEGER(serialNumber, NULL);
+
+    X509_set_serialNumber(cert->getX509(), serial);
+
     int bytes = cert->sign(pKey);
     if (bytes == 0)
         return false;
