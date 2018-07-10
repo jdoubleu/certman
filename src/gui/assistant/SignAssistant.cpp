@@ -38,11 +38,7 @@ void SignAssistant::submit() {
     auto signing = ui->signing_input->currentData(Qt::UserRole).value<CertificateContainer>().certificate;
     bool hasKey = crtMgr->hasPrivateKey(signing);
     if (hasKey) {
-
-        //Get signing key
-        EVP_PKEY *pKey = crtMgr->getKey(crtMgr->getPrivateKeyDefaultLocation(signing));
-        X509_NAME *parentSubject = X509_get_subject_name(signing->getX509());
-        bool successful = crtMgr->signCertificate(cert, pKey, parentSubject);
+        bool successful = crtMgr->signCertificate(cert, signing);
         emit certificateSigned(successful);
     }
 }

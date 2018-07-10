@@ -215,13 +215,15 @@ X509_STORE *CertificateManager::getCertificateListAsX509Store() {
     return store;
 }
 
-bool CertificateManager::signCertificate(Certificate *cert, EVP_PKEY *pKey, X509_NAME *parentSubject) {
+bool CertificateManager::signCertificate(Certificate *cert, Certificate *signer) {
     string certLocation = getCertificateDefaultLocation(cert);
     string keyLocation;
     if (hasPrivateKey(cert))
         keyLocation = getPrivateKeyDefaultLocation(cert);
 
-    X509_set_issuer_name(cert->getX509(), parentSubject);
+    auto *signerSubjectName = X509_get_subject_name(signer->getX509());
+    X509_set_issuer_name(cert->getX509(), signerSubjectName);
+    EVP_PKEY *pKey = getKey(getPrivateKeyDefaultLocation(signer));
     int bytes = cert->sign(pKey);
     if (bytes == 0)
         return false;
