@@ -150,19 +150,8 @@ namespace cert {
         X509 *certificate;
 
     };
-
-    /**
-     * Container to wrap the certificate.
-     */
-    struct CertificateContainer {
-
-        /**
-         *The wrapped certificate.
-         */
-        Certificate *certificate;
-    };
 }
 
-Q_DECLARE_METATYPE(cert::CertificateContainer);
+Q_DECLARE_METATYPE(cert::Certificate*);
 
 #endif

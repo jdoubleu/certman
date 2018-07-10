@@ -5,7 +5,6 @@
 
 using Qt::Orientation;
 using cert::time_to_string;
-using cert::CertificateContainer;
 
 using namespace gui::widget;
 
@@ -68,14 +67,13 @@ QTreeWidgetItem *CertificateListWidget::createRowForCertificate(Certificate *cer
             }
     ));
 
-    struct CertificateContainer c = {cert};
-    row->setData(0, Qt::UserRole, QVariant::fromValue(c));
+    row->setData(0, Qt::UserRole, QVariant::fromValue(cert));
 
     return row;
 }
 
 Certificate *CertificateListWidget::retrieveCertificateFromItem(const QTreeWidgetItem *item) const {
-    return item->data(0, Qt::UserRole).value<CertificateContainer>().certificate;
+    return item->data(0, Qt::UserRole).value<Certificate *>();
 }
 
 void CertificateListWidget::onItemDoubleClicked(QTreeWidgetItem *item) {
