@@ -1,12 +1,17 @@
 #include <string>
+#include <ctime>
+#include <sstream>
 #include <openssl/pem.h>
 #include <QtCore/QDirIterator>
 #include "CertificateManager.h"
 #include "../gui/widget/PasswordWidget.h"
 #include "../core/Environment.h"
+#include "util.h"
 
 using std::string;
 using std::vector;
+using std::time;
+using std::stringstream;
 using core::Environment;
 using gui::widget::PasswordWidget;
 
@@ -215,13 +220,24 @@ X509_STORE *CertificateManager::getCertificateListAsX509Store() {
     return store;
 }
 
-bool CertificateManager::signCertificate(Certificate *cert, EVP_PKEY *pKey, X509_NAME *parentSubject) {
+bool CertificateManager::signCertificate(Certificate *cert, Certificate *signer) {
     string certLocation = getCertificateDefaultLocation(cert);
     string keyLocation;
     if (hasPrivateKey(cert))
         keyLocation = getPrivateKeyDefaultLocation(cert);
 
-    X509_set_issuer_name(cert->getX509(), parentSubject);
+    auto *signerSubjectName = X509_get_subject_name(signer->getX509());
+    X509_set_issuer_name(cert->getX509(), signerSubjectName);
+    EVP_PKEY *pKey = getKey(getPrivateKeyDefaultLocation(signer));
+
+    BIGNUM *serialNumber = BN_new();
+    stringstream times;
+    times << signer->getCreated() << time(NULL) << cert->getCreated();
+    BN_asc2bn(&serialNumber, times.str().c_str());
+    ASN1_INTEGER *serial = BN_to_ASN1_INTEGER(serialNumber, NULL);
+
+    X509_set_serialNumber(cert->getX509(), serial);
+
     int bytes = cert->sign(pKey);
     if (bytes == 0)
         return false;

@@ -176,11 +176,10 @@ namespace cert {
         /**
          * Signs a given certificate.
          * @param cert Certificate to sign.
-         * @param pKey Private key used to sign the certificate.
-         * @param parentSubject Subject of the parent certificate.
+         * @param signer The certificate used to sign cert.
          * @return Boolean if signing was successful.
          */
-        bool signCertificate(Certificate *cert, EVP_PKEY *pKey, X509_NAME *parentSubject);
+        bool signCertificate(Certificate *cert, Certificate *signer);
 
         /**
          * Genertes a key pair.
